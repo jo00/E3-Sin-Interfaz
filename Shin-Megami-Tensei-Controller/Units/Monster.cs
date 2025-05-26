@@ -1,10 +1,10 @@
-public class Monster : Unit
+public class Monster : UnitData
 {
     public List<string> skillsNames;
     public Monster(string name, int hp, int mp, int strength, int skill, int magic, int speed, int luck, Dictionary<string, string> affinities)
         : base(name, hp, mp, strength, skill, magic, speed, luck, affinities) { }
     
-    public override Unit Clone()
+    public override UnitData Clone()
     {
         Monster newMonster = new Monster(Name, maxHP, maxMP, Strength, Skill, Magic, Speed, Luck, new Dictionary<string, string>(Affinities));
         newMonster.SetSkills(new List<SkillData>(Skills));

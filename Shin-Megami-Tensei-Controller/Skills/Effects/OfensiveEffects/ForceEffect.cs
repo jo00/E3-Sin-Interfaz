@@ -4,39 +4,39 @@ namespace Shin_Megami_Tensei.Skills.Effects;
 
 public class ForceEffect:Effect
 {
-    private Unit _unitAttacking;
+    private UnitData _unitDataAttacking;
     private int _skillPower;
     private View _view;
     private bool _wasEffectApplied = true;
     
-    public ForceEffect(Unit unitAttacking, int skillPower, View view) : base(unitAttacking)
+    public ForceEffect(UnitData unitDataAttacking, int skillPower, View view) : base(unitDataAttacking)
     {
-        _unitAttacking = unitAttacking;
+        _unitDataAttacking = unitDataAttacking;
         _skillPower = skillPower;
         _view = view;
     }
 
-    public override void Apply(List<Unit> oponentUnits, TurnsController turnsController)
+    public override void Apply(List<UnitData> oponentUnits, TurnsController turnsController)
     {
         MenusController menuController = new MenusController(_view);
-        Unit target = menuController.SelectTarget(oponentUnits, _unitAttacking);
+        UnitData target = menuController.SelectTarget(oponentUnits, _unitDataAttacking);
         if (target != null)
         {
-            menuController.ShowForceTarget(_unitAttacking, target);
-            double damage = (Math.Sqrt(_unitAttacking.Magic * _skillPower));
+            menuController.ShowForceTarget(_unitDataAttacking, target);
+            double damage = (Math.Sqrt(_unitDataAttacking.Magic * _skillPower));
         
-            AffinitiesController affinitiesController = new AffinitiesController("Force", damage, target, _unitAttacking, _view, turnsController);
+            AffinitiesController affinitiesController = new AffinitiesController("Force", damage, target, _unitDataAttacking, _view, turnsController);
             int damageWithAffinities = affinitiesController.ApplyAffinity();
             target.DiscountHp(damageWithAffinities);
             if (!affinitiesController.IsReturnDamageAffinity())
             {
-                menuController.ShowEffectOfDamage(_unitAttacking, target, damageWithAffinities);
+                menuController.ShowEffectOfDamage(_unitDataAttacking, target, damageWithAffinities);
 
             }
         
             else
             {
-                _view.WriteLine($"{_unitAttacking.Name} termina con HP:{_unitAttacking.HP}/{_unitAttacking.maxHP}");;
+                _view.WriteLine($"{_unitDataAttacking.Name} termina con HP:{_unitDataAttacking.HP}/{_unitDataAttacking.maxHP}");;
 
             }  
         }

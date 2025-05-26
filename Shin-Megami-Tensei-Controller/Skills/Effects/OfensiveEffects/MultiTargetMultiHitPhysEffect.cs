@@ -6,37 +6,37 @@ public class MultiTargetMultiHitPhysEffect:Effect
 {
     private readonly int _min;
     private readonly int _max;
-    private readonly Unit _unitAttacking;
+    private readonly UnitData _unitDataAttacking;
     private readonly int _skillPower;
     private readonly View _view;
     private int _k;
  
-    public MultiTargetMultiHitPhysEffect(Unit unitAttacking, int min, int max, int skillPower, View view, int k) : base(unitAttacking)
+    public MultiTargetMultiHitPhysEffect(UnitData unitDataAttacking, int min, int max, int skillPower, View view, int k) : base(unitDataAttacking)
     {
         _min = min;
         _max = max;
-        _unitAttacking = unitAttacking;
+        _unitDataAttacking = unitDataAttacking;
         _skillPower = skillPower;
         _view = view;
         _k = k;
     }
     
-    public override void Apply(List<Unit> oponentUnits, TurnsController turnsController)
+    public override void Apply(List<UnitData> oponentUnits, TurnsController turnsController)
     {
     
         MenusController menuController = new MenusController(_view);
-        Unit target = menuController.SelectTarget(oponentUnits, _unitAttacking);
+        UnitData target = menuController.SelectTarget(oponentUnits, _unitDataAttacking);
 
         int hits = CalculateHits(_k);
         _view.WriteLine("----------------------------------------");
-        double damage = Math.Sqrt(_unitAttacking.Strength * _skillPower);
+        double damage = Math.Sqrt(_unitDataAttacking.Strength * _skillPower);
 
-        AffinitiesController affinitiesController = new AffinitiesController("Phys", damage, target, _unitAttacking, _view, turnsController);
+        AffinitiesController affinitiesController = new AffinitiesController("Phys", damage, target, _unitDataAttacking, _view, turnsController);
         bool isReturnDamageAffinity = false;
         for (int i = 0; i < hits; i++)
         {
 
-            _view.WriteLine($"{_unitAttacking.Name} ataca a {target.Name}");
+            _view.WriteLine($"{_unitDataAttacking.Name} ataca a {target.Name}");
             
             int damageWithAffinities = affinitiesController.ApplyAffinity();
             target.DiscountHp(damageWithAffinities);
@@ -61,7 +61,7 @@ public class MultiTargetMultiHitPhysEffect:Effect
         }
         else
         {
-            _view.WriteLine($"{_unitAttacking.Name} termina con HP:{_unitAttacking.HP}/{_unitAttacking.maxHP}");;
+            _view.WriteLine($"{_unitDataAttacking.Name} termina con HP:{_unitDataAttacking.HP}/{_unitDataAttacking.maxHP}");;
 
         }
         
@@ -75,9 +75,9 @@ public class MultiTargetMultiHitPhysEffect:Effect
 
     }
 
-    public static List<Unit> GetMultiTargetUnits(List<Unit> activeUnits, int k, int hits)
+    public static List<UnitData> GetMultiTargetUnits(List<UnitData> activeUnits, int k, int hits)
     {
-        List<Unit> targets = new List<Unit>();
+        List<UnitData> targets = new List<UnitData>();
 
         int A = activeUnits.Count;
         if (A == 0) return targets;
@@ -85,7 +85,7 @@ public class MultiTargetMultiHitPhysEffect:Effect
         int i = k % A;
         bool moveLeft = i % 2 == 0;  
 
-        List<Unit> R = activeUnits;
+        List<UnitData> R = activeUnits;
 
         int index = i;
 

@@ -5,26 +5,26 @@ namespace Shin_Megami_Tensei.Skills.Effects.OfensiveEffects;
 
 public class ReviveEffect:Effect
 {
-    private Unit _unitAttacking;
+    private UnitData _unitDataAttacking;
     private TeamData _teamData;
     private View _view;
     private int _power;
     private TurnsController _turnsController;
     private bool _wasEffectApplied;
 
-    public ReviveEffect(Unit unitAttacking, TeamData teamData, View view,  int power, TurnsController turnsController) : base(unitAttacking)
+    public ReviveEffect(UnitData unitDataAttacking, TeamData teamData, View view,  int power, TurnsController turnsController) : base(unitDataAttacking)
     {
-        _unitAttacking = unitAttacking;
+        _unitDataAttacking = unitDataAttacking;
         _teamData = teamData;
         _view = view;
         _power = power;
         _turnsController = turnsController;
         _wasEffectApplied = true;
     }
-    public override void Apply(List<Unit> oponentUnits, TurnsController turnsController)
+    public override void Apply(List<UnitData> oponentUnits, TurnsController turnsController)
     {
         MenusController menusController = new MenusController(_view);
-        Unit allyTarget = menusController.GetDeadAllyTarget(_unitAttacking, _teamData);
+        UnitData allyTarget = menusController.GetDeadAllyTarget(_unitDataAttacking, _teamData);
         Console.WriteLine("got ally target");
         Console.WriteLine(allyTarget);
         if (allyTarget != null)
@@ -34,7 +34,7 @@ public class ReviveEffect:Effect
             allyTarget.HP = Math.Min(allyTarget.maxHP, allyTarget.HP + healAmount);
             allyTarget.active = false;
             Console.WriteLine(healAmount);
-            menusController.ShowReviveAllyTarget(_unitAttacking, allyTarget);
+            menusController.ShowReviveAllyTarget(_unitDataAttacking, allyTarget);
             menusController.ShowHealResult(healAmount, allyTarget);
             _turnsController.ChangeTurnsForNonOffensiveAbilities();  
         }

@@ -5,31 +5,31 @@ namespace Shin_Megami_Tensei.Skills.Effects;
 
 public class HealEffect:Effect
 {
-    private Unit _unitAttacking;
+    private UnitData _unitDataAttacking;
     private TeamData _teamData;
     private View _view;
     private int _power;
     private TurnsController _turnsController;
     private bool _wasEffectApplied = true;
-    public HealEffect(Unit unitAttacking, TeamData teamData, View view,  int power, TurnsController turnsController) : base(unitAttacking)
+    public HealEffect(UnitData unitDataAttacking, TeamData teamData, View view,  int power, TurnsController turnsController) : base(unitDataAttacking)
     {
-        _unitAttacking = unitAttacking;
+        _unitDataAttacking = unitDataAttacking;
         _teamData = teamData;
         _view = view;
         _power = power;
         _turnsController = turnsController;
     }
 
-    public override void Apply(List<Unit> oponentUnits, TurnsController turnsController)
+    public override void Apply(List<UnitData> oponentUnits, TurnsController turnsController)
     {
         MenusController menusController = new MenusController(_view);
-        Unit allyTarget = menusController.GetAllyTarget(_unitAttacking, _teamData);
+        UnitData allyTarget = menusController.GetAllyTarget(_unitDataAttacking, _teamData);
         if (allyTarget != null)
         {
             
             int healAmount = (int)(allyTarget.maxHP * _power / 100);
             allyTarget.HP = Math.Min(allyTarget.maxHP, allyTarget.HP + healAmount);
-            menusController.ShowHealAllyTarget(_unitAttacking, allyTarget);
+            menusController.ShowHealAllyTarget(_unitDataAttacking, allyTarget);
             menusController.ShowHealResult(healAmount, allyTarget);
             _turnsController.ChangeTurnsForNonOffensiveAbilities();
         }

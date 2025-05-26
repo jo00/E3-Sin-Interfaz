@@ -18,12 +18,12 @@ public class SummonController
         _menusController = menusController;
     }
 
-    public void SummonForSamurai(Unit samurai, TeamData teamData, Action markActionExecuted)
+    public void SummonForSamurai(UnitData samurai, TeamData teamData, Action markActionExecuted)
     {
-        Unit monsterToSummon = _teamController.GetMonsterToSummonFromBench(teamData.team);
+        UnitData monsterToSummon = _teamController.GetMonsterToSummonFromBench(teamData.team);
         if (monsterToSummon == null) return;
 
-        Unit monsterToGetOut = _menusController.GetMonsterToGetOut(teamData, _teamController);
+        UnitData monsterToGetOut = _menusController.GetMonsterToGetOut(teamData, _teamController);
         if (monsterToSummon != null && monsterToGetOut != null)
         {
             ApplySummon(samurai, monsterToGetOut, monsterToSummon, teamData);
@@ -33,8 +33,8 @@ public class SummonController
         
     }
 
-    public void SummonForMonster(Unit monsterAttacking, TeamData teamData, Action markActionExecuted,
-        Action<Unit> addToTurnList)
+    public void SummonForMonster(UnitData monsterAttacking, TeamData teamData, Action markActionExecuted,
+        Action<UnitData> addToTurnList)
     {
         var monsterToSummon = _teamController.GetMonsterToSummonFromBench(teamData.team);
         if (monsterToSummon == null) return;
@@ -44,16 +44,16 @@ public class SummonController
         markActionExecuted();
     }
 
-    private void ApplySummon(Unit unitThatUsedTheAbility, Unit outMonster, Unit inMonster, TeamData teamData)
+    private void ApplySummon(UnitData unitDataThatUsedTheAbility, UnitData outMonster, UnitData inMonster, TeamData teamData)
     {
         _menusController.AnounceThatAMonsterHasBeenSummon(inMonster);
-        _teamController.ChangeUnitsWhenSummonIsMade(unitThatUsedTheAbility,outMonster, inMonster, teamData);
+        _teamController.ChangeUnitsWhenSummonIsMade(unitDataThatUsedTheAbility,outMonster, inMonster, teamData);
         _turnsController.ChangeTurnsStateWhenPassOrSummon();
         _turnsController.AnounceTurnsState();
         UpdateTurnList(outMonster, inMonster, teamData);
     }
 
-    private void UpdateTurnList(Unit outMonster, Unit inMonster, TeamData teamData)
+    private void UpdateTurnList(UnitData outMonster, UnitData inMonster, TeamData teamData)
     {
         if (!teamData.teamUnitsThatAlreadyPlayed.Contains(outMonster)) return;
         int index = _teamController.FindUnitIndexInTeam(outMonster, teamData.teamUnitsThatAlreadyPlayed);
@@ -62,26 +62,26 @@ public class SummonController
         
     }
 
-    public bool SummonAndReviveFromAbility(Unit unitThatUsedAbility, TeamData teamData, Action markActionExecuted)
+    public bool SummonAndReviveFromAbility(UnitData unitDataThatUsedAbility, TeamData teamData, Action markActionExecuted)
     {
-        Unit inMonster = _teamController.GetMonsterToSummonFromBenchWhenItCanBeDead(teamData.team);
+        UnitData inMonster = _teamController.GetMonsterToSummonFromBenchWhenItCanBeDead(teamData.team);
         if (inMonster == null)
         {
             Console.WriteLine("es null");
             return false;
         }
 
-        Unit outMonster = _menusController.GetMonsterToGetOut(teamData, _teamController);
+        UnitData outMonster = _menusController.GetMonsterToGetOut(teamData, _teamController);
 
         _menusController.AnounceThatAMonsterHasBeenSummon(inMonster);
 
         if (inMonster.HP <= 0)
         {
             inMonster.HP = inMonster.maxHP;
-            _menusController.AnounceRevive(unitThatUsedAbility,inMonster);
+            _menusController.AnounceRevive(unitDataThatUsedAbility,inMonster);
         }
 
-        _teamController.ChangeUnitsWhenSummonIsMade(unitThatUsedAbility,outMonster, inMonster, teamData);
+        _teamController.ChangeUnitsWhenSummonIsMade(unitDataThatUsedAbility,outMonster, inMonster, teamData);
         
         UpdateTurnList(outMonster, inMonster, teamData);
 
@@ -90,15 +90,15 @@ public class SummonController
         return true;
     }
     
-    public bool SummonFromAbility(Unit unitThatUsedAbility, TeamData teamData, Action markActionExecuted)
+    public bool SummonFromAbility(UnitData unitDataThatUsedAbility, TeamData teamData, Action markActionExecuted)
     {
-        Unit inMonster = _teamController.GetMonsterToSummonFromBench(teamData.team);
+        UnitData inMonster = _teamController.GetMonsterToSummonFromBench(teamData.team);
         if (inMonster == null)
         {
             return false;
         }
 
-        Unit outMonster = _menusController.GetMonsterToGetOut(teamData, _teamController);
+        UnitData outMonster = _menusController.GetMonsterToGetOut(teamData, _teamController);
         if(outMonster == null )
         {
             return false;
@@ -106,7 +106,7 @@ public class SummonController
 
         _menusController.AnounceThatAMonsterHasBeenSummon(inMonster);
 
-        _teamController.ChangeUnitsWhenSummonIsMade(unitThatUsedAbility, outMonster, inMonster, teamData);
+        _teamController.ChangeUnitsWhenSummonIsMade(unitDataThatUsedAbility, outMonster, inMonster, teamData);
         
         UpdateTurnList(outMonster, inMonster, teamData);
 

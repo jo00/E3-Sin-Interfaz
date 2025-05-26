@@ -7,63 +7,63 @@ public class MenusController
 {
     private View _view;
     private int _indexCounterForTargets;
-    private List<Unit> _allyUnitsThatCanBeTarget = new List<Unit>();
+    private List<UnitData> _allyUnitsThatCanBeTarget = new List<UnitData>();
     public MenusController(View view)
     {
         _view = view;
     }
 
-    public Unit SelectTarget(List<Unit> oponentUnits, Unit unitAttacking)
+    public UnitData SelectTarget(List<UnitData> oponentUnits, UnitData unitDataAttacking)
     {
         _view.WriteLine("----------------------------------------");
-        _view.WriteLine($"Seleccione un objetivo para {unitAttacking.Name}");
+        _view.WriteLine($"Seleccione un objetivo para {unitDataAttacking.Name}");
         ShowTargetUnitsAlive(oponentUnits);
         ShowCancelOption(oponentUnits);
         return GetTargetUnit(_allyUnitsThatCanBeTarget);
     }
     
-    private void ShowTargetUnitsAlive(List<Unit> enemyUnits)
+    private void ShowTargetUnitsAlive(List<UnitData> enemyUnits)
     {
         _indexCounterForTargets = 1;
-        _allyUnitsThatCanBeTarget = new List<Unit>();
+        _allyUnitsThatCanBeTarget = new List<UnitData>();
         for (int i = 0; i < enemyUnits.Count; i++)
         {
 
-            Unit enemyUnit = enemyUnits[i];
-            if (enemyUnit.HP > 0 && enemyUnit.active)
+            UnitData enemyUnitData = enemyUnits[i];
+            if (enemyUnitData.HP > 0 && enemyUnitData.active)
             {
-                _allyUnitsThatCanBeTarget.Add(enemyUnit);
-                _view.WriteLine($"{_indexCounterForTargets}-{enemyUnit.Name} HP:{enemyUnit.HP}/{enemyUnit.maxHP} MP:{enemyUnit.MP}/{enemyUnit.maxMP}");
+                _allyUnitsThatCanBeTarget.Add(enemyUnitData);
+                _view.WriteLine($"{_indexCounterForTargets}-{enemyUnitData.Name} HP:{enemyUnitData.HP}/{enemyUnitData.maxHP} MP:{enemyUnitData.MP}/{enemyUnitData.maxMP}");
                 _indexCounterForTargets += 1;
             }
             
         }
     }
     
-    private void ShowTargetUnitsDead(List<Unit> enemyUnits)
+    private void ShowTargetUnitsDead(List<UnitData> enemyUnits)
     {
         _indexCounterForTargets = 1;
-        _allyUnitsThatCanBeTarget = new List<Unit>();
+        _allyUnitsThatCanBeTarget = new List<UnitData>();
         for (int i = 0; i < enemyUnits.Count; i++)
         {
 
-            Unit enemyUnit = enemyUnits[i];
-            if (enemyUnit.HP <= 0)
+            UnitData enemyUnitData = enemyUnits[i];
+            if (enemyUnitData.HP <= 0)
             {
-                _allyUnitsThatCanBeTarget.Add(enemyUnit);
-                _view.WriteLine($"{_indexCounterForTargets}-{enemyUnit.Name} HP:{enemyUnit.HP}/{enemyUnit.maxHP} MP:{enemyUnit.MP}/{enemyUnit.maxMP}");
+                _allyUnitsThatCanBeTarget.Add(enemyUnitData);
+                _view.WriteLine($"{_indexCounterForTargets}-{enemyUnitData.Name} HP:{enemyUnitData.HP}/{enemyUnitData.maxHP} MP:{enemyUnitData.MP}/{enemyUnitData.maxMP}");
                 _indexCounterForTargets += 1;
             }
             
         }
     }
     
-    private void ShowCancelOption(List<Unit> oponentUnits)
+    private void ShowCancelOption(List<UnitData> oponentUnits)
     {
         _view.WriteLine($"{_indexCounterForTargets}-Cancelar");
     }
     
-    private Unit GetTargetUnit(List<Unit> oponentUnits)
+    private UnitData GetTargetUnit(List<UnitData> oponentUnits)
     {
         int choice = int.Parse(_view.ReadLine());
 
@@ -76,7 +76,7 @@ public class MenusController
         return null;
     }
 
-    public void ShowEffectOfDamage(Unit unitAttacking, Unit target, int damageWithAffinities)
+    public void ShowEffectOfDamage(UnitData unitDataAttacking, UnitData target, int damageWithAffinities)
     {
 
         if (damageWithAffinities > 0)
@@ -87,82 +87,82 @@ public class MenusController
         _view.WriteLine($"{target.Name} termina con HP:{target.HP}/{target.maxHP}");
     }
     
-    public void ShowGunTarget(Unit unitAttacking, Unit target)
+    public void ShowGunTarget(UnitData unitDataAttacking, UnitData target)
     {
 
     {
         _view.WriteLine("----------------------------------------");
-        _view.WriteLine($"{unitAttacking.Name} dispara a {target.Name}");
+        _view.WriteLine($"{unitDataAttacking.Name} dispara a {target.Name}");
     }    }
 
-    public void ShowAttackTarget(Unit unitAttacking, Unit target)
+    public void ShowAttackTarget(UnitData unitDataAttacking, UnitData target)
     {
         _view.WriteLine("----------------------------------------");
-        _view.WriteLine($"{unitAttacking.Name} ataca a {target.Name}");
+        _view.WriteLine($"{unitDataAttacking.Name} ataca a {target.Name}");
     }
     
-    public void ShowFireTarget(Unit unitAttacking, Unit target)
+    public void ShowFireTarget(UnitData unitDataAttacking, UnitData target)
     {
         _view.WriteLine("----------------------------------------");
-        _view.WriteLine($"{unitAttacking.Name} lanza fuego a {target.Name}");
+        _view.WriteLine($"{unitDataAttacking.Name} lanza fuego a {target.Name}");
     }
     
-    public void ShowIceTarget(Unit unitAttacking, Unit target)
+    public void ShowIceTarget(UnitData unitDataAttacking, UnitData target)
     {
         _view.WriteLine("----------------------------------------");
-        _view.WriteLine($"{unitAttacking.Name} lanza hielo a {target.Name}");
+        _view.WriteLine($"{unitDataAttacking.Name} lanza hielo a {target.Name}");
     }
     
-    public void ShowElecTarget(Unit unitAttacking, Unit target)
+    public void ShowElecTarget(UnitData unitDataAttacking, UnitData target)
     {
         _view.WriteLine("----------------------------------------");
-        _view.WriteLine($"{unitAttacking.Name} lanza electricidad a {target.Name}");
+        _view.WriteLine($"{unitDataAttacking.Name} lanza electricidad a {target.Name}");
     }
     
-    public void ShowForceTarget(Unit unitAttacking, Unit target)
+    public void ShowForceTarget(UnitData unitDataAttacking, UnitData target)
     {
         _view.WriteLine("----------------------------------------");
-        _view.WriteLine($"{unitAttacking.Name} lanza viento a {target.Name}");
+        _view.WriteLine($"{unitDataAttacking.Name} lanza viento a {target.Name}");
     }
     
-    public void ShowHealAllyTarget(Unit unitAttacking, Unit target)
+    public void ShowHealAllyTarget(UnitData unitDataAttacking, UnitData target)
     {
         _view.WriteLine("----------------------------------------");
-        _view.WriteLine($"{unitAttacking.Name} cura a {target.Name}");
+        _view.WriteLine($"{unitDataAttacking.Name} cura a {target.Name}");
     }
 
-    public void ShowReviveAllyTarget(Unit unitAttacking, Unit target)
+    public void ShowReviveAllyTarget(UnitData unitDataAttacking, UnitData target)
     {
         _view.WriteLine("----------------------------------------");
-        _view.WriteLine($"{unitAttacking.Name} revive a {target.Name}");
+        _view.WriteLine($"{unitDataAttacking.Name} revive a {target.Name}");
     }
 
-    public void ShowHealResult(int heal, Unit target)
+    public void ShowHealResult(int heal, UnitData target)
     {
         _view.WriteLine($"{target.Name} recibe {heal} de HP");
         _view.WriteLine($"{target.Name} termina con HP:{target.HP}/{target.maxHP}");
     }
 
-    public Unit GetAllyTarget(Unit unitAttacking, TeamData teamData)
+    public UnitData GetAllyTarget(UnitData unitDataAttacking, TeamData teamData)
     {
         TeamController teamController = teamData.teamController;
-        List<Unit> fullTeam = teamData.team;
+        List<UnitData> fullTeam = teamData.team;
         _view.WriteLine("----------------------------------------");
-        _view.WriteLine($"Seleccione un objetivo para {unitAttacking.Name}");
-       List<Unit> activeUnitsAlive= teamController.GetActiveUnitsAlive(fullTeam);
+        _view.WriteLine($"Seleccione un objetivo para {unitDataAttacking.Name}");
+       List<UnitData> activeUnitsAlive= teamController.GetActiveUnitsAlive(fullTeam);
        ShowTargetUnitsAlive(activeUnitsAlive);
        ShowCancelOption(activeUnitsAlive);
        return GetTargetUnit(_allyUnitsThatCanBeTarget);
 
     }
 
-    public Unit GetDeadAllyTarget(Unit unitAttacking, TeamData teamData)
+    public UnitData GetDeadAllyTarget(UnitData unitDataAttacking, TeamData teamData)
     {
         TeamController teamController = teamData.teamController;
-        List<Unit> fullTeam = teamData.team;
+        List<UnitData> fullTeam = teamData.team;
         _view.WriteLine("----------------------------------------");
-        _view.WriteLine($"Seleccione un objetivo para {unitAttacking.Name}");
-        List<Unit> deadUnits= teamController.GetDeadUnits(fullTeam);
+        _view.WriteLine($"Seleccione un objetivo para {unitDataAttacking.Name}");
+        List<UnitData> deadUnits= teamController.GetDeadUnits(fullTeam);
         ShowTargetUnitsDead(deadUnits);
         ShowCancelOption(deadUnits);
         return GetTargetUnit(_allyUnitsThatCanBeTarget);
@@ -174,16 +174,16 @@ public class MenusController
         _view.WriteLine($"Ronda de {samuraiName} (J{playerNumber})");
     }
 
-    public void AnounceThatAMonsterHasBeenSummon(Unit monsterToSummon)
+    public void AnounceThatAMonsterHasBeenSummon(UnitData monsterToSummon)
     {
         _view.WriteLine("----------------------------------------");
         _view.WriteLine($"{monsterToSummon.Name} ha sido invocado");
     }
     
-    public void AnounceAttackDamage(Unit unitAttacking, Unit targetUnit)
+    public void AnounceAttackDamage(UnitData unitDataAttacking, UnitData targetUnitData)
     {
         _view.WriteLine("----------------------------------------");
-        _view.WriteLine($"{unitAttacking.Name} ataca a {targetUnit.Name}");;
+        _view.WriteLine($"{unitDataAttacking.Name} ataca a {targetUnitData.Name}");;
     }
     
     public void AnounceSurrender(string samuaraiName, string playerNumber)
@@ -192,18 +192,18 @@ public class MenusController
         _view.WriteLine($"{samuaraiName} (J{playerNumber}) se rinde");
     }
     
-    public Unit GetMonsterToGetOut( TeamData teamData, TeamController teamController)
+    public UnitData GetMonsterToGetOut( TeamData teamData, TeamController teamController)
     {
         _view.WriteLine( "----------------------------------------");
         _view.WriteLine("Seleccione una posición para invocar");
-        List<Unit> activeUnits = teamController.GetActiveUnits(teamData.team);
+        List<UnitData> activeUnits = teamController.GetActiveUnits(teamData.team);
        
         for (int i = 1; i < activeUnits.Count; i++)
         {
-            Unit unit = activeUnits[i];
-            if (unit.HP>0)
+            UnitData unitData = activeUnits[i];
+            if (unitData.HP>0)
             {
-                _view.WriteLine($"{i}-{unit.Name} HP:{unit.HP}/{unit.maxHP} MP:{unit.MP}/{unit.maxMP} (Puesto {i+1})");
+                _view.WriteLine($"{i}-{unitData.Name} HP:{unitData.HP}/{unitData.maxHP} MP:{unitData.MP}/{unitData.maxMP} (Puesto {i+1})");
 
                 
             }
@@ -233,22 +233,22 @@ public class MenusController
 
     }
     
-    public int ShowSelectAbilityMenu(Unit unitAttacking, int skillsOptionsCounter)
+    public int ShowSelectAbilityMenu(UnitData unitDataAttacking, int skillsOptionsCounter)
     {
         _view.WriteLine("----------------------------------------");
-        _view.WriteLine($"Seleccione una habilidad para que {unitAttacking.Name} use");
-        int updatedSkillsOptionsCounter = ShowUsableSkills(unitAttacking, skillsOptionsCounter);
+        _view.WriteLine($"Seleccione una habilidad para que {unitDataAttacking.Name} use");
+        int updatedSkillsOptionsCounter = ShowUsableSkills(unitDataAttacking, skillsOptionsCounter);
         _view.WriteLine($"{skillsOptionsCounter}-Cancelar");
         return updatedSkillsOptionsCounter;
     }
 
-    private int ShowUsableSkills(Unit unitAttacking, int skillsOptionsCounter)
+    private int ShowUsableSkills(UnitData unitDataAttacking, int skillsOptionsCounter)
     {
-        foreach (SkillData skill in unitAttacking.Skills)
+        foreach (SkillData skill in unitDataAttacking.Skills)
         {
             Console.WriteLine(skill.name);
         }
-        foreach (SkillData skill in unitAttacking.GetUsableSkills())
+        foreach (SkillData skill in unitDataAttacking.GetUsableSkills())
         {
             _view.WriteLine($"{skillsOptionsCounter}-{skill.name} MP:{skill.cost}");
             skillsOptionsCounter++;
@@ -261,27 +261,27 @@ public class MenusController
     public void AnounceUnitsOrderOfAction(TeamData teamData, TeamController teamController)
     {
         _view.WriteLine("Orden:");
-        List<Unit> activeUnits = teamController.GetActiveUnitsAlive(teamData.team);
-        List<Unit> activeUnitsInOrder = teamController.GetActiveUnitsInOrderOfAction(activeUnits, teamData.teamUnitsThatAlreadyPlayed);
+        List<UnitData> activeUnits = teamController.GetActiveUnitsAlive(teamData.team);
+        List<UnitData> activeUnitsInOrder = teamController.GetActiveUnitsInOrderOfAction(activeUnits, teamData.teamUnitsThatAlreadyPlayed);
             
         for (int i = 0; i < activeUnitsInOrder.Count; i++)
         {
-            Unit unit = activeUnitsInOrder[i];
-            _view.WriteLine($"{i + 1}-{unit.Name}");
+            UnitData unitData = activeUnitsInOrder[i];
+            _view.WriteLine($"{i + 1}-{unitData.Name}");
         }
 
     }
 
-    public void ShowActionMenu(Unit unit)
+    public void ShowActionMenu(UnitData unitData)
     {
         _view.WriteLine("----------------------------------------");
-        _view.WriteLine($"Seleccione una acción para {unit.Name}");
+        _view.WriteLine($"Seleccione una acción para {unitData.Name}");
     
-        if (unit is Samurai)
+        if (unitData is Samurai)
         {
             ShowActionsForSamurai();
         }
-        else if (unit is Monster)
+        else if (unitData is Monster)
         {
             ShowActionsForMonster();
         }
@@ -306,35 +306,35 @@ public class MenusController
         _view.WriteLine("4: Pasar Turno");
     }
 
-    public void AnounceHPFinalState(Unit unit)
+    public void AnounceHPFinalState(UnitData unitData)
     {
-        _view.WriteLine($"{unit.Name} termina con HP:{unit.HP}/{unit.maxHP}");;
+        _view.WriteLine($"{unitData.Name} termina con HP:{unitData.HP}/{unitData.maxHP}");;
 
     }
 
-    public void AnounceFinalStateAfterAbility(AffinitiesController affinitiesController, Unit unitAttacking, Unit target)
+    public void AnounceFinalStateAfterAbility(AffinitiesController affinitiesController, UnitData unitDataAttacking, UnitData target)
     {
         int damageWithAffinities = affinitiesController.ApplyAffinity();
 
         if (!affinitiesController.IsReturnDamageAffinity())
         {
-            ShowEffectOfDamage(unitAttacking, target, damageWithAffinities);
+            ShowEffectOfDamage(unitDataAttacking, target, damageWithAffinities);
 
         }
         
         else
         {
-            _view.WriteLine($"{unitAttacking.Name} termina con HP:{unitAttacking.HP}/{unitAttacking.maxHP}");;
+            _view.WriteLine($"{unitDataAttacking.Name} termina con HP:{unitDataAttacking.HP}/{unitDataAttacking.maxHP}");;
 
         }
     }
     
     
-    public void AnounceRevive( Unit attackingUnit, Unit allyUnit)
+    public void AnounceRevive( UnitData attackingUnitData, UnitData allyUnitData)
     {
-        _view.WriteLine($"{attackingUnit.Name} revive a {allyUnit.Name}");
-        _view.WriteLine($"{allyUnit.Name} recibe {allyUnit.maxHP} de HP");
-        _view.WriteLine($"{allyUnit.Name} termina con HP:{allyUnit.HP}/{allyUnit.maxHP}");
+        _view.WriteLine($"{attackingUnitData.Name} revive a {allyUnitData.Name}");
+        _view.WriteLine($"{allyUnitData.Name} recibe {allyUnitData.maxHP} de HP");
+        _view.WriteLine($"{allyUnitData.Name} termina con HP:{allyUnitData.HP}/{allyUnitData.maxHP}");
     }
 
 }

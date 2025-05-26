@@ -1,4 +1,4 @@
-public abstract class Unit
+public abstract class UnitData
 {
     public string Name { get; protected set; }
     public int HP { get; set; }
@@ -18,7 +18,7 @@ public abstract class Unit
     public int speedForOrder { get; set; }
 
 
-    protected Unit(string name, int hp, int mp, int strength, int skill, int magic, int speed, int luck, Dictionary<string, string> affinities)
+    protected UnitData(string name, int hp, int mp, int strength, int skill, int magic, int speed, int luck, Dictionary<string, string> affinities)
     {
         Name = name;
         HP = hp;
@@ -62,7 +62,7 @@ public abstract class Unit
         return usableSkills;
     }
     
-    public abstract Unit Clone();
+    public abstract UnitData Clone();
 
     
 }

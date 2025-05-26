@@ -8,18 +8,18 @@ public abstract class Effect
 {
 
     protected View _view;
-    protected Unit _target;
-    protected Unit _unitAttacking;
+    protected UnitData _target;
+    protected UnitData UnitDataAttacking;
 
-    public Effect(Unit unitAttacking)
+    public Effect(UnitData unitDataAttacking)
     {
-        this._unitAttacking = unitAttacking;
+        this.UnitDataAttacking = unitDataAttacking;
        
     }
 
     
 
-    public abstract void Apply(List<Unit> oponentUnits, TurnsController turnsController);
+    public abstract void Apply(List<UnitData> oponentUnits, TurnsController turnsController);
 
     public abstract bool WasEffectApplied();
 }

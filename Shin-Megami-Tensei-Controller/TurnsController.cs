@@ -83,7 +83,7 @@ public class TurnsController
         return _blinkinTurnsCounter;
     }
     
-    public void RestartTurns(List<Unit> team, TeamController teamController)
+    public void RestartTurns(List<UnitData> team, TeamController teamController)
     {
         Console.WriteLine("turnsController5");
 

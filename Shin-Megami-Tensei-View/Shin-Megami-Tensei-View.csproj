@@ -1,5 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
+    <ItemGroup>
+      <ProjectReference Include="..\Shin-Megami-Tensei-Model\Shin-Megami-Tensei-Model.csproj" />
+    </ItemGroup>
+
     <PropertyGroup>
         <TargetFramework>net8.0</TargetFramework>
         <RootNamespace>Shin_Megami_Tensei_View</RootNamespace>

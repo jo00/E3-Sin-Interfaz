@@ -8,8 +8,8 @@ public class TeamController(View view, List<Samurai> samurais, List<Monster> mon
 {
     private View _view = view;
     private Samurai _samurai;
-    private List<Unit> _firstTeam = new List<Unit>();
-    private List<Unit> _secondTeam = new List<Unit>();
+    private List<UnitData> _firstTeam = new List<UnitData>();
+    private List<UnitData> _secondTeam = new List<UnitData>();
     private string[] _teamFilesSorted;
     private bool _isSecondTeam = false;
     private List<Samurai> _samurais = samurais;
@@ -72,8 +72,8 @@ public class TeamController(View view, List<Samurai> samurais, List<Monster> mon
         foreach (string line in lines)
         {
             IsSecondPlayerTeam(line);
-            Unit unit = CreateUnitFromName(line);
-            AddUnitToCorrespondingTeam(unit);
+            UnitData unitData = CreateUnitFromName(line);
+            AddUnitToCorrespondingTeam(unitData);
             
         }
 
@@ -87,37 +87,37 @@ public class TeamController(View view, List<Samurai> samurais, List<Monster> mon
          }
     }
 
-    private void AddUnitToCorrespondingTeam(Unit unit)
+    private void AddUnitToCorrespondingTeam(UnitData unitData)
     {
-        if (unit != null)
+        if (unitData != null)
         {
             if (_isSecondTeam)
             {
-                _secondTeam.Add(unit);
+                _secondTeam.Add(unitData);
                 ActiveUnitIfNeeded(_secondTeam);
 
             }
             else
             {
-                _firstTeam.Add(unit);
+                _firstTeam.Add(unitData);
                 ActiveUnitIfNeeded(_firstTeam);
 
             }
         }
     }
 
-    private void ActiveUnitIfNeeded(List<Unit> team)
+    private void ActiveUnitIfNeeded(List<UnitData> team)
     {
         if (team.Count < 5)
         {
-            Unit lastUnitAdded = team[^1];
-            lastUnitAdded.active = true;
+            UnitData lastUnitDataAdded = team[^1];
+            lastUnitDataAdded.active = true;
 
         }
     }
     
    
-    private Unit CreateUnitFromName(string name)
+    private UnitData CreateUnitFromName(string name)
     {
         if (name.StartsWith("[Samurai]"))
         {
@@ -205,7 +205,7 @@ public class TeamController(View view, List<Samurai> samurais, List<Monster> mon
         
     }
 
-    private bool IsTeamValid(List<Unit> units)
+    private bool IsTeamValid(List<UnitData> units)
     {
         List<string> namesOfUnitsInTeam = units.Select(unit => unit.Name).ToList();
 
@@ -259,12 +259,12 @@ public class TeamController(View view, List<Samurai> samurais, List<Monster> mon
             .Any(group => group.Count() > 1); 
     }
     
-    public List<Unit> GetFirstTeam()
+    public List<UnitData> GetFirstTeam()
     {
         return _firstTeam;
     }
     
-    public List<Unit> GetSecondTeam()
+    public List<UnitData> GetSecondTeam()
     {
         return _secondTeam;
     }
@@ -288,7 +288,7 @@ public class TeamController(View view, List<Samurai> samurais, List<Monster> mon
 
     }
 
-    private void ShowTeam(List<Unit> team)
+    private void ShowTeam(List<UnitData> team)
     {
         
         _counterOfUnitsInTeam = 0;
@@ -299,15 +299,15 @@ public class TeamController(View view, List<Samurai> samurais, List<Monster> mon
         
     }
 
-    private void ShowUnits(List<Unit> team)
+    private void ShowUnits(List<UnitData> team)
     {
         int maxNumberOfUnitsToShow = CalculateHowManyUnitsShouldBePrinted(team);
         for (int i = 0; i < maxNumberOfUnitsToShow; i++)
         {
-            Unit unit = team[i];
-            if ((unit.HP > 0) && unit.active || unit is Samurai)
+            UnitData unitData = team[i];
+            if ((unitData.HP > 0) && unitData.active || unitData is Samurai)
             {
-                _view.WriteLine($"{_abecedary[i]}-{unit.Name} HP:{unit.HP}/{unit.maxHP} MP:{unit.MP}/{unit.maxMP}");
+                _view.WriteLine($"{_abecedary[i]}-{unitData.Name} HP:{unitData.HP}/{unitData.maxHP} MP:{unitData.MP}/{unitData.maxMP}");
 
             }
             else
@@ -319,7 +319,7 @@ public class TeamController(View view, List<Samurai> samurais, List<Monster> mon
 
     }
     
-    private int CalculateHowManyUnitsShouldBePrinted(List<Unit> team)
+    private int CalculateHowManyUnitsShouldBePrinted(List<UnitData> team)
     {
         if (team.Count < 4)
         {
@@ -340,10 +340,10 @@ public class TeamController(View view, List<Samurai> samurais, List<Monster> mon
         }
     }
 
-    public List<Unit> GetActiveUnitsAlive(List<Unit> team)
+    public List<UnitData> GetActiveUnitsAlive(List<UnitData> team)
     {
-        List<Unit> activeUnitsAlive = new List<Unit>();
-        foreach (Unit unit in team)
+        List<UnitData> activeUnitsAlive = new List<UnitData>();
+        foreach (UnitData unit in team)
         {
             if (unit.active && unit.HP>0)
             {
@@ -354,10 +354,10 @@ public class TeamController(View view, List<Samurai> samurais, List<Monster> mon
         return activeUnitsAlive;
     }
     
-    public List<Unit> GetDeadUnits(List<Unit> team)
+    public List<UnitData> GetDeadUnits(List<UnitData> team)
     {
-        List<Unit> deadUnits = new List<Unit>();
-        foreach (Unit unit in team)
+        List<UnitData> deadUnits = new List<UnitData>();
+        foreach (UnitData unit in team)
         {
             if (unit.HP<=0)
             {
@@ -369,10 +369,10 @@ public class TeamController(View view, List<Samurai> samurais, List<Monster> mon
         return deadUnits;
     }
     
-    public List<Unit> GetActiveUnits(List<Unit> team)
+    public List<UnitData> GetActiveUnits(List<UnitData> team)
     {
-        List<Unit> activeUnits = new List<Unit>();
-        foreach (Unit unit in team)
+        List<UnitData> activeUnits = new List<UnitData>();
+        foreach (UnitData unit in team)
         {
             if (unit.active)
             {
@@ -383,13 +383,13 @@ public class TeamController(View view, List<Samurai> samurais, List<Monster> mon
         return activeUnits;
     }
 
-    public List<Unit> GetActiveUnitsInOrderOfAction(List<Unit> activeUnits, List<Unit> unitsThatAlreadyPlayed)
+    public List<UnitData> GetActiveUnitsInOrderOfAction(List<UnitData> activeUnits, List<UnitData> unitsThatAlreadyPlayed)
     {
        
 
-        List<Unit> sortedUnits = activeUnits.OrderByDescending(unit => unit.speedForOrder).ToList();
+        List<UnitData> sortedUnits = activeUnits.OrderByDescending(unit => unit.speedForOrder).ToList();
     
-        foreach (Unit unit in unitsThatAlreadyPlayed)
+        foreach (UnitData unit in unitsThatAlreadyPlayed)
         {
             sortedUnits.Remove(unit);
             if (unit.active && unit.HP>0)
@@ -406,9 +406,9 @@ public class TeamController(View view, List<Samurai> samurais, List<Monster> mon
     }
     
     
-    public bool CanTeamKeepPlaying(List<Unit> team)
+    public bool CanTeamKeepPlaying(List<UnitData> team)
     {
-        foreach (Unit unit in GetActiveUnitsAlive(team))
+        foreach (UnitData unit in GetActiveUnitsAlive(team))
         {
             if (unit.HP > 0)
             {
@@ -419,13 +419,13 @@ public class TeamController(View view, List<Samurai> samurais, List<Monster> mon
         return false;
     }
 
-    public Unit GetMonsterToSummonFromBench(List<Unit> team)
+    public UnitData GetMonsterToSummonFromBench(List<UnitData> team)
     {
         _view.WriteLine("----------------------------------------");
         _view.WriteLine("Seleccione un monstruo para invocar");
         int counter = 1;
-        List<Unit> unitsToSummon = new List<Unit>();
-        foreach (Unit unit in team)
+        List<UnitData> unitsToSummon = new List<UnitData>();
+        foreach (UnitData unit in team)
         {
             if (!unit.active && unit.HP > 0 && unit is not Samurai)
 
@@ -446,13 +446,13 @@ public class TeamController(View view, List<Samurai> samurais, List<Monster> mon
 
     }
 
-    public Unit GetMonsterToSummonFromBenchWhenItCanBeDead(List<Unit> team)
+    public UnitData GetMonsterToSummonFromBenchWhenItCanBeDead(List<UnitData> team)
     {
         _view.WriteLine("----------------------------------------");
         _view.WriteLine("Seleccione un monstruo para invocar");
         int counter = 1;
-        List<Unit> unitsToSummon = new List<Unit>();
-        foreach (Unit unit in team)
+        List<UnitData> unitsToSummon = new List<UnitData>();
+        foreach (UnitData unit in team)
         {
             if ((!unit.active || unit.HP<=0) && unit is not Samurai)
             {
@@ -471,29 +471,29 @@ public class TeamController(View view, List<Samurai> samurais, List<Monster> mon
         return unitsToSummon[selectedMonsterIndex - 1];
     }
 
-    public void ChangeUnitsWhenSummonIsMade(Unit unitThatMadeTheSummon, Unit unitToGetOut, Unit unitToGetIn, TeamData teamData)
+    public void ChangeUnitsWhenSummonIsMade(UnitData unitDataThatMadeTheSummon, UnitData unitDataToGetOut, UnitData unitDataToGetIn, TeamData teamData)
     {
-        int unitToGetOutIndex = FindUnitIndexInTeam(unitToGetOut, teamData.team);
-        int unitToGetInIndex = FindUnitIndexInTeam(unitToGetIn, teamData.team);
+        int unitToGetOutIndex = FindUnitIndexInTeam(unitDataToGetOut, teamData.team);
+        int unitToGetInIndex = FindUnitIndexInTeam(unitDataToGetIn, teamData.team);
 
 
-        unitToGetOut.active = false;
-        unitToGetOut.speedForOrder = unitToGetOut.Speed;
-        teamData.team[unitToGetOutIndex] = unitToGetIn;
-        teamData.team[unitToGetInIndex] = unitToGetOut;
+        unitDataToGetOut.active = false;
+        unitDataToGetOut.speedForOrder = unitDataToGetOut.Speed;
+        teamData.team[unitToGetOutIndex] = unitDataToGetIn;
+        teamData.team[unitToGetInIndex] = unitDataToGetOut;
         teamData.team[unitToGetOutIndex].active = true;
-        teamData.team[unitToGetOutIndex].speedForOrder = unitToGetOut.speedForOrder;
-        if (unitToGetOut.HP <= 0 || unitToGetOut == unitToGetIn|| unitThatMadeTheSummon==unitToGetOut)
+        teamData.team[unitToGetOutIndex].speedForOrder = unitDataToGetOut.speedForOrder;
+        if (unitDataToGetOut.HP <= 0 || unitDataToGetOut == unitDataToGetIn|| unitDataThatMadeTheSummon==unitDataToGetOut)
         {
             teamData.team[unitToGetOutIndex].speedForOrder = 0;
-            unitToGetIn.speedForOrder = 0;
+            unitDataToGetIn.speedForOrder = 0;
             teamData.teamUnitsThatAlreadyPlayed.Add(teamData.team[unitToGetOutIndex]);
         }
 
-        if(teamData.teamUnitsThatAlreadyPlayed.Contains(unitToGetOut))
+        if(teamData.teamUnitsThatAlreadyPlayed.Contains(unitDataToGetOut))
         {
-            int indexInPlayedUnits= FindUnitIndexInTeam(unitToGetOut, teamData.teamUnitsThatAlreadyPlayed);
-            teamData.teamUnitsThatAlreadyPlayed[indexInPlayedUnits]= unitToGetIn;
+            int indexInPlayedUnits= FindUnitIndexInTeam(unitDataToGetOut, teamData.teamUnitsThatAlreadyPlayed);
+            teamData.teamUnitsThatAlreadyPlayed[indexInPlayedUnits]= unitDataToGetIn;
         }
         teamData.team = ReOrderTeamAfterSummon(teamData.team, teamData.originalTeamOrder);
         
@@ -501,11 +501,11 @@ public class TeamController(View view, List<Samurai> samurais, List<Monster> mon
         
     }
     
-    public int FindUnitIndexInTeam(Unit unit, List<Unit> team)
+    public int FindUnitIndexInTeam(UnitData unitData, List<UnitData> team)
     {
         for (int i = 0; i < team.Count; i++)
         {
-            if (team[i] == unit)
+            if (team[i] == unitData)
             {
                 return i;
             }
@@ -516,11 +516,11 @@ public class TeamController(View view, List<Samurai> samurais, List<Monster> mon
 
    
     
-    public List<Unit> ReOrderTeamAfterSummon(List<Unit> team, List<Unit> originalTeamOrder)
+    public List<UnitData> ReOrderTeamAfterSummon(List<UnitData> team, List<UnitData> originalTeamOrder)
     {
-        List<Unit> ordered = new List<Unit>();
+        List<UnitData> ordered = new List<UnitData>();
 
-        Unit samurai = team.FirstOrDefault(unit => unit is Samurai);
+        UnitData samurai = team.FirstOrDefault(unit => unit is Samurai);
         ordered.Add(samurai);
         
 

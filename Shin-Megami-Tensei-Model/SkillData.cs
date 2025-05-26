@@ -1,4 +1,3 @@
-using Shin_Megami_Tensei.Skills.Effects;
 
 public class SkillData
 {
@@ -9,9 +8,7 @@ public class SkillData
     public string target { get; private set; }
     public string hits { get; private set; }
     public string effectString { get; private set; }
-
-    public List<Effect> effects;
-
+    
     public SkillData(string name, string type, int cost, int power, string target, string hits, string effectString)
     {
         this.name = name;

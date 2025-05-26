@@ -1,4 +1,4 @@
-public class Samurai : Unit
+public class Samurai : UnitData
 {
 
     public Samurai(string name, int hp, int mp, int strength, int skill, int magic, int speed, int luck, Dictionary<string, string> affinities)
@@ -6,7 +6,7 @@ public class Samurai : Unit
     {
 
     }
-    public override Unit Clone()
+    public override UnitData Clone()
     {
         Samurai clone = new Samurai(Name, maxHP, maxMP, Strength, Skill, Magic, Speed, Luck, new Dictionary<string, string>(Affinities));
         clone.SetSkills(new List<SkillData>(Skills)); 

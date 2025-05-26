@@ -12,11 +12,11 @@ public class Game
     private View _view;
     private DataLoader _loader;
     private string _teamsFolder;
-    private List<Unit> _firstTeam;
-    private List<Unit> _firstTeamUnitsThatAlreadyPlayed = new List<Unit>();
-    private List<Unit> _secondTeamUnitsThatAlreadyPlayed = new List<Unit>();
+    private List<UnitData> _firstTeam;
+    private List<UnitData> _firstTeamUnitsThatAlreadyPlayed = new List<UnitData>();
+    private List<UnitData> _secondTeamUnitsThatAlreadyPlayed = new List<UnitData>();
 
-    private List<Unit> _secondTeam;
+    private List<UnitData> _secondTeam;
     private Samurai _firstSamurai;
     private Samurai _secondSamurai;
     private TeamController _teamController;
@@ -38,8 +38,8 @@ public class Game
     private TurnsController _turnsController;
     private MenusController _menusController;
     
-    private Unit _monsterToGetOut;
-    private Unit _monsterToSummon;
+    private UnitData _monsterToGetOut;
+    private UnitData _monsterToSummon;
     private SummonController _summonController;
 
 
@@ -103,9 +103,9 @@ public class Game
         }
     }
 
-    private void ResetSpeedForOrderValues(List<Unit> team)
+    private void ResetSpeedForOrderValues(List<UnitData> team)
     {
-        foreach (Unit unit in team)
+        foreach (UnitData unit in team)
         {
             unit.speedForOrder = unit.Speed;
         }
@@ -167,11 +167,11 @@ public class Game
 
     
 
-    private void PlayPlayerTurn(TeamData teamData, List<Unit> oponentTeam)
+    private void PlayPlayerTurn(TeamData teamData, List<UnitData> oponentTeam)
     {
         Samurai samurai = teamData.samurai;
-        List<Unit> team = teamData.team;
-        teamData.teamUnitsThatAlreadyPlayed  = new List<Unit>(); 
+        List<UnitData> team = teamData.team;
+        teamData.teamUnitsThatAlreadyPlayed  = new List<UnitData>(); 
         
         _menusController.AnounceRound(samurai.Name, teamData.playerNumber);
         _turnsController.RestartTurns(team, _teamController);
@@ -180,7 +180,7 @@ public class Game
 
     }
 
-    private void PlayEachUnitTurn(TeamData teamData, List<Unit> oponentTeam)
+    private void PlayEachUnitTurn(TeamData teamData, List<UnitData> oponentTeam)
     {
         while ((_turnsController.CalculateNumberOfFullTurnsLeft()>0|| _turnsController.CalculateNumberOfBlinkingTurns()>0)&& _canFirstTeamKeepPlaying && _canSecondTeamKeepPlaying)
         {
@@ -188,18 +188,18 @@ public class Game
         }
     }
 
-    private void PlayUnitTurn(TeamData teamData, List<Unit> oponentTeam)
+    private void PlayUnitTurn(TeamData teamData, List<UnitData> oponentTeam)
     {
-        List<Unit> unitsInOrderOfAction = _teamController.GetActiveUnitsInOrderOfAction(_teamController.GetActiveUnitsAlive(teamData.team), teamData.teamUnitsThatAlreadyPlayed);
+        List<UnitData> unitsInOrderOfAction = _teamController.GetActiveUnitsInOrderOfAction(_teamController.GetActiveUnitsAlive(teamData.team), teamData.teamUnitsThatAlreadyPlayed);
             
         for(int i =0; i < unitsInOrderOfAction.Count;i++)
         {
             unitsInOrderOfAction = _teamController.GetActiveUnitsInOrderOfAction(_teamController.GetActiveUnitsAlive(teamData.team), teamData.teamUnitsThatAlreadyPlayed);
                
-            Unit unit = unitsInOrderOfAction[0];    
+            UnitData unitData = unitsInOrderOfAction[0];    
             if (_canFirstTeamKeepPlaying && _canSecondTeamKeepPlaying && (_turnsController.CalculateNumberOfFullTurnsLeft()>0 || _turnsController.CalculateNumberOfBlinkingTurns()>0))
             {
-                DevelopUnitTurn(teamData, unit, oponentTeam); 
+                DevelopUnitTurn(teamData, unitData, oponentTeam); 
             }
                 
         } 
@@ -207,7 +207,7 @@ public class Game
 
     
 
-    private void DevelopUnitTurn(TeamData teamData, Unit unit, List<Unit> oponentTeam)
+    private void DevelopUnitTurn(TeamData teamData, UnitData unitData, List<UnitData> oponentTeam)
     {
         
         _actionExecuted = false;
@@ -216,24 +216,24 @@ public class Game
         while (!_actionExecuted )
         {
             _wasActionAMonsterSummon = false;
-            string actionChoosen = SelectAction(unit);
-            ExecuteAction(actionChoosen, unit, oponentTeam);
+            string actionChoosen = SelectAction(unitData);
+            ExecuteAction(actionChoosen, unitData, oponentTeam);
         }
-        EvaluateIfActionWasSummonToChangeListOfUnitsThatAlreadyPlayed(teamData, unit);
+        EvaluateIfActionWasSummonToChangeListOfUnitsThatAlreadyPlayed(teamData, unitData);
         
         
     }
 
-    private void EvaluateIfActionWasSummonToChangeListOfUnitsThatAlreadyPlayed(TeamData teamData, Unit unit)
+    private void EvaluateIfActionWasSummonToChangeListOfUnitsThatAlreadyPlayed(TeamData teamData, UnitData unitData)
     {
         if (!_wasActionAMonsterSummon)
         {
-            teamData.teamUnitsThatAlreadyPlayed.Add(unit);
+            teamData.teamUnitsThatAlreadyPlayed.Add(unitData);
 
         }
         else if (_wasActionAMonsterSummon)
         {
-            teamData.teamUnitsThatAlreadyPlayed.Remove(unit);
+            teamData.teamUnitsThatAlreadyPlayed.Remove(unitData);
         }
     }
 
@@ -250,9 +250,9 @@ public class Game
 
     
 
-    private string SelectAction(Unit unit)
+    private string SelectAction(UnitData unitData)
     {
-        _menusController.ShowActionMenu(unit);
+        _menusController.ShowActionMenu(unitData);
         string actionChoosen = _view.ReadLine();
         return actionChoosen;
     }
@@ -268,58 +268,58 @@ public class Game
 
    
 
-    private void ExecuteAction(string actionChoosen, Unit unitAttacking, List<Unit> oponentTeam)
+    private void ExecuteAction(string actionChoosen, UnitData unitDataAttacking, List<UnitData> oponentTeam)
     {
-        if (unitAttacking is Samurai)
+        if (unitDataAttacking is Samurai)
         {
-            ExecuteActionSamurai(actionChoosen, unitAttacking, oponentTeam);
+            ExecuteActionSamurai(actionChoosen, unitDataAttacking, oponentTeam);
         }
 
         else
         {
-            ExecuteActionMonster(actionChoosen, unitAttacking, oponentTeam);
+            ExecuteActionMonster(actionChoosen, unitDataAttacking, oponentTeam);
         }
 
     }
 
-    private void ExecuteActionSamurai(string actionChoosen,Unit unitAttacking , List<Unit> oponentTeam)
+    private void ExecuteActionSamurai(string actionChoosen,UnitData unitDataAttacking , List<UnitData> oponentTeam)
     {
         switch (actionChoosen)
         {
             case "1":
-                MakeAttackDamage(oponentTeam, unitAttacking);
+                MakeAttackDamage(oponentTeam, unitDataAttacking);
                 break;
             case "2":
-                MakeGunDamage(unitAttacking, oponentTeam);
+                MakeGunDamage(unitDataAttacking, oponentTeam);
                 break;   
             case "3":
-                UseAbility(oponentTeam, unitAttacking);
+                UseAbility(oponentTeam, unitDataAttacking);
                 break;
             case "4":
-                SummonForSamurai(unitAttacking);
+                SummonForSamurai(unitDataAttacking);
                 break;
             case "5":
                 PassTurn();
                 break;
             case "6":
-                Surrender(unitAttacking);
+                Surrender(unitDataAttacking);
                 break;
         }
         CheckIfTheOponentTeamCanKeepPlaying(oponentTeam);
     }
     
-    private void ExecuteActionMonster(string actionChoosen, Unit unitAttacking, List<Unit> oponentTeam)
+    private void ExecuteActionMonster(string actionChoosen, UnitData unitDataAttacking, List<UnitData> oponentTeam)
     {
         switch (actionChoosen)
         {
             case "1":
-                MakeAttackDamage(oponentTeam, unitAttacking);
+                MakeAttackDamage(oponentTeam, unitDataAttacking);
                 break;
             case "2":
-                UseAbility(oponentTeam, unitAttacking);
+                UseAbility(oponentTeam, unitDataAttacking);
                 break; 
             case "3":
-                SummonForMonster(unitAttacking);
+                SummonForMonster(unitDataAttacking);
                 break;
             case "4":
                 PassTurn();
@@ -331,16 +331,16 @@ public class Game
     
 
 
-    private void MakeAttackDamage(List<Unit> oponentTeam, Unit unitAttacking)
+    private void MakeAttackDamage(List<UnitData> oponentTeam, UnitData unitDataAttacking)
     {
 
-        Unit targetUnit = _menusController.SelectTarget(_teamController.GetActiveUnitsAlive(oponentTeam), unitAttacking);
+        UnitData targetUnitData = _menusController.SelectTarget(_teamController.GetActiveUnitsAlive(oponentTeam), unitDataAttacking);
 
-        if (targetUnit != null)
+        if (targetUnitData != null)
         {
             _actionExecuted = true;
-            _menusController.AnounceAttackDamage(unitAttacking, targetUnit);
-            DiscountAttackDamageFromOponent(unitAttacking, targetUnit);
+            _menusController.AnounceAttackDamage(unitDataAttacking, targetUnitData);
+            DiscountAttackDamageFromOponent(unitDataAttacking, targetUnitData);
         }
     }
     
@@ -348,28 +348,28 @@ public class Game
 
     
 
-    private void MakeGunDamage(Unit unitAttacking, List<Unit> oponentTeam)
+    private void MakeGunDamage(UnitData unitDataAttacking, List<UnitData> oponentTeam)
     {
-        Unit targetUnit =_menusController.SelectTarget(_teamController.GetActiveUnitsAlive(oponentTeam), unitAttacking);
-        if (targetUnit != null)
+        UnitData targetUnitData =_menusController.SelectTarget(_teamController.GetActiveUnitsAlive(oponentTeam), unitDataAttacking);
+        if (targetUnitData != null)
         {
 
 
             _actionExecuted = true;
-            AnounceGunDamage(unitAttacking, targetUnit);
-            DiscountGunDamage(unitAttacking, targetUnit);
+            AnounceGunDamage(unitDataAttacking, targetUnitData);
+            DiscountGunDamage(unitDataAttacking, targetUnitData);
         }
     }
 
-    private void AnounceGunDamage(Unit unitAttacking, Unit targetUnit)
+    private void AnounceGunDamage(UnitData unitDataAttacking, UnitData targetUnitData)
     {
         _view.WriteLine("----------------------------------------");
-        _view.WriteLine($"{unitAttacking.Name} dispara a {targetUnit.Name}");
+        _view.WriteLine($"{unitDataAttacking.Name} dispara a {targetUnitData.Name}");
     }
 
-    private TeamData GetWichTeamIsPlaying(Unit unitAttacking)
+    private TeamData GetWichTeamIsPlaying(UnitData unitDataAttacking)
     {
-        if (_firstTeamData.team.Contains(unitAttacking))
+        if (_firstTeamData.team.Contains(unitDataAttacking))
         {
             return _firstTeamData;
         }
@@ -377,13 +377,13 @@ public class Game
         return _secondTeamData;
     }
 
-    private void UseAbility(List<Unit> oponentTeam, Unit unitAttacking)
+    private void UseAbility(List<UnitData> oponentTeam, UnitData unitDataAttacking)
     {
-        TeamData teamData = GetWichTeamIsPlaying(unitAttacking);
-        SkillData ability = SelectAbility(unitAttacking);
+        TeamData teamData = GetWichTeamIsPlaying(unitDataAttacking);
+        SkillData ability = SelectAbility(unitDataAttacking);
         if (ability != null)
         {
-            EffectsSetter effectsSetter = new EffectsSetter(ability, unitAttacking, _view, _turnsController, teamData, _summonController);
+            EffectsSetter effectsSetter = new EffectsSetter(ability, unitDataAttacking, _view, _turnsController, teamData, _summonController);
             SkillController skillController = effectsSetter.SetEffectsForSkill();
             skillController.ApplySkillEffects(oponentTeam);
             if(skillController.WasSkillApplied())
@@ -403,10 +403,10 @@ public class Game
         _canSecondTeamKeepPlaying = _teamController.CanTeamKeepPlaying(_secondTeamData.team);
     }
 
-    private void Surrender(Unit unitAttacking)
+    private void Surrender(UnitData unitDataAttacking)
     {
         _actionExecuted = true;
-        if (_firstTeamData.team.Contains(unitAttacking))
+        if (_firstTeamData.team.Contains(unitDataAttacking))
         {
             _menusController.AnounceSurrender(_firstSamurai.Name, _numberOneAsString);
             _canFirstTeamKeepPlaying = false;
@@ -432,17 +432,17 @@ public class Game
     
   
     
-    private void SummonForSamurai(Unit unitAttacking)
+    private void SummonForSamurai(UnitData unitDataAttacking)
     {
-        TeamData teamData = GetWichTeamIsPlaying(unitAttacking);
-        _summonController.SummonForSamurai(unitAttacking, teamData, () => _actionExecuted = true);
+        TeamData teamData = GetWichTeamIsPlaying(unitDataAttacking);
+        _summonController.SummonForSamurai(unitDataAttacking, teamData, () => _actionExecuted = true);
 
     }
 
-    private void SummonForMonster(Unit unitAttacking)
+    private void SummonForMonster(UnitData unitDataAttacking)
     {
-        TeamData teamData = GetWichTeamIsPlaying(unitAttacking);
-        _summonController.SummonForMonster(unitAttacking, teamData, () => _actionExecuted = true, monster => teamData.teamUnitsThatAlreadyPlayed.Add(monster));
+        TeamData teamData = GetWichTeamIsPlaying(unitDataAttacking);
+        _summonController.SummonForMonster(unitDataAttacking, teamData, () => _actionExecuted = true, monster => teamData.teamUnitsThatAlreadyPlayed.Add(monster));
         _wasActionAMonsterSummon = true;
     }
     
@@ -452,7 +452,7 @@ public class Game
     
     
 
-    private void CheckIfTheOponentTeamCanKeepPlaying(List<Unit> oponentTeam)
+    private void CheckIfTheOponentTeamCanKeepPlaying(List<UnitData> oponentTeam)
     {
         if (oponentTeam == _firstTeamData.team)
             _canFirstTeamKeepPlaying = _teamController.CanTeamKeepPlaying(_firstTeamData.team);
@@ -460,40 +460,40 @@ public class Game
             _canSecondTeamKeepPlaying = _teamController.CanTeamKeepPlaying(_secondTeamData.team);
     }
 
-    private SkillData SelectAbility(Unit unitAttacking)
+    private SkillData SelectAbility(UnitData unitDataAttacking)
     {
         _skillsOptionsCounter = 1;
-        ShowSelectAbilityMenu(unitAttacking);
+        ShowSelectAbilityMenu(unitDataAttacking);
         int choice = int.Parse(_view.ReadLine());
 
-        return GetSelectedSkill(choice, unitAttacking);
+        return GetSelectedSkill(choice, unitDataAttacking);
 
     }
 
-    private SkillData GetSelectedSkill(int choice, Unit unitAttacking)
+    private SkillData GetSelectedSkill(int choice, UnitData unitDataAttacking)
     {
         if (choice != _skillsOptionsCounter)
         {
-            SkillData selectedSkillData = unitAttacking.GetUsableSkills()[choice - 1];
+            SkillData selectedSkillData = unitDataAttacking.GetUsableSkills()[choice - 1];
             return selectedSkillData;
         }
         return null;
 
     }
 
-    private void ShowSelectAbilityMenu(Unit unitAttacking)
+    private void ShowSelectAbilityMenu(UnitData unitDataAttacking)
     {
         _view.WriteLine("----------------------------------------");
-        _view.WriteLine($"Seleccione una habilidad para que {unitAttacking.Name} use");
-        ShowUsableSkills(unitAttacking);
+        _view.WriteLine($"Seleccione una habilidad para que {unitDataAttacking.Name} use");
+        ShowUsableSkills(unitDataAttacking);
         _view.WriteLine($"{_skillsOptionsCounter}-Cancelar");
     }
 
-    private void ShowUsableSkills(Unit unitAttacking)
+    private void ShowUsableSkills(UnitData unitDataAttacking)
     {
         
         
-        foreach (SkillData skill in unitAttacking.GetUsableSkills())
+        foreach (SkillData skill in unitDataAttacking.GetUsableSkills())
         {
             _view.WriteLine($"{_skillsOptionsCounter}-{skill.name} MP:{skill.cost}");
             _skillsOptionsCounter++;
@@ -503,22 +503,22 @@ public class Game
 
    
     
-    private void DiscountGunDamage(Unit unitAttacking, Unit targetUnit)
+    private void DiscountGunDamage(UnitData unitDataAttacking, UnitData targetUnitData)
     {
         
-        double damage = CalculateGunDamage(unitAttacking);
-        AffinitiesController affinitiesController = new AffinitiesController("Gun", damage, targetUnit, unitAttacking, _view, _turnsController);
+        double damage = CalculateGunDamage(unitDataAttacking);
+        AffinitiesController affinitiesController = new AffinitiesController("Gun", damage, targetUnitData, unitDataAttacking, _view, _turnsController);
         int damageWithAffinities = affinitiesController.ApplyAffinity();
-        targetUnit.DiscountHp(damageWithAffinities);
+        targetUnitData.DiscountHp(damageWithAffinities);
         if (!affinitiesController.IsReturnDamageAffinity())
         {
-            _menusController.ShowEffectOfDamage(unitAttacking, targetUnit, damageWithAffinities);
+            _menusController.ShowEffectOfDamage(unitDataAttacking, targetUnitData, damageWithAffinities);
 
         }
         
         else
         {
-            _menusController.AnounceHPFinalState(unitAttacking);
+            _menusController.AnounceHPFinalState(unitDataAttacking);
         }
         _turnsController.AnounceTurnsState();
     }
@@ -528,21 +528,21 @@ public class Game
     
 
 
-    private void DiscountAttackDamageFromOponent(Unit unitAttacking, Unit targetUnit)
+    private void DiscountAttackDamageFromOponent(UnitData unitDataAttacking, UnitData targetUnitData)
     {
-        double damage = CalculateAttackDamage(unitAttacking);
-        AffinitiesController affinitiesController = new AffinitiesController("Phys", damage, targetUnit, unitAttacking, _view, _turnsController);
+        double damage = CalculateAttackDamage(unitDataAttacking);
+        AffinitiesController affinitiesController = new AffinitiesController("Phys", damage, targetUnitData, unitDataAttacking, _view, _turnsController);
         int damageWithAffinities = affinitiesController.ApplyAffinity();
-        targetUnit.DiscountHp(damageWithAffinities);
+        targetUnitData.DiscountHp(damageWithAffinities);
         if (!affinitiesController.IsReturnDamageAffinity())
         {
-            _menusController.ShowEffectOfDamage(unitAttacking, targetUnit, damageWithAffinities);
+            _menusController.ShowEffectOfDamage(unitDataAttacking, targetUnitData, damageWithAffinities);
 
         }
         else
         {
           
-            _view.WriteLine($"{unitAttacking.Name} termina con HP:{unitAttacking.HP}/{unitAttacking.maxHP}");;
+            _view.WriteLine($"{unitDataAttacking.Name} termina con HP:{unitDataAttacking.HP}/{unitDataAttacking.maxHP}");;
 
         }
         _turnsController.AnounceTurnsState();
@@ -553,22 +553,22 @@ public class Game
 
 
 
-    private double CalculateAttackDamage(Unit unitAttacking)
+    private double CalculateAttackDamage(UnitData unitDataAttacking)
     {
         double damagePonderator = 0.0114;
         double attackDamagePonderator = 54;
-        double originalDamage = unitAttacking.Strength * damagePonderator * attackDamagePonderator;
+        double originalDamage = unitDataAttacking.Strength * damagePonderator * attackDamagePonderator;
        
 
         return originalDamage;
 
     }
     
-    private double CalculateGunDamage(Unit unitAttacking)
+    private double CalculateGunDamage(UnitData unitDataAttacking)
     {
         double damagePonderator = 0.0114;
         double gunDamagePonderator = 80;
-        double originalDamage = unitAttacking.Skill * damagePonderator  * gunDamagePonderator;
+        double originalDamage = unitDataAttacking.Skill * damagePonderator  * gunDamagePonderator;
 
         return originalDamage;
 
