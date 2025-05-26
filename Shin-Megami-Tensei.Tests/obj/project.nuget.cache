@@ -1,0 +1,24 @@
+{
+  "version": 2,
+  "dgSpecHash": "9d+LhlZ/+NtRMIItVafGz91A1inwKZSL3qove5vWTYgFRm/O8ZV6UeMmmXJLhQBtJQcSbLYOPJmMbcYhq13rCw==",
+  "success": true,
+  "projectFilePath": "/Users/ekeksit/Desktop/Universidad/2025-1/Detallado 2025-1/Proyectyo/E3-Sin-Interfaz/Proyecto-Megaten-IIC2113 3/Proyecto-Megaten-IIC2113/Proyecto-Megaten-IIC2113/Shin-Megami-Tensei.Tests/Shin-Megami-Tensei.Tests.csproj",
+  "expectedPackageFiles": [
+    "/Users/ekeksit/.nuget/packages/coverlet.collector/6.0.2/coverlet.collector.6.0.2.nupkg.sha512",
+    "/Users/ekeksit/.nuget/packages/microsoft.codecoverage/17.11.1/microsoft.codecoverage.17.11.1.nupkg.sha512",
+    "/Users/ekeksit/.nuget/packages/microsoft.net.test.sdk/17.11.1/microsoft.net.test.sdk.17.11.1.nupkg.sha512",
+    "/Users/ekeksit/.nuget/packages/microsoft.testplatform.objectmodel/17.11.1/microsoft.testplatform.objectmodel.17.11.1.nupkg.sha512",
+    "/Users/ekeksit/.nuget/packages/microsoft.testplatform.testhost/17.11.1/microsoft.testplatform.testhost.17.11.1.nupkg.sha512",
+    "/Users/ekeksit/.nuget/packages/newtonsoft.json/13.0.1/newtonsoft.json.13.0.1.nupkg.sha512",
+    "/Users/ekeksit/.nuget/packages/system.reflection.metadata/1.6.0/system.reflection.metadata.1.6.0.nupkg.sha512",
+    "/Users/ekeksit/.nuget/packages/xunit/2.9.2/xunit.2.9.2.nupkg.sha512",
+    "/Users/ekeksit/.nuget/packages/xunit.abstractions/2.0.3/xunit.abstractions.2.0.3.nupkg.sha512",
+    "/Users/ekeksit/.nuget/packages/xunit.analyzers/1.16.0/xunit.analyzers.1.16.0.nupkg.sha512",
+    "/Users/ekeksit/.nuget/packages/xunit.assert/2.9.2/xunit.assert.2.9.2.nupkg.sha512",
+    "/Users/ekeksit/.nuget/packages/xunit.core/2.9.2/xunit.core.2.9.2.nupkg.sha512",
+    "/Users/ekeksit/.nuget/packages/xunit.extensibility.core/2.9.2/xunit.extensibility.core.2.9.2.nupkg.sha512",
+    "/Users/ekeksit/.nuget/packages/xunit.extensibility.execution/2.9.2/xunit.extensibility.execution.2.9.2.nupkg.sha512",
+    "/Users/ekeksit/.nuget/packages/xunit.runner.visualstudio/2.8.2/xunit.runner.visualstudio.2.8.2.nupkg.sha512"
+  ],
+  "logs": []
+}
