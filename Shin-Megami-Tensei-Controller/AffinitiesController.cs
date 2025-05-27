@@ -8,12 +8,12 @@ public class AffinitiesController
     private double _baseDamage;
     private UnitData _targetUnitData;
     private UnitData _unitDataAttacking;
-    private View _view;
+    private ImplementedConsoleView _view;
     private TurnsController _turnsController;
     private bool _isReturnDamageAffinity;
     private bool _wereTurnChangesAlreadyApplied;
 
-    public AffinitiesController(string attackType, double baseDamage, UnitData targetUnitData, UnitData unitDataAttacking, View view, TurnsController turnsController)
+    public AffinitiesController(string attackType, double baseDamage, UnitData targetUnitData, UnitData unitDataAttacking, ImplementedConsoleView view, TurnsController turnsController)
     {
         _attackType = attackType;
         _baseDamage = baseDamage;
@@ -37,7 +37,7 @@ public class AffinitiesController
         switch (affinity)
         {
             case "Wk":
-                _view.WriteLine($"{_targetUnitData.Name} es débil contra el ataque de {_unitDataAttacking.Name}");
+                _view.AnounceThatTargetUnitIsWeak(_targetUnitData, _unitDataAttacking);
                 if (!_wereTurnChangesAlreadyApplied)
                 {
                     _turnsController.ChangeTurnsForWeakAffinity();
@@ -50,7 +50,7 @@ public class AffinitiesController
                     _turnsController.ChangeTurnStateForNeutralOrResistAffinity();
                     _wereTurnChangesAlreadyApplied = true;
                 }
-                _view.WriteLine($"{_targetUnitData.Name} es resistente el ataque de {_unitDataAttacking.Name}");
+                _view.AnounceThatTargetIsRessistent(_targetUnitData, _unitDataAttacking);
                 return (int)(_baseDamage * 0.5);
             case "Nu":
                 if (!_wereTurnChangesAlreadyApplied)
@@ -58,7 +58,7 @@ public class AffinitiesController
                     _turnsController.ChangeTurnsStateForNullAffinity();
                     _wereTurnChangesAlreadyApplied = true;
                 }
-                _view.WriteLine($"{_targetUnitData.Name} bloquea el ataque de {_unitDataAttacking.Name}");
+                _view.AnounceThatTargetBlockedAttack(_targetUnitData, _unitDataAttacking);
                 return 0;
             case "Dr":
                 if (!_wereTurnChangesAlreadyApplied)
@@ -67,7 +67,7 @@ public class AffinitiesController
                     _wereTurnChangesAlreadyApplied = true;
                 }
                 _targetUnitData.HP = (int)Math.Min(_targetUnitData.HP + _baseDamage, _targetUnitData.maxHP);
-                _view.WriteLine($"{_targetUnitData.Name} absorbe {(int) _baseDamage} daño");
+                _view.AnounceThatTargetUnitAbsorbedDamage(_targetUnitData, (int)_baseDamage);
                 return 0;
             case "-":
                 if (!_wereTurnChangesAlreadyApplied)
@@ -84,7 +84,7 @@ public class AffinitiesController
                 }
 
                 _isReturnDamageAffinity = true;
-                _view.WriteLine($"{_targetUnitData.Name} devuelve {(int)_baseDamage} daño a {_unitDataAttacking.Name}");
+                _view.AnounceThatTargetUnitReflectedDamage(_targetUnitData, _unitDataAttacking, (int)_baseDamage);
                 _unitDataAttacking.DiscountHp((int)_baseDamage);
                 return 0;
 

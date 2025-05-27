@@ -6,10 +6,10 @@ public class ForceEffect:Effect
 {
     private UnitData _unitDataAttacking;
     private int _skillPower;
-    private View _view;
+    private ImplementedConsoleView _view;
     private bool _wasEffectApplied = true;
     
-    public ForceEffect(UnitData unitDataAttacking, int skillPower, View view) : base(unitDataAttacking)
+    public ForceEffect(UnitData unitDataAttacking, int skillPower, ImplementedConsoleView view) : base(unitDataAttacking)
     {
         _unitDataAttacking = unitDataAttacking;
         _skillPower = skillPower;
@@ -36,7 +36,7 @@ public class ForceEffect:Effect
         
             else
             {
-                _view.WriteLine($"{_unitDataAttacking.Name} termina con HP:{_unitDataAttacking.HP}/{_unitDataAttacking.maxHP}");;
+                _view.AnounceHPFinalStateForUnit(_unitDataAttacking);
 
             }  
         }

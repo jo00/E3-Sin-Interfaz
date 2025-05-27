@@ -7,16 +7,16 @@ public class ReviveEffect:Effect
 {
     private UnitData _unitDataAttacking;
     private TeamData _teamData;
-    private View _view;
     private int _power;
     private TurnsController _turnsController;
     private bool _wasEffectApplied;
+    private ImplementedConsoleView _view;
 
-    public ReviveEffect(UnitData unitDataAttacking, TeamData teamData, View view,  int power, TurnsController turnsController) : base(unitDataAttacking)
+    public ReviveEffect(UnitData unitDataAttacking, TeamData teamData,  int power, TurnsController turnsController, ImplementedConsoleView view) : base(unitDataAttacking)
     {
         _unitDataAttacking = unitDataAttacking;
         _teamData = teamData;
-        _view = view;
+        _view= view;
         _power = power;
         _turnsController = turnsController;
         _wasEffectApplied = true;
@@ -25,15 +25,12 @@ public class ReviveEffect:Effect
     {
         MenusController menusController = new MenusController(_view);
         UnitData allyTarget = menusController.GetDeadAllyTarget(_unitDataAttacking, _teamData);
-        Console.WriteLine("got ally target");
-        Console.WriteLine(allyTarget);
         if (allyTarget != null)
         {
             
             int healAmount = (int)(allyTarget.maxHP * (_power / 100.0));
             allyTarget.HP = Math.Min(allyTarget.maxHP, allyTarget.HP + healAmount);
             allyTarget.active = false;
-            Console.WriteLine(healAmount);
             menusController.ShowReviveAllyTarget(_unitDataAttacking, allyTarget);
             menusController.ShowHealResult(healAmount, allyTarget);
             _turnsController.ChangeTurnsForNonOffensiveAbilities();  

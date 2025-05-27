@@ -5,15 +5,22 @@ namespace Shin_Megami_Tensei.Skills;
 
 public class MultiHitPhysEffect : Effect
 {
+   
     private readonly int _min;
     private readonly int _max;
     private readonly UnitData _unitDataAttacking;
     private readonly int _skillPower;
-    private readonly View _view;
-    private int _k;
+    private readonly ImplementedConsoleView _view;
+    private readonly int _k;
     private bool _wasEffectApplied = true;
 
-    public MultiHitPhysEffect(UnitData unitDataAttacking, int min, int max, int skillPower, View view, int k) : base(unitDataAttacking)
+    private List<UnitData> _oponentUnits;
+    private TurnsController _turnsController;
+    private UnitData _target;
+    private AffinitiesController _affinitiesController;
+    private double _baseDamage;
+
+    public MultiHitPhysEffect(UnitData unitDataAttacking, int min, int max, int skillPower, ImplementedConsoleView view, int k) : base(unitDataAttacking)
     {
         _min = min;
         _max = max;
@@ -25,55 +32,67 @@ public class MultiHitPhysEffect : Effect
 
     public override void Apply(List<UnitData> oponentUnits, TurnsController turnsController)
     {
-    
-        MenusController menuController = new MenusController(_view);
-        UnitData target = menuController.SelectTarget(oponentUnits, _unitDataAttacking);
-        if (target != null)
+        _oponentUnits = oponentUnits;
+        _turnsController = turnsController;
+
+        if (!SelectTarget())
         {
-            int hits = CalculateHits(_k);
-            _view.WriteLine("----------------------------------------");
-            double damage = Math.Sqrt(_unitDataAttacking.Strength * _skillPower);
+            _wasEffectApplied = false;
+            return;
+        }
 
-            AffinitiesController affinitiesController = new AffinitiesController("Phys", damage, target, _unitDataAttacking, _view, turnsController);
-            bool isReturnDamageAffinity = false;
-            for (int i = 0; i < hits; i++)
+        PrepareAttack();
+        ExecuteHits();
+        AnnounceFinalHP();
+    }
+
+    private bool SelectTarget()
+    {
+        MenusController menuController = new MenusController(_view);
+        _target = menuController.SelectTarget(_oponentUnits, _unitDataAttacking);
+        return _target != null;
+    }
+
+    private void PrepareAttack()
+    {
+        _view.ShowSeparator();
+        _baseDamage = Math.Sqrt(_unitDataAttacking.Strength * _skillPower);
+        _affinitiesController = new AffinitiesController("Phys", _baseDamage, _target, _unitDataAttacking, _view, _turnsController);
+    }
+
+    private void ExecuteHits()
+    {
+        int hits = CalculateHits(_k);
+
+        for (int i = 0; i < hits; i++)
+        {
+            _view.AnounceAttack(_unitDataAttacking, _target);
+
+            int damageWithAffinities = _affinitiesController.ApplyAffinity();
+            _target.DiscountHp(damageWithAffinities);
+
+            if (!_affinitiesController.IsReturnDamageAffinity() && damageWithAffinities > 0)
             {
-
-                _view.WriteLine($"{_unitDataAttacking.Name} ataca a {target.Name}");
-            
-                int damageWithAffinities = affinitiesController.ApplyAffinity();
-                target.DiscountHp(damageWithAffinities);
-                isReturnDamageAffinity= affinitiesController.IsReturnDamageAffinity();
-                if (!isReturnDamageAffinity)
-                {
-
-                    if (damageWithAffinities > 0)
-                    {
-                        _view.WriteLine($"{target.Name} recibe {damageWithAffinities} de daño");
-
-                    }
-                
-                }
+                _view.AnounceDamageReceived(_target, damageWithAffinities);
             }
-            if (!isReturnDamageAffinity)
-            {
+        }
+    }
 
-                _view.WriteLine($"{target.Name} termina con HP:{target.HP}/{target.maxHP}");
-
-                
-            }
-            else
-            {
-                _view.WriteLine($"{_unitDataAttacking.Name} termina con HP:{_unitDataAttacking.HP}/{_unitDataAttacking.maxHP}");;
-
-            }   
+    private void AnnounceFinalHP()
+    {
+        if (_affinitiesController.IsReturnDamageAffinity())
+        {
+            _view.AnounceHPFinalStateForUnit(_unitDataAttacking);
         }
         else
         {
-            _wasEffectApplied = false;
+            _view.AnounceHPFinalStateForUnit(_target);
         }
-
     }
+
+    
+
+
 
     public override bool WasEffectApplied()
     {

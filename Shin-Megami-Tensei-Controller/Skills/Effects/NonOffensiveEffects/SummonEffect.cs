@@ -7,17 +7,15 @@ public class SummonEffect : Effect
 {
     private readonly UnitData _unitDataAttacking;
     private readonly TeamData _teamData;
-    private readonly View _view;
     private readonly TurnsController _turnsController;
     private readonly SummonController _summonController;
     private bool _wasEffectApplied = true;
 
-    public SummonEffect(UnitData unitDataAttacking, TeamData teamData, View view, TurnsController turnsController, SummonController summonController)
+    public SummonEffect(UnitData unitDataAttacking, TeamData teamData, TurnsController turnsController, SummonController summonController)
         : base(unitDataAttacking)
     {
         _unitDataAttacking = unitDataAttacking;
         _teamData = teamData;
-        _view = view;
         _turnsController = turnsController;
         _summonController = summonController;
     }

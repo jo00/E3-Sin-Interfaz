@@ -4,9 +4,9 @@ using System.Collections.Generic;
 
 namespace Shin_Megami_Tensei.Configs;
 
-public class TeamController(View view, List<Samurai> samurais, List<Monster> monsters, List<SkillData> skills)
+public class TeamController(ImplementedConsoleView implementedConsoleView, List<Samurai> samurais, List<Monster> monsters, List<SkillData> skills)
 {
-    private View _view = view;
+    private ImplementedConsoleView _implementedConsoleView = implementedConsoleView;
     private Samurai _samurai;
     private List<UnitData> _firstTeam = new List<UnitData>();
     private List<UnitData> _secondTeam = new List<UnitData>();
@@ -21,47 +21,12 @@ public class TeamController(View view, List<Samurai> samurais, List<Monster> mon
 
     public void SelectTeam(string teamsFolder)
     {
-        _view.WriteLine("Elige un archivo para cargar los equipos");
-        ShowTeamOptions(teamsFolder);
-        int choice = int.Parse(_view.ReadLine());
+        _teamFilesSorted = _implementedConsoleView.ShowTeamsToSelect(teamsFolder);
+        int choice = _implementedConsoleView.GetNumericSelectedOptionFromUser();
         string selectedTeamFile = _teamFilesSorted[choice];
         LoadTeamsFromFile(selectedTeamFile);
     }
-    private void ShowTeamOptions(string teamsFolder)
-    {
-        string[] teamFiles = Directory.GetFiles(teamsFolder, "*.txt");
-        
-        List<Tuple<string, int>> sortedTeamFiles = SortTeamFiles(teamFiles);
-        sortedTeamFiles = sortedTeamFiles.OrderBy(t => t.Item2).ToList();
-
-        _teamFilesSorted = sortedTeamFiles.Select(t => t.Item1).ToArray();
-
-        ShowFilesSorted();
-    }
-
-    private List<Tuple<string, int>> SortTeamFiles(string[] teamFiles)
-    {
-        List<Tuple<string, int>> sortedTeamFiles = new List<Tuple<string, int>>();
-
-        foreach (string filePath in teamFiles)
-        {
-            string fileName = Path.GetFileNameWithoutExtension(filePath);
-            int number;
-            int.TryParse(fileName, out number);
-            sortedTeamFiles.Add(new Tuple<string, int>(filePath, number));
-
-        }
-
-        return sortedTeamFiles;
-    }
-
-    private void ShowFilesSorted()
-    {
-        for (int i = 0; i < _teamFilesSorted.Length; i++)
-        {
-            _view.WriteLine($"{i}: {Path.GetFileName(_teamFilesSorted[i])}");
-        }
-    }
+    
 
     
     private void LoadTeamsFromFile(string filePath)
@@ -182,12 +147,7 @@ public class TeamController(View view, List<Samurai> samurais, List<Monster> mon
 
         return selectedSkills;
     }
-    
 
-
-    
-
-    
 
     public bool AreBoothTeamsValid()
     {
@@ -196,12 +156,9 @@ public class TeamController(View view, List<Samurai> samurais, List<Monster> mon
             return true;
         }
 
-        else
-        {
-            _view.WriteLine("Archivo de equipos inválido");
-            return false;
-
-        }
+        
+        _implementedConsoleView.AnounceThatTeamIsInvalid();
+        return false;
         
     }
 
@@ -278,46 +235,11 @@ public class TeamController(View view, List<Samurai> samurais, List<Monster> mon
     {
         return _secondTeam.FirstOrDefault(unit => unit is Samurai) as Samurai;
     }
-    
-    public void ShowTeams(TeamData teamData)
-    {
+   
 
-        _view.WriteLine($"Equipo de {teamData.samurai.Name} (J{teamData.playerNumber})");
 
-        ShowTeam(teamData.team);
 
-    }
 
-    private void ShowTeam(List<UnitData> team)
-    {
-        
-        _counterOfUnitsInTeam = 0;
-        ShowUnits(team);
-        ShowEmptySpaces();
-        
-       
-        
-    }
-
-    private void ShowUnits(List<UnitData> team)
-    {
-        int maxNumberOfUnitsToShow = CalculateHowManyUnitsShouldBePrinted(team);
-        for (int i = 0; i < maxNumberOfUnitsToShow; i++)
-        {
-            UnitData unitData = team[i];
-            if ((unitData.HP > 0) && unitData.active || unitData is Samurai)
-            {
-                _view.WriteLine($"{_abecedary[i]}-{unitData.Name} HP:{unitData.HP}/{unitData.maxHP} MP:{unitData.MP}/{unitData.maxMP}");
-
-            }
-            else
-            {
-                _view.WriteLine($"{_abecedary[i]}-");
-            }
-            _counterOfUnitsInTeam += 1;
-        }
-
-    }
     
     private int CalculateHowManyUnitsShouldBePrinted(List<UnitData> team)
     {
@@ -329,16 +251,7 @@ public class TeamController(View view, List<Samurai> samurais, List<Monster> mon
         return 4;
     }
 
-    private void ShowEmptySpaces()
-    {
-        if (_counterOfUnitsInTeam < 4)
-        {
-            for (int i = _counterOfUnitsInTeam; i < 4; i++)
-            {
-                _view.WriteLine($"{_abecedary[i]}-");
-            }
-        }
-    }
+  
 
     public List<UnitData> GetActiveUnitsAlive(List<UnitData> team)
     {
@@ -421,54 +334,13 @@ public class TeamController(View view, List<Samurai> samurais, List<Monster> mon
 
     public UnitData GetMonsterToSummonFromBench(List<UnitData> team)
     {
-        _view.WriteLine("----------------------------------------");
-        _view.WriteLine("Seleccione un monstruo para invocar");
-        int counter = 1;
-        List<UnitData> unitsToSummon = new List<UnitData>();
-        foreach (UnitData unit in team)
-        {
-            if (!unit.active && unit.HP > 0 && unit is not Samurai)
-
-            {
-                _view.WriteLine($"{counter}-{unit.Name} HP:{unit.HP}/{unit.maxHP} MP:{unit.MP}/{unit.maxMP}");
-                unitsToSummon.Add(unit);
-                counter++;
-            }
-
-        }
-        _view.WriteLine($"{counter}-Cancelar");
-        int selectedMonsterIndex = Convert.ToInt32(_view.ReadLine());
-        if (selectedMonsterIndex == counter)
-        {
-            return null;
-        }
-        return unitsToSummon[selectedMonsterIndex - 1];
+        return _implementedConsoleView.SelectMonsterToSummonMenu(team);
 
     }
 
     public UnitData GetMonsterToSummonFromBenchWhenItCanBeDead(List<UnitData> team)
     {
-        _view.WriteLine("----------------------------------------");
-        _view.WriteLine("Seleccione un monstruo para invocar");
-        int counter = 1;
-        List<UnitData> unitsToSummon = new List<UnitData>();
-        foreach (UnitData unit in team)
-        {
-            if ((!unit.active || unit.HP<=0) && unit is not Samurai)
-            {
-                _view.WriteLine($"{counter}-{unit.Name} HP:{unit.HP}/{unit.maxHP} MP:{unit.MP}/{unit.maxMP}");
-                unitsToSummon.Add(unit);
-                counter++;
-            }
-
-        }
-        _view.WriteLine($"{counter}-Cancelar");
-        int selectedMonsterIndex = Convert.ToInt32(_view.ReadLine());
-        if (selectedMonsterIndex == counter)
-        {
-            return null;
-        }
-        return unitsToSummon[selectedMonsterIndex - 1];
+        return _implementedConsoleView.GetMonsterToSummonFromBenchWhenItCanBeDead(team);
     }
 
     public void ChangeUnitsWhenSummonIsMade(UnitData unitDataThatMadeTheSummon, UnitData unitDataToGetOut, UnitData unitDataToGetIn, TeamData teamData)
@@ -497,9 +369,8 @@ public class TeamController(View view, List<Samurai> samurais, List<Monster> mon
         }
         teamData.team = ReOrderTeamAfterSummon(teamData.team, teamData.originalTeamOrder);
         
-        
-        
     }
+    
     
     public int FindUnitIndexInTeam(UnitData unitData, List<UnitData> team)
     {
@@ -535,6 +406,69 @@ public class TeamController(View view, List<Samurai> samurais, List<Monster> mon
         
         return ordered;
     }
+    
+    
+    
+    public List<string> GetTeamDisplayLines(TeamData teamData)
+    {
+        var lines = new List<string>();
+        string lineToAdd = $"Equipo de {teamData.samurai.Name} (J{teamData.playerNumber})";
+
+        lines.Add(lineToAdd);
+
+        lines.AddRange(GetTeamLines(teamData.team));
+
+        return lines;
+    }
+
+    private List<string> GetTeamLines(List<UnitData> team)
+    {
+        _counterOfUnitsInTeam = 0;
+
+        var lines = new List<string>();
+
+        lines.AddRange(GetUnitLines(team));
+        lines.AddRange(GetEmptySpaceLines());
+
+        return lines;
+    }
+
+    private List<string> GetUnitLines(List<UnitData> team)
+    {
+        var lines = new List<string>();
+        int maxNumberOfUnitsToShow = CalculateHowManyUnitsShouldBePrinted(team);
+
+        for (int i = 0; i < maxNumberOfUnitsToShow; i++)
+        {
+            UnitData unitData = team[i];
+
+            if ((unitData.HP > 0 && unitData.active) || unitData is Samurai)
+            {
+                lines.Add($"{_abecedary[i]}-{unitData.Name} HP:{unitData.HP}/{unitData.maxHP} MP:{unitData.MP}/{unitData.maxMP}");
+            }
+            else
+            {
+                lines.Add($"{_abecedary[i]}-");
+            }
+
+            _counterOfUnitsInTeam += 1;
+        }
+
+        return lines;
+    }
+
+    private List<string> GetEmptySpaceLines()
+    {
+        var lines = new List<string>();
+
+        for (int i = _counterOfUnitsInTeam; i < 4; i++)
+        {
+            lines.Add($"{_abecedary[i]}-");
+        }
+
+        return lines;
+    }
+
 
     
         

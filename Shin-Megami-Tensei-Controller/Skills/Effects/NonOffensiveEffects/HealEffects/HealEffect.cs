@@ -7,15 +7,15 @@ public class HealEffect:Effect
 {
     private UnitData _unitDataAttacking;
     private TeamData _teamData;
-    private View _view;
     private int _power;
     private TurnsController _turnsController;
     private bool _wasEffectApplied = true;
-    public HealEffect(UnitData unitDataAttacking, TeamData teamData, View view,  int power, TurnsController turnsController) : base(unitDataAttacking)
+    private ImplementedConsoleView _view;
+    public HealEffect(UnitData unitDataAttacking, TeamData teamData,  int power, TurnsController turnsController, ImplementedConsoleView view) : base(unitDataAttacking)
     {
+        _view = view;
         _unitDataAttacking = unitDataAttacking;
         _teamData = teamData;
-        _view = view;
         _power = power;
         _turnsController = turnsController;
     }

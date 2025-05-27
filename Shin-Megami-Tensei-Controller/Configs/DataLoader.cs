@@ -4,9 +4,8 @@ namespace Shin_Megami_Tensei.Configs;
 using System.Text.Json;
 using System.IO;
 
-public class DataLoader(View view)
+public class DataLoader()
 { 
-    private View _view = view;
     private List<Monster> _monsters = new List<Monster>();
     private List<Samurai> _samurais = new List<Samurai>();
 

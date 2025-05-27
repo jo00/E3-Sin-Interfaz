@@ -6,11 +6,11 @@ public class IceEffect:Effect
 {
     private UnitData _unitDataAttacking;
     private int _skillPower;
-    private View _view;
+    private ImplementedConsoleView _view;
     private bool _wasEffectApplied = true;
     
     
-    public IceEffect(UnitData unitDataAttacking, int skillPower, View view) : base(unitDataAttacking)
+    public IceEffect(UnitData unitDataAttacking, int skillPower, ImplementedConsoleView view) : base(unitDataAttacking)
     {
         _unitDataAttacking = unitDataAttacking;
         _skillPower = skillPower;
@@ -38,7 +38,7 @@ public class IceEffect:Effect
         
             else
             {
-                _view.WriteLine($"{_unitDataAttacking.Name} termina con HP:{_unitDataAttacking.HP}/{_unitDataAttacking.maxHP}");;
+                _view.AnounceHPFinalStateForUnit(_unitDataAttacking);
 
             }
         }
