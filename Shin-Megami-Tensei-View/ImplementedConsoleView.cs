@@ -421,7 +421,7 @@ public class ImplementedConsoleView: IView
         _view.WriteLine($"4-Cancelar");
 
         int positionChoosen = Convert.ToInt32(_view.ReadLine());
-        if(positionChoosen == activeUnits.Count)
+        if(positionChoosen == 4)
         {
             return null;
         }
