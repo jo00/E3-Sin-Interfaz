@@ -23,6 +23,8 @@ public abstract class UnitData
     
     public int speedForOrder { get; set; }
 
+    public bool shouldDiscountAttackAfterApplyingIt;
+    public bool incrementMagic=false;
 
     protected UnitData(string name, int hp, int mp, double strength, double skill, double magic, int speed, int luck, Dictionary<string, string> affinities)
     {
@@ -41,6 +43,7 @@ public abstract class UnitData
         speedForOrder = speed;
         Luck = luck;
         Affinities = affinities;
+        shouldDiscountAttackAfterApplyingIt = false;
     }
     
     public void DiscountHp(int damage)

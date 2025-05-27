@@ -84,6 +84,19 @@ public class SkillController
 
         return false;
     }
+    
+    public bool WasEffectOffensivePhysOrGun()
+    {
+        foreach (Effect effect in _effects)
+        {
+            if ((effect is OffensivePhysEffect) || (effect is OffensiveGunEffect))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
 
 
   

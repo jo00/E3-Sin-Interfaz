@@ -28,7 +28,7 @@ public class IceEffect:OffensiveMagicEffect
             double damage = (Math.Sqrt(_unitDataAttacking.Magic * _skillPower));
         
             AffinitiesController affinitiesController = new AffinitiesController("Ice", damage, target, _unitDataAttacking, _view, turnsController);
-            int damageWithAffinities = affinitiesController.ApplyAffinity();
+            int damageWithAffinities = (int)affinitiesController.ApplyAffinity();
             target.DiscountHp(damageWithAffinities);
         
             if (!affinitiesController.IsReturnDamageAffinity())

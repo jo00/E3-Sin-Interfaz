@@ -4,7 +4,7 @@ using Shin_Megami_Tensei.Skills.Effects.OfensiveEffects;
 
 namespace Shin_Megami_Tensei.Skills;
 
-public class MultiHitPhysEffect : Effect
+public class MultiHitPhysEffect : OffensivePhysEffect
 {
    
     private readonly int _min;
@@ -69,7 +69,7 @@ public class MultiHitPhysEffect : Effect
         {
             _view.AnounceAttack(_unitDataAttacking, _target);
 
-            int damageWithAffinities = _affinitiesController.ApplyAffinity();
+            int damageWithAffinities =(int) _affinitiesController.ApplyAffinity();
             _target.DiscountHp(damageWithAffinities);
 
             if (!_affinitiesController.IsReturnDamageAffinity() && damageWithAffinities > 0)

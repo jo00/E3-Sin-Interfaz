@@ -27,12 +27,16 @@ public class FireEffect:OffensiveMagicEffect
             double damage = (Math.Sqrt(_unitDataAttacking.Magic * _skillPower));
         
             AffinitiesController affinitiesController = new AffinitiesController("Fire", damage, target, _unitDataAttacking, _view, turnsController);
-            int damageWithAffinities = affinitiesController.ApplyAffinity();
-            target.DiscountHp(damageWithAffinities);
+            double damageWithAffinities = affinitiesController.ApplyAffinity();
+            if (_unitDataAttacking.incrementMagic)
+            {
+                damageWithAffinities = (int)(damageWithAffinities * 2.5);
+            }
+            target.DiscountHp((int)damageWithAffinities);
         
             if (!affinitiesController.IsReturnDamageAffinity())
             {
-                menuController.ShowEffectOfDamage(_unitDataAttacking, target, damageWithAffinities);
+                menuController.ShowEffectOfDamage(_unitDataAttacking, target, (int)damageWithAffinities);
 
             }
         

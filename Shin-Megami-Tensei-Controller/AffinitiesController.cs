@@ -23,11 +23,11 @@ public class AffinitiesController
         _turnsController = turnsController;
         _wereTurnChangesAlreadyApplied = false;
     }
-    public int ApplyAffinity()
+    public double ApplyAffinity()
     {
         if (_targetUnitData.Affinities == null || !_targetUnitData.Affinities.ContainsKey(_attackType))
         {
-            return (int)_baseDamage; 
+            return _baseDamage; 
         }
 
         string affinity = _targetUnitData.Affinities[_attackType];
@@ -43,7 +43,7 @@ public class AffinitiesController
                     _turnsController.ChangeTurnsForWeakAffinity();
                     _wereTurnChangesAlreadyApplied = true;
                 }
-                return (int)(_baseDamage * 1.5);
+                return (_baseDamage * 1.5);
             case "Rs":
                 if (!_wereTurnChangesAlreadyApplied)
                 {
@@ -51,7 +51,7 @@ public class AffinitiesController
                     _wereTurnChangesAlreadyApplied = true;
                 }
                 _view.AnounceThatTargetIsRessistent(_targetUnitData, _unitDataAttacking);
-                return (int)(_baseDamage * 0.5);
+                return (_baseDamage * 0.5);
             case "Nu":
                 if (!_wereTurnChangesAlreadyApplied)
                 {
@@ -75,7 +75,7 @@ public class AffinitiesController
                     _turnsController.ChangeTurnStateForNeutralOrResistAffinity();
                     _wereTurnChangesAlreadyApplied = true;
                 }
-                return (int)_baseDamage;
+                return _baseDamage;
             case "Rp":
                 if (!_wereTurnChangesAlreadyApplied)
                 {
@@ -89,7 +89,7 @@ public class AffinitiesController
                 return 0;
 
             default:
-                return (int)_baseDamage;
+                return _baseDamage;
         }
     }
     

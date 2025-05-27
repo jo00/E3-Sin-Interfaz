@@ -372,6 +372,14 @@ public class ImplementedConsoleView: IView
         _view.WriteLine($"{unitDataAttacking.Name} ha cargado su siguiente ataque mágico a más del doble");
     }
 
+    public void AnounceBloodRitual(UnitData unitDataAttacking)
+    {
+        _view.WriteLine("----------------------------------------");
+        _view.WriteLine($"El ataque de {unitDataAttacking.Name} ha aumentado");
+        _view.WriteLine($"La defensa de {unitDataAttacking.Name} ha aumentado");
+        AnounceHPFinalStateForUnit(unitDataAttacking);
+    }
+
     public void ShowHealResult(int heal, UnitData target)
     {
         _view.WriteLine($"{target.Name} recibe {heal} de HP");

@@ -44,8 +44,7 @@ public class Game
     
     private ImplementedConsoleView _implementedConsoleView;
     
-    private bool _shouldDisccountDamageAfterAppliyingIt = false;
-    private bool _shouldDiscountMagicAfterAppliyingIt = false;
+   
 
 
     public Game(View view, string teamsFolder)
@@ -346,9 +345,9 @@ public class Game
             _actionExecuted = true;
             _implementedConsoleView.AnounceAttackDamage(unitDataAttacking, targetUnitData);
             DiscountAttackDamageFromOponent(unitDataAttacking, targetUnitData);
-            if (_shouldDisccountDamageAfterAppliyingIt)
+            if (unitDataAttacking.shouldDiscountAttackAfterApplyingIt )
             {
-                _shouldDisccountDamageAfterAppliyingIt = false;
+                unitDataAttacking.shouldDiscountAttackAfterApplyingIt  = false;
                 unitDataAttacking.Strength =unitDataAttacking.Strength/ 2.5;
                 unitDataAttacking.Skill = unitDataAttacking.Skill / 2.5;
             }
@@ -369,9 +368,9 @@ public class Game
             _actionExecuted = true;
             _implementedConsoleView.AnounceGunDamage(unitDataAttacking, targetUnitData);
             DiscountGunDamage(unitDataAttacking, targetUnitData);
-            if (_shouldDisccountDamageAfterAppliyingIt)
+            if (unitDataAttacking.shouldDiscountAttackAfterApplyingIt )
             {
-                _shouldDisccountDamageAfterAppliyingIt = false;
+                unitDataAttacking.shouldDiscountAttackAfterApplyingIt  = false;
                 unitDataAttacking.Strength =unitDataAttacking.Strength/ 2.5;
                 unitDataAttacking.Skill = unitDataAttacking.Skill / 2.5;
             }
@@ -407,20 +406,21 @@ public class Game
 
             if (skillController.WasEffectCharge())
             {
-                _shouldDisccountDamageAfterAppliyingIt = true;
+                unitDataAttacking.shouldDiscountAttackAfterApplyingIt = true;
             }
             
-            if(skillController.WasEffectConcentrate())
-            {
-                _shouldDiscountMagicAfterAppliyingIt = true;
-            }
+            
 
-            if (skillController.WasEffectOffensiveMagic() && _shouldDiscountMagicAfterAppliyingIt)
+            if (skillController.WasEffectOffensiveMagic() && unitDataAttacking.incrementMagic)
             {
-                _shouldDiscountMagicAfterAppliyingIt = false;
-                unitDataAttacking.Magic = unitDataAttacking.Magic / 2.5;
+                unitDataAttacking.incrementMagic = false;
             }
-            
+            if(skillController.WasEffectOffensivePhysOrGun() && unitDataAttacking.shouldDiscountAttackAfterApplyingIt)
+            {
+                unitDataAttacking.shouldDiscountAttackAfterApplyingIt = false;
+                unitDataAttacking.Strength = unitDataAttacking.Strength / 2.5;
+                unitDataAttacking.Skill = unitDataAttacking.Skill / 2.5;
+            }
         }
         CheckIfTeamsCanKeepPlaying();
     }
@@ -520,7 +520,7 @@ public class Game
         
         double damage = CalculateGunDamage(unitDataAttacking);
         AffinitiesController affinitiesController = new AffinitiesController("Gun", damage, targetUnitData, unitDataAttacking, _implementedConsoleView, _turnsController);
-        int damageWithAffinities = affinitiesController.ApplyAffinity();
+        int damageWithAffinities = (int)affinitiesController.ApplyAffinity();
         targetUnitData.DiscountHp(damageWithAffinities);
         if (!affinitiesController.IsReturnDamageAffinity())
         {
@@ -544,7 +544,7 @@ public class Game
     {
         double damage = CalculateAttackDamage(unitDataAttacking);
         AffinitiesController affinitiesController = new AffinitiesController("Phys", damage, targetUnitData, unitDataAttacking, _implementedConsoleView, _turnsController);
-        int damageWithAffinities = affinitiesController.ApplyAffinity();
+        int damageWithAffinities = (int)affinitiesController.ApplyAffinity();
         targetUnitData.DiscountHp(damageWithAffinities);
         if (!affinitiesController.IsReturnDamageAffinity())
         {

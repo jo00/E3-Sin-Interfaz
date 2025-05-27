@@ -3,7 +3,7 @@ using Shin_Megami_Tensei.Skills.Effects.OfensiveEffects;
 
 namespace Shin_Megami_Tensei.Skills.Effects;
 
-public class GunEffect:Effect
+public class GunEffect:OffensiveGunEffect
 {
     private UnitData _unitDataAttacking;
     private int _skillPower;
@@ -27,7 +27,7 @@ public class GunEffect:Effect
             double damage = (Math.Sqrt(_unitDataAttacking.Skill * _skillPower));
         
             AffinitiesController affinitiesController = new AffinitiesController("Gun", damage, target, _unitDataAttacking, _view, turnsController);
-            int damageWithAffinities = affinitiesController.ApplyAffinity();
+            int damageWithAffinities = (int)affinitiesController.ApplyAffinity();
             target.DiscountHp(damageWithAffinities);
             if (!affinitiesController.IsReturnDamageAffinity())
             {

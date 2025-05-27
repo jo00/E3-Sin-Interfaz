@@ -1,10 +1,9 @@
-using System.Security.Cryptography;
 using Shin_Megami_Tensei_View;
 using Shin_Megami_Tensei.Configs;
 
 namespace Shin_Megami_Tensei.Skills.Effects.SuppportEffects;
 
-public class ConcentrateEffect:Effect
+public class BloodRitual:Effect
 {
     private UnitData _unitDataAttacking;
     private TeamData _teamData;
@@ -14,7 +13,7 @@ public class ConcentrateEffect:Effect
     private ImplementedConsoleView _view;
     private TeamController _teamController;
     private bool _shouldApplied;
-    public ConcentrateEffect(UnitData unitDataAttacking, TeamData teamData,  int power, TurnsController turnsController, ImplementedConsoleView view, TeamController teamController) : base(unitDataAttacking)
+    public BloodRitual(UnitData unitDataAttacking, TeamData teamData,  int power, TurnsController turnsController, ImplementedConsoleView view, TeamController teamController) : base(unitDataAttacking)
     {
         _teamController = teamController;
         _view = view;
@@ -27,11 +26,9 @@ public class ConcentrateEffect:Effect
 
     public override void Apply(List<UnitData> oponentUnits, TurnsController turnsController)
     {
-        _unitDataAttacking.incrementMagic = true;
 
-        
-        _view.AnounceConcentrate(_unitDataAttacking);
-
+     
+        _view.AnounceBloodRitual(_unitDataAttacking);
         
         _turnsController.ChangeTurnsForNonOffensiveAbilities();
 

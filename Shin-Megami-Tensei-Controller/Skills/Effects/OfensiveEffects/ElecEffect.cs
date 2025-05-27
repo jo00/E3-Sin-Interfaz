@@ -30,11 +30,11 @@ public class ElecEffect:OffensiveMagicEffect
             _affinitiesController = new AffinitiesController("Elec", damage, target, _unitDataAttacking, _view, turnsController);
 
         
-            int damageWithAffinities = _affinitiesController.ApplyAffinity();
-            target.DiscountHp(damageWithAffinities);
+            double damageWithAffinities = _affinitiesController.ApplyAffinity();
+            target.DiscountHp((int)damageWithAffinities);
             if (!_affinitiesController.IsReturnDamageAffinity())
             {
-                menuController.ShowEffectOfDamage(_unitDataAttacking, target, damageWithAffinities);
+                menuController.ShowEffectOfDamage(_unitDataAttacking, target, (int)damageWithAffinities);
 
             }
         

@@ -26,15 +26,16 @@ public class ChargeEffect:Effect
 
     public override void Apply(List<UnitData> oponentUnits, TurnsController turnsController)
     {
+        double increment = 2.5;
         if (_unitDataAttacking.Strength == _unitDataAttacking.originalStrength)
         {
-            _unitDataAttacking.Strength *= 2.5;
+            _unitDataAttacking.Strength *= increment;
 
         }
 
         if (_unitDataAttacking.Skill == _unitDataAttacking.originalSkill)
         {
-            _unitDataAttacking.Skill *= 2.5;
+            _unitDataAttacking.Skill *= increment;
 
         }
 

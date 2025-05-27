@@ -3,7 +3,7 @@ using Shin_Megami_Tensei.Skills.Effects.OfensiveEffects;
 
 namespace Shin_Megami_Tensei.Skills.Effects;
 
-public class PhysEffect:Effect
+public class PhysEffect:OffensivePhysEffect
 
 {
     
@@ -29,7 +29,7 @@ public class PhysEffect:Effect
             double damage = (Math.Sqrt(_unitDataAttacking.Strength * _skillPower));
         
             AffinitiesController affinitiesController = new AffinitiesController("Phys", damage, target, _unitDataAttacking, _view, turnsController);
-            int damageWithAffinities = affinitiesController.ApplyAffinity();
+            int damageWithAffinities = (int)affinitiesController.ApplyAffinity();
             target.DiscountHp(damageWithAffinities);
             if (!affinitiesController.IsReturnDamageAffinity())
             {
