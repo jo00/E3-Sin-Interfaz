@@ -359,6 +359,18 @@ public class ImplementedConsoleView: IView
         _view.WriteLine("----------------------------------------");
         _view.WriteLine($"{unitDataAttacking.Name} revive a {target.Name}");
     }
+    
+    public void AnounceCharge(UnitData unitDataAttacking)
+    {
+        _view.WriteLine("----------------------------------------");
+        _view.WriteLine($"{unitDataAttacking.Name} ha cargado su siguiente ataque físico o disparo a más del doble");
+    }
+    
+    public void AnounceConcentrate(UnitData unitDataAttacking)
+    {
+        _view.WriteLine("----------------------------------------");
+        _view.WriteLine($"{unitDataAttacking.Name} ha cargado su siguiente ataque mágico a más del doble");
+    }
 
     public void ShowHealResult(int heal, UnitData target)
     {

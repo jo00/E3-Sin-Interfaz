@@ -1,5 +1,6 @@
 using Shin_Megami_Tensei_View;
 using Shin_Megami_Tensei.Skills.Effects;
+using Shin_Megami_Tensei.Skills.Effects.OfensiveEffects;
 
 namespace Shin_Megami_Tensei.Skills;
 

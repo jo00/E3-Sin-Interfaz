@@ -43,6 +43,9 @@ public class Game
     private SummonController _summonController;
     
     private ImplementedConsoleView _implementedConsoleView;
+    
+    private bool _shouldDisccountDamageAfterAppliyingIt = false;
+    private bool _shouldDiscountMagicAfterAppliyingIt = false;
 
 
     public Game(View view, string teamsFolder)
@@ -343,6 +346,12 @@ public class Game
             _actionExecuted = true;
             _implementedConsoleView.AnounceAttackDamage(unitDataAttacking, targetUnitData);
             DiscountAttackDamageFromOponent(unitDataAttacking, targetUnitData);
+            if (_shouldDisccountDamageAfterAppliyingIt)
+            {
+                _shouldDisccountDamageAfterAppliyingIt = false;
+                unitDataAttacking.Strength =unitDataAttacking.Strength/ 2.5;
+                unitDataAttacking.Skill = unitDataAttacking.Skill / 2.5;
+            }
         }
     }
     
@@ -360,6 +369,12 @@ public class Game
             _actionExecuted = true;
             _implementedConsoleView.AnounceGunDamage(unitDataAttacking, targetUnitData);
             DiscountGunDamage(unitDataAttacking, targetUnitData);
+            if (_shouldDisccountDamageAfterAppliyingIt)
+            {
+                _shouldDisccountDamageAfterAppliyingIt = false;
+                unitDataAttacking.Strength =unitDataAttacking.Strength/ 2.5;
+                unitDataAttacking.Skill = unitDataAttacking.Skill / 2.5;
+            }
         }
     }
     
@@ -388,6 +403,22 @@ public class Game
                 _turnsController.AnounceTurnsState();
                 teamData.abilitiesUsedCounter += 1;
                 _actionExecuted = true;
+            }
+
+            if (skillController.WasEffectCharge())
+            {
+                _shouldDisccountDamageAfterAppliyingIt = true;
+            }
+            
+            if(skillController.WasEffectConcentrate())
+            {
+                _shouldDiscountMagicAfterAppliyingIt = true;
+            }
+
+            if (skillController.WasEffectOffensiveMagic() && _shouldDiscountMagicAfterAppliyingIt)
+            {
+                _shouldDiscountMagicAfterAppliyingIt = false;
+                unitDataAttacking.Magic = unitDataAttacking.Magic / 2.5;
             }
             
         }

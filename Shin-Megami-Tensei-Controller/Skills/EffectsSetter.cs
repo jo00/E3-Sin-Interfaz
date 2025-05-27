@@ -2,6 +2,7 @@ using Shin_Megami_Tensei_View;
 using Shin_Megami_Tensei.Configs;
 using Shin_Megami_Tensei.Skills.Effects;
 using Shin_Megami_Tensei.Skills.Effects.OfensiveEffects;
+using Shin_Megami_Tensei.Skills.Effects.SuppportEffects;
 
 namespace Shin_Megami_Tensei.Skills;
 
@@ -173,6 +174,14 @@ public class EffectsSetter
             
             case "Sabbatma":
                 effects.Add(new SummonEffect(_unitDataAttacking, _teamData, _turnsController, _summonController));
+                return new SkillController(_skillData, effects, _unitDataAttacking, _turnsController);
+            
+            case "Charge":
+                effects.Add(new ChargeEffect(_unitDataAttacking, _teamData, _skillData.power, _turnsController, _view, _teamController));
+                return new SkillController(_skillData, effects, _unitDataAttacking, _turnsController);
+            
+            case "Concentrate":
+                effects.Add(new ConcentrateEffect(_unitDataAttacking, _teamData, _skillData.power, _turnsController, _view, _teamController));
                 return new SkillController(_skillData, effects, _unitDataAttacking, _turnsController);
 
         }

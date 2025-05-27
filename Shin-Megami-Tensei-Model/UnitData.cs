@@ -3,14 +3,20 @@ public abstract class UnitData
     public string Name { get; protected set; }
     public int HP { get; set; }
     public int MP;
-    public int Strength { get; protected set; }
-    public int Skill { get; protected set; }
-    public int Magic { get; protected set; }
+    public double Strength { get; set; }
+    public double Skill { get; set; }
+    public double Magic { get; set; }
     public int Speed { get; protected set; }
     public int Luck { get; protected set; }
     public int maxHP { get; protected set; }
     public int maxMP { get; protected set; }
     public bool active { get; set; }
+    
+    public double originalStrength { get; set; }
+    public double originalSkill { get; set; }
+    
+    public double originalMagic { get; set; }
+  
     public List<SkillData> Skills { get; protected set; } = new List<SkillData>();
 
     public Dictionary<string, string> Affinities { get; protected set; }
@@ -18,7 +24,7 @@ public abstract class UnitData
     public int speedForOrder { get; set; }
 
 
-    protected UnitData(string name, int hp, int mp, int strength, int skill, int magic, int speed, int luck, Dictionary<string, string> affinities)
+    protected UnitData(string name, int hp, int mp, double strength, double skill, double magic, int speed, int luck, Dictionary<string, string> affinities)
     {
         Name = name;
         HP = hp;
@@ -26,8 +32,11 @@ public abstract class UnitData
         maxMP = mp;
         maxHP = hp;
         Strength = strength;
+        originalStrength = strength;
+        originalSkill = skill;
         Skill = skill;
         Magic = magic;
+        originalMagic = magic;
         Speed = speed;
         speedForOrder = speed;
         Luck = luck;

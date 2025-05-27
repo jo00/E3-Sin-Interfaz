@@ -1,7 +1,7 @@
 public class Samurai : UnitData
 {
 
-    public Samurai(string name, int hp, int mp, int strength, int skill, int magic, int speed, int luck, Dictionary<string, string> affinities)
+    public Samurai(string name, int hp, int mp, double strength, double skill, double magic, int speed, int luck, Dictionary<string, string> affinities)
         : base(name, hp, mp, strength, skill, magic, speed, luck, affinities)
     {
 

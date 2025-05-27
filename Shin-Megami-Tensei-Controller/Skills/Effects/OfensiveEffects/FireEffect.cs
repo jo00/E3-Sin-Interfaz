@@ -1,8 +1,9 @@
 using Shin_Megami_Tensei_View;
+using Shin_Megami_Tensei.Skills.Effects.OfensiveEffects;
 
 namespace Shin_Megami_Tensei.Skills.Effects;
 
-public class FireEffect:Effect
+public class FireEffect:OffensiveMagicEffect
 {
     private UnitData _unitDataAttacking;
     private int _skillPower;

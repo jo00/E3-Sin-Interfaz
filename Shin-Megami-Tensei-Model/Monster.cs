@@ -1,7 +1,7 @@
 public class Monster : UnitData
 {
     public List<string> skillsNames;
-    public Monster(string name, int hp, int mp, int strength, int skill, int magic, int speed, int luck, Dictionary<string, string> affinities)
+    public Monster(string name, int hp, int mp, double strength, double skill, double magic, int speed, int luck, Dictionary<string, string> affinities)
         : base(name, hp, mp, strength, skill, magic, speed, luck, affinities) { }
     
     public override UnitData Clone()

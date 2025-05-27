@@ -67,7 +67,6 @@ public class SummonController
         UnitData inMonster = _teamController.GetMonsterToSummonFromBenchWhenItCanBeDead(teamData.originalTeamOrder);
         if (inMonster == null)
         {
-            Console.WriteLine("es null");
             return false;
         }
 

@@ -1,4 +1,6 @@
 using Shin_Megami_Tensei.Skills.Effects;
+using Shin_Megami_Tensei.Skills.Effects.OfensiveEffects;
+using Shin_Megami_Tensei.Skills.Effects.SuppportEffects;
 
 namespace Shin_Megami_Tensei.Skills;
 
@@ -43,6 +45,46 @@ public class SkillController
 
         return true;
     }
+
+    public bool WasEffectCharge()
+    {
+        foreach (Effect effect in _effects)
+        {
+            if (effect is ChargeEffect)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+    
+    public bool WasEffectConcentrate()
+    {
+        foreach (Effect effect in _effects)
+        {
+            if (effect is ConcentrateEffect)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+    
+    public bool WasEffectOffensiveMagic()
+    {
+        foreach (Effect effect in _effects)
+        {
+            if (effect is OffensiveMagicEffect)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 
   
  
