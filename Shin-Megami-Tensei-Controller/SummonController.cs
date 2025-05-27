@@ -20,7 +20,7 @@ public class SummonController
 
     public void SummonForSamurai(UnitData samurai, TeamData teamData, Action markActionExecuted)
     {
-        UnitData monsterToSummon = _teamController.GetMonsterToSummonFromBench(teamData.team);
+        UnitData monsterToSummon = _teamController.GetMonsterToSummonFromBench(teamData.originalTeamOrder);
         if (monsterToSummon == null) return;
 
         UnitData monsterToGetOut = _menusController.GetMonsterToGetOut(teamData, _teamController);
@@ -36,7 +36,7 @@ public class SummonController
     public void SummonForMonster(UnitData monsterAttacking, TeamData teamData, Action markActionExecuted,
         Action<UnitData> addToTurnList)
     {
-        var monsterToSummon = _teamController.GetMonsterToSummonFromBench(teamData.team);
+        var monsterToSummon = _teamController.GetMonsterToSummonFromBench(teamData.originalTeamOrder);
         if (monsterToSummon == null) return;
 
         ApplySummon(monsterAttacking,monsterAttacking, monsterToSummon, teamData);
@@ -92,7 +92,7 @@ public class SummonController
     
     public bool SummonFromAbility(UnitData unitDataThatUsedAbility, TeamData teamData, Action markActionExecuted)
     {
-        UnitData inMonster = _teamController.GetMonsterToSummonFromBench(teamData.team);
+        UnitData inMonster = _teamController.GetMonsterToSummonFromBench(teamData.originalTeamOrder);
         if (inMonster == null)
         {
             return false;
