@@ -64,7 +64,7 @@ public class SummonController
 
     public bool SummonAndReviveFromAbility(UnitData unitDataThatUsedAbility, TeamData teamData, Action markActionExecuted)
     {
-        UnitData inMonster = _teamController.GetMonsterToSummonFromBenchWhenItCanBeDead(teamData.team);
+        UnitData inMonster = _teamController.GetMonsterToSummonFromBenchWhenItCanBeDead(teamData.originalTeamOrder);
         if (inMonster == null)
         {
             Console.WriteLine("es null");
