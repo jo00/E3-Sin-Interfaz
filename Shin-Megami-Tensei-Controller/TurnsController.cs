@@ -14,17 +14,16 @@ public class TurnsController
     
     private int _originalFullTurns;
 
-    private View _view;
+    private ImplementedConsoleView _view;
     
 
-    public TurnsController(View view)
+    public TurnsController(ImplementedConsoleView view)
     {
         _view = view;
     }
     
     public void ChangeTurnsStateWhenPassOrSummon()
     {
-        Console.WriteLine("turnsController1");
         if ( _blinkinTurnsCounter == 0)
         {
             _fullTurnsUsed +=1;
@@ -43,7 +42,6 @@ public class TurnsController
 
     public void ChangeTurnsForWeakAffinity()
     {
-        Console.WriteLine("turnsController2");
 
         if ( CalculateNumberOfFullTurnsLeft()  >= 1)
         {
@@ -63,14 +61,11 @@ public class TurnsController
     
     public void AnounceTurnsState()
     {
-        _view.WriteLine("----------------------------------------");
-        _view.WriteLine($"Se han consumido {_fullTurnsUsedDuringThisAction} Full Turn(s) y {_blinkinTurnsUsedDuringThisAction} Blinking Turn(s)");
-        _view.WriteLine($"Se han obtenido {_blinkinTurnsoObtainedDuringThisAction} Blinking Turn(s)");
+        _view.AnounceTurnsState(_fullTurnsUsedDuringThisAction, _blinkinTurnsUsedDuringThisAction, _blinkinTurnsoObtainedDuringThisAction);
     }
     
     public int CalculateNumberOfFullTurnsLeft()
     {
-        Console.WriteLine("turnsController3");
 
         int fullTurnsLeft = _originalFullTurns - _fullTurnsUsed ;
         return fullTurnsLeft;
@@ -78,14 +73,12 @@ public class TurnsController
     
     public int CalculateNumberOfBlinkingTurns()
     {
-        Console.WriteLine("turnsController4");
 
         return _blinkinTurnsCounter;
     }
     
     public void RestartTurns(List<UnitData> team, TeamController teamController)
     {
-        Console.WriteLine("turnsController5");
 
         
         _fullTurnsUsed = 0;
@@ -96,15 +89,11 @@ public class TurnsController
     public void ShowNumberOfTurns()
     {
 
-        _view.WriteLine("----------------------------------------");
-        _view.WriteLine($"Full Turns: {CalculateNumberOfFullTurnsLeft()}");
-        _view.WriteLine($"Blinking Turns: {_blinkinTurnsCounter}");
-        _view.WriteLine("----------------------------------------");
+        _view.ShowNumberOfTurns(CalculateNumberOfFullTurnsLeft(),_blinkinTurnsCounter);
     }
     
     public void ChangeTurnStateForNeutralOrResistAffinity()
     {
-        Console.WriteLine("turnsController7");
 
         if (_blinkinTurnsCounter > 0)
         {
@@ -123,7 +112,6 @@ public class TurnsController
 
     public void ChangeTurnsStateForNullAffinity()
     {
-        Console.WriteLine("turnsController8");
 
         if (_blinkinTurnsCounter == 0)
         {
@@ -150,7 +138,6 @@ public class TurnsController
 
     public void ChangeTurnsStateForDrOrRepelAffinity()
     {
-        Console.WriteLine("turnsController9");
 
         _blinkinTurnsUsedDuringThisAction = _blinkinTurnsCounter;
         _fullTurnsUsedDuringThisAction = CalculateNumberOfFullTurnsLeft();
@@ -174,7 +161,6 @@ public class TurnsController
 
     public void RestartTurnValuesForUnitTurn()
     {
-        Console.WriteLine("turnsController10");
 
         _fullTurnsUsedDuringThisAction = 0;
         _blinkinTurnsUsedDuringThisAction = 0;

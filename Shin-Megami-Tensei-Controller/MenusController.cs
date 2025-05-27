@@ -24,51 +24,6 @@ public class MenusController
         _view.ShowEffectOfDamage(unitDataAttacking, target, damageWithAffinities);
     }
 
-    public void ShowGunTarget(UnitData unitDataAttacking, UnitData target)
-    {
-
-        _view.ShowGunTarget(unitDataAttacking, target);
-    }
-
-    public void ShowAttackTarget(UnitData unitDataAttacking, UnitData target)
-    {
-        _view.ShowAttackTarget(unitDataAttacking, target);
-    }
-    
-    public void ShowFireTarget(UnitData unitDataAttacking, UnitData target)
-    {
-        _view.ShowFireTarget(unitDataAttacking, target);
-    }
-    
-    public void ShowIceTarget(UnitData unitDataAttacking, UnitData target)
-    {
-        _view.ShowIceTarget(unitDataAttacking, target);
-    }
-    
-    public void ShowElecTarget(UnitData unitDataAttacking, UnitData target)
-    {
-        _view.ShowElecTarget(unitDataAttacking, target);
-    }
-    
-    public void ShowForceTarget(UnitData unitDataAttacking, UnitData target)
-    {
-        _view.ShowForceTarget(unitDataAttacking, target);
-    }
-    
-    public void ShowHealAllyTarget(UnitData unitDataAttacking, UnitData target)
-    {
-        _view.ShowHealAllyTarget(unitDataAttacking, target);
-    }
-
-    public void ShowReviveAllyTarget(UnitData unitDataAttacking, UnitData target)
-    {
-        _view.ShowReviveAllyTarget(unitDataAttacking, target);
-    }
-
-    public void ShowHealResult(int heal, UnitData target)
-    {
-        _view.ShowHealResult(heal, target);
-    }
 
     public UnitData GetAllyTarget(UnitData unitDataAttacking, TeamData teamData)
     {
@@ -89,11 +44,6 @@ public class MenusController
         
     }
     
-
-    public void AnounceThatAMonsterHasBeenSummon(UnitData monsterToSummon)
-    {
-        _view.AnounceThatAMonsterHasBeenSummon(monsterToSummon);
-    }
     
     
     public UnitData GetMonsterToGetOut( TeamData teamData, TeamController teamController)
@@ -116,11 +66,5 @@ public class MenusController
 
     }
 
-    
-    
-    public void AnounceRevive( UnitData attackingUnitData, UnitData allyUnitData)
-    {
-        _view.AnounceRevive(attackingUnitData, allyUnitData);
-    }
 
 }

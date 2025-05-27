@@ -51,7 +51,7 @@ public class Game
         _implementedConsoleView = new ImplementedConsoleView(_view);
         _loader = new DataLoader();
         _teamsFolder = teamsFolder;
-        _turnsController = new TurnsController(view);
+        _turnsController = new TurnsController(_implementedConsoleView);
         _menusController = new MenusController(_implementedConsoleView);
 
     }
@@ -85,7 +85,7 @@ public class Game
     {
         _teamController = new TeamController(_implementedConsoleView, _samurais, _monsters, _skills);
         _teamController.SelectTeam(teamsFolder);
-        _summonController = new SummonController(_view, _teamController, _turnsController, _menusController);
+        _summonController = new SummonController(_implementedConsoleView, _teamController, _turnsController, _menusController);
 
     }
 

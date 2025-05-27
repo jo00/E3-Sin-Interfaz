@@ -4,12 +4,12 @@ using Shin_Megami_Tensei.Configs;
 
 public class SummonController
 {
-    private readonly View _view;
+    private readonly ImplementedConsoleView _view;
     private readonly TeamController _teamController;
     private readonly TurnsController _turnsController;
     private readonly MenusController _menusController;
 
-    public SummonController(View view, TeamController teamController, TurnsController turnsController,
+    public SummonController(ImplementedConsoleView view, TeamController teamController, TurnsController turnsController,
         MenusController menusController)
     {
         _view = view;
@@ -46,7 +46,7 @@ public class SummonController
 
     private void ApplySummon(UnitData unitDataThatUsedTheAbility, UnitData outMonster, UnitData inMonster, TeamData teamData)
     {
-        _menusController.AnounceThatAMonsterHasBeenSummon(inMonster);
+        _view.AnounceThatAMonsterHasBeenSummon(inMonster);
         _teamController.ChangeUnitsWhenSummonIsMade(unitDataThatUsedTheAbility,outMonster, inMonster, teamData);
         _turnsController.ChangeTurnsStateWhenPassOrSummon();
         _turnsController.AnounceTurnsState();
@@ -73,12 +73,12 @@ public class SummonController
 
         UnitData outMonster = _menusController.GetMonsterToGetOut(teamData, _teamController);
 
-        _menusController.AnounceThatAMonsterHasBeenSummon(inMonster);
+        _view.AnounceThatAMonsterHasBeenSummon(inMonster);
 
         if (inMonster.HP <= 0)
         {
             inMonster.HP = inMonster.maxHP;
-            _menusController.AnounceRevive(unitDataThatUsedAbility,inMonster);
+            _view.AnounceRevive(unitDataThatUsedAbility,inMonster);
         }
 
         _teamController.ChangeUnitsWhenSummonIsMade(unitDataThatUsedAbility,outMonster, inMonster, teamData);
@@ -104,7 +104,7 @@ public class SummonController
             return false;
         }
 
-        _menusController.AnounceThatAMonsterHasBeenSummon(inMonster);
+        _view.AnounceThatAMonsterHasBeenSummon(inMonster);
 
         _teamController.ChangeUnitsWhenSummonIsMade(unitDataThatUsedAbility, outMonster, inMonster, teamData);
         

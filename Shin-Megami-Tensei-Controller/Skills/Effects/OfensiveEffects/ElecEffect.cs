@@ -24,7 +24,7 @@ public class ElecEffect:Effect
         UnitData target = menuController.SelectTarget(oponentUnits, _unitDataAttacking);
         if (target != null)
         {
-            menuController.ShowElecTarget(_unitDataAttacking, target);
+            _view.ShowElecTarget(_unitDataAttacking, target);
             double damage = (Math.Sqrt(_unitDataAttacking.Magic * _skillPower));
             _affinitiesController = new AffinitiesController("Elec", damage, target, _unitDataAttacking, _view, turnsController);
 

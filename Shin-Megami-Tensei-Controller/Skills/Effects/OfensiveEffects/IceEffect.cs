@@ -23,7 +23,7 @@ public class IceEffect:Effect
         UnitData target = menuController.SelectTarget(oponentUnits, _unitDataAttacking);
         if (target != null)
         {
-            menuController.ShowIceTarget(_unitDataAttacking, target);
+            _view.ShowIceTarget(_unitDataAttacking, target);
             double damage = (Math.Sqrt(_unitDataAttacking.Magic * _skillPower));
         
             AffinitiesController affinitiesController = new AffinitiesController("Ice", damage, target, _unitDataAttacking, _view, turnsController);

@@ -233,12 +233,8 @@ public class ImplementedConsoleView: IView
     {
         _view.WriteLine($"{target.Name} recibe {damageWithAffinities} de daño");
     }
-    
-    
-    
-    
-    //menuscontroller
-        public UnitData SelectTarget(List<UnitData> oponentUnits, UnitData unitDataAttacking)
+
+    public UnitData SelectTarget(List<UnitData> oponentUnits, UnitData unitDataAttacking)
     {
         _view.WriteLine("----------------------------------------");
         _view.WriteLine($"Seleccione un objetivo para {unitDataAttacking.Name}");
@@ -512,6 +508,23 @@ public class ImplementedConsoleView: IView
         _view.WriteLine($"{attackingUnitData.Name} revive a {allyUnitData.Name}");
         _view.WriteLine($"{allyUnitData.Name} recibe {allyUnitData.maxHP} de HP");
         _view.WriteLine($"{allyUnitData.Name} termina con HP:{allyUnitData.HP}/{allyUnitData.maxHP}");
+    }
+
+
+    public void AnounceTurnsState(int fullTurnsUsedDuringThisAction, int blinkinTurnsUsedDuringThisAction, int blinkinTurnsoObtainedDuringThisAction)
+    {
+        _view.WriteLine("----------------------------------------");
+        _view.WriteLine($"Se han consumido {fullTurnsUsedDuringThisAction} Full Turn(s) y {blinkinTurnsUsedDuringThisAction} Blinking Turn(s)");
+        _view.WriteLine($"Se han obtenido {blinkinTurnsoObtainedDuringThisAction} Blinking Turn(s)");
+    }
+    
+    public void ShowNumberOfTurns(int numberOfFullTurnsLeft, int blinkingTurnsCounter)
+    {
+
+        _view.WriteLine("----------------------------------------");
+        _view.WriteLine($"Full Turns: {numberOfFullTurnsLeft}");
+        _view.WriteLine($"Blinking Turns: {blinkingTurnsCounter}");
+        _view.WriteLine("----------------------------------------");
     }
     
     

@@ -90,10 +90,6 @@ public class MultiHitPhysEffect : Effect
         }
     }
 
-    
-
-
-
     public override bool WasEffectApplied()
     {
         return _wasEffectApplied;

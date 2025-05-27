@@ -13,8 +13,4 @@
       <ProjectReference Include="..\Shin-Megami-Tensei-Model\Shin-Megami-Tensei-Model.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Units\" />
-    </ItemGroup>
-
 </Project>

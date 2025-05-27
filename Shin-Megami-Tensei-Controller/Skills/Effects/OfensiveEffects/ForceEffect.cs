@@ -22,7 +22,7 @@ public class ForceEffect:Effect
         UnitData target = menuController.SelectTarget(oponentUnits, _unitDataAttacking);
         if (target != null)
         {
-            menuController.ShowForceTarget(_unitDataAttacking, target);
+            _view.ShowForceTarget(_unitDataAttacking, target);
             double damage = (Math.Sqrt(_unitDataAttacking.Magic * _skillPower));
         
             AffinitiesController affinitiesController = new AffinitiesController("Force", damage, target, _unitDataAttacking, _view, turnsController);
