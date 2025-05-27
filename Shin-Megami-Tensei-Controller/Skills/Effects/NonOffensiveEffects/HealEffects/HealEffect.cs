@@ -11,8 +11,10 @@ public class HealEffect:Effect
     private TurnsController _turnsController;
     private bool _wasEffectApplied = true;
     private ImplementedConsoleView _view;
-    public HealEffect(UnitData unitDataAttacking, TeamData teamData,  int power, TurnsController turnsController, ImplementedConsoleView view) : base(unitDataAttacking)
+    private TeamController _teamController;
+    public HealEffect(UnitData unitDataAttacking, TeamData teamData,  int power, TurnsController turnsController, ImplementedConsoleView view, TeamController teamController) : base(unitDataAttacking)
     {
+        _teamController = teamController;
         _view = view;
         _unitDataAttacking = unitDataAttacking;
         _teamData = teamData;
@@ -23,7 +25,7 @@ public class HealEffect:Effect
     public override void Apply(List<UnitData> oponentUnits, TurnsController turnsController)
     {
         MenusController menusController = new MenusController(_view);
-        UnitData allyTarget = menusController.GetAllyTarget(_unitDataAttacking, _teamData);
+        UnitData allyTarget = menusController.GetAllyTarget(_unitDataAttacking, _teamData, _teamController);
         if (allyTarget != null)
         {
             

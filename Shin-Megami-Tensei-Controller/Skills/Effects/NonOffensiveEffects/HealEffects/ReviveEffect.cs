@@ -11,8 +11,9 @@ public class ReviveEffect:Effect
     private TurnsController _turnsController;
     private bool _wasEffectApplied;
     private ImplementedConsoleView _view;
+    private TeamController _teamController;
 
-    public ReviveEffect(UnitData unitDataAttacking, TeamData teamData,  int power, TurnsController turnsController, ImplementedConsoleView view) : base(unitDataAttacking)
+    public ReviveEffect(UnitData unitDataAttacking, TeamData teamData,  int power, TurnsController turnsController, ImplementedConsoleView view, TeamController teamController) : base(unitDataAttacking)
     {
         _unitDataAttacking = unitDataAttacking;
         _teamData = teamData;
@@ -20,11 +21,12 @@ public class ReviveEffect:Effect
         _power = power;
         _turnsController = turnsController;
         _wasEffectApplied = true;
+        _teamController = teamController;
     }
     public override void Apply(List<UnitData> oponentUnits, TurnsController turnsController)
     {
         MenusController menusController = new MenusController(_view);
-        UnitData allyTarget = menusController.GetDeadAllyTarget(_unitDataAttacking, _teamData);
+        UnitData allyTarget = menusController.GetDeadAllyTarget(_unitDataAttacking, _teamData, _teamController);
         if (allyTarget != null)
         {
             

@@ -25,9 +25,8 @@ public class MenusController
     }
 
 
-    public UnitData GetAllyTarget(UnitData unitDataAttacking, TeamData teamData)
+    public UnitData GetAllyTarget(UnitData unitDataAttacking, TeamData teamData, TeamController teamController)
     {
-        TeamController teamController = teamData.teamController;
         List<UnitData> fullTeam = teamData.team;
        List<UnitData> activeUnitsAlive= teamController.GetActiveUnitsAlive(fullTeam);
        
@@ -35,9 +34,8 @@ public class MenusController
 
     }
 
-    public UnitData GetDeadAllyTarget(UnitData unitDataAttacking, TeamData teamData)
+    public UnitData GetDeadAllyTarget(UnitData unitDataAttacking, TeamData teamData, TeamController teamController)
     {
-        TeamController teamController = teamData.teamController;
         List<UnitData> fullTeam = teamData.team;
         List<UnitData> deadUnits= teamController.GetDeadUnits(fullTeam);
         return _view.GetDeadAllyTarget(unitDataAttacking, deadUnits);

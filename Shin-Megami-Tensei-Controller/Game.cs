@@ -163,8 +163,8 @@ public class Game
         _secondTeam = _teamController.GetSecondTeam();
         _firstSamurai = _teamController.GetSamuraiFromFirstTeam();
         _secondSamurai = _teamController.GetSamuraiFromSecondTeam();
-        _firstTeamData = new TeamData(_firstTeam, _firstSamurai, _firstTeamUnitsThatAlreadyPlayed, _numberOneAsString, _teamController);
-        _secondTeamData = new TeamData(_secondTeam, _secondSamurai, _secondTeamUnitsThatAlreadyPlayed, _numberTwoAsString, _teamController);
+        _firstTeamData = new TeamData(_firstTeam, _firstSamurai, _firstTeamUnitsThatAlreadyPlayed, _numberOneAsString);
+        _secondTeamData = new TeamData(_secondTeam, _secondSamurai, _secondTeamUnitsThatAlreadyPlayed, _numberTwoAsString);
     }
 
     
@@ -380,7 +380,7 @@ public class Game
         SkillData ability = SelectAbility(unitDataAttacking);
         if (ability != null)
         {
-            EffectsSetter effectsSetter = new EffectsSetter(ability, unitDataAttacking, _implementedConsoleView, _turnsController, teamData, _summonController);
+            EffectsSetter effectsSetter = new EffectsSetter(ability, unitDataAttacking, _implementedConsoleView, _turnsController, teamData, _summonController, _teamController);
             SkillController skillController = effectsSetter.SetEffectsForSkill();
             skillController.ApplySkillEffects(oponentTeam);
             if(skillController.WasSkillApplied())

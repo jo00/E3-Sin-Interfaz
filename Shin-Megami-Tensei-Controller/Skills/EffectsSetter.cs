@@ -14,7 +14,8 @@ public class EffectsSetter
     private TurnsController _turnsController;
     private TeamData _teamData;
     private SummonController _summonController;
-    public EffectsSetter(SkillData skillData, UnitData unitDataAttacking, ImplementedConsoleView view, TurnsController turnsController, TeamData teamData, SummonController summonController)
+    private TeamController _teamController;
+    public EffectsSetter(SkillData skillData, UnitData unitDataAttacking, ImplementedConsoleView view, TurnsController turnsController, TeamData teamData, SummonController summonController, TeamController teamController)
     {
         _skillData = skillData;
         _unitDataAttacking = unitDataAttacking;
@@ -22,6 +23,7 @@ public class EffectsSetter
         _turnsController = turnsController;
         _teamData = teamData;
         _summonController = summonController;
+        _teamController = teamController;
     }
     public SkillController SetEffectsForSkill()
     {
@@ -144,21 +146,21 @@ public class EffectsSetter
                 return new SkillController(_skillData, effects, _unitDataAttacking, _turnsController);
 
             case "Dia":
-                effects.Add(new HealEffect(_unitDataAttacking, _teamData,  _skillData.power, _turnsController, _view));
+                effects.Add(new HealEffect(_unitDataAttacking, _teamData,  _skillData.power, _turnsController, _view, _teamController));
                 return new SkillController(_skillData, effects, _unitDataAttacking, _turnsController);
             case "Diarama":
-                effects.Add(new HealEffect(_unitDataAttacking, _teamData,  _skillData.power, _turnsController, _view));
+                effects.Add(new HealEffect(_unitDataAttacking, _teamData,  _skillData.power, _turnsController, _view, _teamController));
                 return new SkillController(_skillData, effects, _unitDataAttacking, _turnsController);
             case "Diarahan":
-                effects.Add(new HealEffect(_unitDataAttacking, _teamData,  _skillData.power, _turnsController, _view));
+                effects.Add(new HealEffect(_unitDataAttacking, _teamData,  _skillData.power, _turnsController, _view, _teamController));
                 return new SkillController(_skillData, effects, _unitDataAttacking, _turnsController);
 
             case "Recarm":
-                effects.Add(new ReviveEffect(_unitDataAttacking, _teamData, _skillData.power, _turnsController, _view));
+                effects.Add(new ReviveEffect(_unitDataAttacking, _teamData, _skillData.power, _turnsController, _view, _teamController));
                 return new SkillController(_skillData, effects, _unitDataAttacking, _turnsController);
 
             case "Samarecarm":
-                effects.Add(new ReviveEffect(_unitDataAttacking, _teamData,  _skillData.power, _turnsController, _view));
+                effects.Add(new ReviveEffect(_unitDataAttacking, _teamData,  _skillData.power, _turnsController, _view, _teamController));
                 return new SkillController(_skillData, effects, _unitDataAttacking, _turnsController);
             
             case "Axel Claw":

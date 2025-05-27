@@ -8,9 +8,8 @@ public class TeamData
     public string playerNumber;
     public List<UnitData> originalTeamOrder;
     public int abilitiesUsedCounter;
-    public TeamController teamController;
     
-    public TeamData(List<UnitData > team, Samurai samurai, List<UnitData> teamUnitsThatAlreadyPlayed, string playerNumber, TeamController teamController)
+    public TeamData(List<UnitData > team, Samurai samurai, List<UnitData> teamUnitsThatAlreadyPlayed, string playerNumber)
     {
         this.team = team;
         this.samurai = samurai;
@@ -18,6 +17,5 @@ public class TeamData
         this.playerNumber = playerNumber;
         originalTeamOrder =  new List<UnitData>(team);
         abilitiesUsedCounter = 0;
-        this.teamController = teamController;
     }
 }
