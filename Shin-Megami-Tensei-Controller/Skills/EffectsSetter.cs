@@ -205,6 +205,10 @@ public class EffectsSetter
             case "Mudoon":
                 effects.Add(new InstaKillEffect(_unitDataAttacking, _skillData.power, _view, "Dark"));
                 return new SkillController(_skillData, effects, _unitDataAttacking, _turnsController);
+            case "Mahama":
+                effects.Add(new AllTargetInstaKillEffect(_unitDataAttacking, _skillData.power, _view, "Light", _teamController));
+                return new SkillController(_skillData, effects, _unitDataAttacking, _turnsController);
+                
 
 
         }

@@ -1,9 +1,10 @@
 using Shin_Megami_Tensei_View;
+using Shin_Megami_Tensei.Configs;
 using Shin_Megami_Tensei.Skills.Effects.OfensiveEffects;
 
 namespace Shin_Megami_Tensei.Skills.Effects;
 
-public class InstaKillEffect:OffensiveMagicEffect
+public class AllTargetInstaKillEffect:OffensiveMagicEffect
 {
     private UnitData _unitDataAttacking;
     private int _skillPower;
@@ -13,36 +14,45 @@ public class InstaKillEffect:OffensiveMagicEffect
     private bool _wasEffective=false;
     private bool _wasMissed = false;
     private bool _wasBlocked = false;
+    private bool _isLast = false;
+    private TeamController _teamController;
 
-    public InstaKillEffect(UnitData unitDataAttacking, int skillPower, ImplementedConsoleView view, string type) : base(unitDataAttacking)
+    public AllTargetInstaKillEffect(UnitData unitDataAttacking, int skillPower, ImplementedConsoleView view, string type, TeamController teamController) : base(unitDataAttacking)
     {
         _unitDataAttacking = unitDataAttacking;
         _skillPower = skillPower;
         _view = view;
         _type = type;
+        _teamController = teamController;
     }
 
     public override void Apply(List<UnitData> oponentUnits, TurnsController turnsController)
     {
-        MenusController menuController = new MenusController(_view);
-        UnitData target = menuController.SelectTarget(oponentUnits, _unitDataAttacking);
-        if (target != null)
+        _view.ShowLines();
+        
+
+        List<UnitData> activeUnitsAlive = _teamController.GetActiveUnitsAlive(oponentUnits);
+        foreach (UnitData target in activeUnitsAlive)
         {
-            _view.ShowLines();
+            _isLast = ReferenceEquals(target, oponentUnits[^1]);
+
+            ReStartBooleanValues();
             AnounceCorrespondingAttack(target);
             string affinity = target.Affinities[_type];
             CheckEffectivness(affinity, target, turnsController);
             ApplyCorrespondingEffectivness(target);
             _view.AnounceHPFinalStateForUnit(target);
-
-            
         }
-        else
-        {
-            _wasEffectApplied= false;
-        }
+        
 
     
+    }
+
+    private void ReStartBooleanValues()
+    {
+        _wasEffective=false;
+        _wasMissed = false;
+        _wasBlocked = false;
     }
     private void AnounceCorrespondingAttack(UnitData target)
     {
@@ -61,31 +71,49 @@ public class InstaKillEffect:OffensiveMagicEffect
         if (affinity == "-")
         {
             CheckEffectivnessForNeutralAffinity(target);
-            turnsController.ChangeTurnStateForNeutralOrResistAffinity();
+            if (_isLast)
+            {
+                turnsController.ChangeTurnStateForNeutralOrResistAffinity();
+
+            }
         }
 
         if (affinity == "Wk")
         {
             _view.AnounceThatTargetUnitIsWeak(target, _unitDataAttacking);
-            turnsController.ChangeTurnsForWeakAffinity();
+            if (_isLast)
+            {
+                turnsController.ChangeTurnsForWeakAffinity();
+
+            }
             _wasEffective = true;
         }
 
         if (affinity == "Rs")
         {
-            turnsController.ChangeTurnStateForNeutralOrResistAffinity();
+            if (_isLast)
+            {
+                turnsController.ChangeTurnStateForNeutralOrResistAffinity();
+
+            }
             CheckEffectivnessForResistAffinity(target);
         }
-        
-        if(affinity == "Nu")
+
+        if (affinity == "Nu")
         {
-            turnsController.ChangeTurnsStateForNullAffinity();
+            if (_isLast)
+            {
+                turnsController.ChangeTurnsStateForNullAffinity();
+
+            }
+
             _wasBlocked = true;
         }
     }
 
     private void CheckEffectivnessForNeutralAffinity(UnitData target)
     {
+        
         if (_unitDataAttacking.Luck + _skillPower >= target.Luck)
         {
             _wasEffective = true;

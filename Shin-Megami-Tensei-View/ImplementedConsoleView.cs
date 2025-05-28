@@ -549,14 +549,12 @@ public class ImplementedConsoleView: IView
 
     public void AnounceLightAttack(UnitData unitDataAttacking, UnitData unitDataTarget)
     {
-        _view.WriteLine("----------------------------------------");
 
         _view.WriteLine($"{unitDataAttacking.Name} ataca con luz a {unitDataTarget.Name}");
     }
     
     public void AnounceDarkAttack(UnitData unitDataAttacking, UnitData unitDataTarget)
     {
-        _view.WriteLine("----------------------------------------");
 
         _view.WriteLine($"{unitDataAttacking.Name} ataca con oscuridad a {unitDataTarget.Name}");
     }
@@ -569,6 +567,11 @@ public class ImplementedConsoleView: IView
     public void AnounceThatTargetHasBeenEliminated(UnitData targetUnitData)
     {
         _view.WriteLine($"{targetUnitData.Name} ha sido eliminado");
+    }
+
+    public void ShowLines()
+    {
+        _view.WriteLine("----------------------------------------");
     }
 
     
