@@ -50,7 +50,7 @@ public class SkillController
     {
         foreach (Effect effect in _effects)
         {
-            if (effect is ChargeEffect)
+            if (effect is DoublePhysOrGunEffect)
             {
                 return true;
             }
