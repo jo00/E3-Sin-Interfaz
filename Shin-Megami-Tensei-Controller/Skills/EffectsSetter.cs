@@ -181,11 +181,14 @@ public class EffectsSetter
                 return new SkillController(_skillData, effects, _unitDataAttacking, _turnsController);
             
             case "Concentrate":
-                effects.Add(new ConcentrateEffect(_unitDataAttacking, _teamData, _skillData.power, _turnsController, _view, _teamController));
+                effects.Add(new DoublesMagicEffect(_unitDataAttacking, _teamData, _skillData.power, _turnsController, _view, _teamController));
                 return new SkillController(_skillData, effects, _unitDataAttacking, _turnsController);
             
             case "Blood Ritual":
                 effects.Add(new BloodRitual(_unitDataAttacking, _teamData, _skillData.power, _turnsController, _view, _teamController));
+                return new SkillController(_skillData, effects, _unitDataAttacking, _turnsController);
+            case "Gather Spirit Energy":
+                effects.Add(new DoublesMagicEffect(_unitDataAttacking, _teamData, _skillData.power, _turnsController, _view, _teamController));
                 return new SkillController(_skillData, effects, _unitDataAttacking, _turnsController);
 
         }

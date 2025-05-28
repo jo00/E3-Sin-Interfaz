@@ -4,7 +4,7 @@ using Shin_Megami_Tensei.Configs;
 
 namespace Shin_Megami_Tensei.Skills.Effects.SuppportEffects;
 
-public class ConcentrateEffect:Effect
+public class DoublesMagicEffect:Effect
 {
     private UnitData _unitDataAttacking;
     private TeamData _teamData;
@@ -14,7 +14,7 @@ public class ConcentrateEffect:Effect
     private ImplementedConsoleView _view;
     private TeamController _teamController;
     private bool _shouldApplied;
-    public ConcentrateEffect(UnitData unitDataAttacking, TeamData teamData,  int power, TurnsController turnsController, ImplementedConsoleView view, TeamController teamController) : base(unitDataAttacking)
+    public DoublesMagicEffect(UnitData unitDataAttacking, TeamData teamData,  int power, TurnsController turnsController, ImplementedConsoleView view, TeamController teamController) : base(unitDataAttacking)
     {
         _teamController = teamController;
         _view = view;

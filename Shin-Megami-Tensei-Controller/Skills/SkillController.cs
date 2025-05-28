@@ -63,7 +63,7 @@ public class SkillController
     {
         foreach (Effect effect in _effects)
         {
-            if (effect is ConcentrateEffect)
+            if (effect is DoublesMagicEffect)
             {
                 return true;
             }
