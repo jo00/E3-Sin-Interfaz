@@ -26,7 +26,7 @@ public class GunEffect:OffensiveGunEffect
             _view.ShowGunTarget(_unitDataAttacking, target);
             double damage = (Math.Sqrt(_unitDataAttacking.Skill * _skillPower));
         
-            AffinitiesController affinitiesController = new AffinitiesController("Gun", damage, target, _unitDataAttacking, _view, turnsController);
+            AffinitiesController affinitiesController = new AffinitiesController("Gun", damage, target, _unitDataAttacking, _view, turnsController,1);
             int damageWithAffinities = (int)affinitiesController.ApplyAffinity();
             target.DiscountHp(damageWithAffinities);
             if (!affinitiesController.IsReturnDamageAffinity())

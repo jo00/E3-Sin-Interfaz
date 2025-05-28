@@ -519,7 +519,7 @@ public class Game
     {
         
         double damage = CalculateGunDamage(unitDataAttacking);
-        AffinitiesController affinitiesController = new AffinitiesController("Gun", damage, targetUnitData, unitDataAttacking, _implementedConsoleView, _turnsController);
+        AffinitiesController affinitiesController = new AffinitiesController("Gun", damage, targetUnitData, unitDataAttacking, _implementedConsoleView, _turnsController,1);
         int damageWithAffinities = (int)affinitiesController.ApplyAffinity();
         targetUnitData.DiscountHp(damageWithAffinities);
         if (!affinitiesController.IsReturnDamageAffinity())
@@ -543,7 +543,7 @@ public class Game
     private void DiscountAttackDamageFromOponent(UnitData unitDataAttacking, UnitData targetUnitData)
     {
         double damage = CalculateAttackDamage(unitDataAttacking);
-        AffinitiesController affinitiesController = new AffinitiesController("Phys", damage, targetUnitData, unitDataAttacking, _implementedConsoleView, _turnsController);
+        AffinitiesController affinitiesController = new AffinitiesController("Phys", damage, targetUnitData, unitDataAttacking, _implementedConsoleView, _turnsController,1);
         int damageWithAffinities = (int)affinitiesController.ApplyAffinity();
         targetUnitData.DiscountHp(damageWithAffinities);
         if (!affinitiesController.IsReturnDamageAffinity())

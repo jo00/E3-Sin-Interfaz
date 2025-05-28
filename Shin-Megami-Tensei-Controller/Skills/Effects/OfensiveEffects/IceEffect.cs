@@ -1,3 +1,4 @@
+using System.Security.Cryptography;
 using Shin_Megami_Tensei_View;
 using Shin_Megami_Tensei.Skills.Effects.OfensiveEffects;
 
@@ -26,14 +27,20 @@ public class IceEffect:OffensiveMagicEffect
         {
             _view.ShowIceTarget(_unitDataAttacking, target);
             double damage = (Math.Sqrt(_unitDataAttacking.Magic * _skillPower));
+            double increment = 1.0;
+            if (_unitDataAttacking.incrementMagic)
+            {
+                 increment=2.5;
+            }
         
-            AffinitiesController affinitiesController = new AffinitiesController("Ice", damage, target, _unitDataAttacking, _view, turnsController);
-            int damageWithAffinities = (int)affinitiesController.ApplyAffinity();
-            target.DiscountHp(damageWithAffinities);
+            AffinitiesController affinitiesController = new AffinitiesController("Ice", damage, target, _unitDataAttacking, _view, turnsController, increment);
+            double damageWithAffinities = affinitiesController.ApplyAffinity();
+            
+            target.DiscountHp((int)damageWithAffinities);
         
             if (!affinitiesController.IsReturnDamageAffinity())
             {
-                menuController.ShowEffectOfDamage(_unitDataAttacking, target, damageWithAffinities);
+                menuController.ShowEffectOfDamage(_unitDataAttacking, target, (int)damageWithAffinities);
 
             }
         

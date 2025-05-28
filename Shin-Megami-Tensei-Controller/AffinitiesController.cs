@@ -12,8 +12,9 @@ public class AffinitiesController
     private TurnsController _turnsController;
     private bool _isReturnDamageAffinity;
     private bool _wereTurnChangesAlreadyApplied;
+    private double _increment;
 
-    public AffinitiesController(string attackType, double baseDamage, UnitData targetUnitData, UnitData unitDataAttacking, ImplementedConsoleView view, TurnsController turnsController)
+    public AffinitiesController(string attackType, double baseDamage, UnitData targetUnitData, UnitData unitDataAttacking, ImplementedConsoleView view, TurnsController turnsController, double increment)
     {
         _attackType = attackType;
         _baseDamage = baseDamage;
@@ -22,12 +23,14 @@ public class AffinitiesController
         _view = view;
         _turnsController = turnsController;
         _wereTurnChangesAlreadyApplied = false;
+        _increment = increment;
+        
     }
     public double ApplyAffinity()
     {
         if (_targetUnitData.Affinities == null || !_targetUnitData.Affinities.ContainsKey(_attackType))
         {
-            return _baseDamage; 
+            return _baseDamage*_increment; 
         }
 
         string affinity = _targetUnitData.Affinities[_attackType];
@@ -43,7 +46,7 @@ public class AffinitiesController
                     _turnsController.ChangeTurnsForWeakAffinity();
                     _wereTurnChangesAlreadyApplied = true;
                 }
-                return (_baseDamage * 1.5);
+                return (_baseDamage * 1.5*_increment);
             case "Rs":
                 if (!_wereTurnChangesAlreadyApplied)
                 {
@@ -51,7 +54,7 @@ public class AffinitiesController
                     _wereTurnChangesAlreadyApplied = true;
                 }
                 _view.AnounceThatTargetIsRessistent(_targetUnitData, _unitDataAttacking);
-                return (_baseDamage * 0.5);
+                return (_baseDamage * 0.5*_increment);
             case "Nu":
                 if (!_wereTurnChangesAlreadyApplied)
                 {
@@ -67,7 +70,7 @@ public class AffinitiesController
                     _wereTurnChangesAlreadyApplied = true;
                 }
                 _targetUnitData.HP = (int)Math.Min(_targetUnitData.HP + _baseDamage, _targetUnitData.maxHP);
-                _view.AnounceThatTargetUnitAbsorbedDamage(_targetUnitData, (int)_baseDamage);
+                _view.AnounceThatTargetUnitAbsorbedDamage(_targetUnitData, (int)(_baseDamage* _increment));
                 return 0;
             case "-":
                 if (!_wereTurnChangesAlreadyApplied)
@@ -75,7 +78,7 @@ public class AffinitiesController
                     _turnsController.ChangeTurnStateForNeutralOrResistAffinity();
                     _wereTurnChangesAlreadyApplied = true;
                 }
-                return _baseDamage;
+                return _baseDamage*_increment;
             case "Rp":
                 if (!_wereTurnChangesAlreadyApplied)
                 {
@@ -84,12 +87,12 @@ public class AffinitiesController
                 }
 
                 _isReturnDamageAffinity = true;
-                _view.AnounceThatTargetUnitReflectedDamage(_targetUnitData, _unitDataAttacking, (int)_baseDamage);
-                _unitDataAttacking.DiscountHp((int)_baseDamage);
+                _view.AnounceThatTargetUnitReflectedDamage(_targetUnitData, _unitDataAttacking, (int)(_baseDamage*_increment));
+                _unitDataAttacking.DiscountHp((int)(_baseDamage*_increment));
                 return 0;
 
             default:
-                return _baseDamage;
+                return _baseDamage*_increment;
         }
     }
     

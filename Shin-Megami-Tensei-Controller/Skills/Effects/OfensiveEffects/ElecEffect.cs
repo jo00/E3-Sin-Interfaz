@@ -27,7 +27,12 @@ public class ElecEffect:OffensiveMagicEffect
         {
             _view.ShowElecTarget(_unitDataAttacking, target);
             double damage = (Math.Sqrt(_unitDataAttacking.Magic * _skillPower));
-            _affinitiesController = new AffinitiesController("Elec", damage, target, _unitDataAttacking, _view, turnsController);
+            double increment = 1.0;
+            if (_unitDataAttacking.incrementMagic)
+            {
+                increment=2.5;
+            }
+            _affinitiesController = new AffinitiesController("Elec", damage, target, _unitDataAttacking, _view, turnsController,increment);
 
         
             double damageWithAffinities = _affinitiesController.ApplyAffinity();

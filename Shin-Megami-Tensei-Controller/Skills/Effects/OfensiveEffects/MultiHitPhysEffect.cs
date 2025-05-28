@@ -58,7 +58,7 @@ public class MultiHitPhysEffect : OffensivePhysEffect
     {
         _view.ShowSeparator();
         _baseDamage = Math.Sqrt(_unitDataAttacking.Strength * _skillPower);
-        _affinitiesController = new AffinitiesController("Phys", _baseDamage, _target, _unitDataAttacking, _view, _turnsController);
+        _affinitiesController = new AffinitiesController("Phys", _baseDamage, _target, _unitDataAttacking, _view, _turnsController,1 );
     }
 
     private void ExecuteHits()

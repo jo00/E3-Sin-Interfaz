@@ -25,13 +25,18 @@ public class ForceEffect:OffensiveMagicEffect
         {
             _view.ShowForceTarget(_unitDataAttacking, target);
             double damage = (Math.Sqrt(_unitDataAttacking.Magic * _skillPower));
-        
-            AffinitiesController affinitiesController = new AffinitiesController("Force", damage, target, _unitDataAttacking, _view, turnsController);
-            int damageWithAffinities = (int)affinitiesController.ApplyAffinity();
-            target.DiscountHp(damageWithAffinities);
+            double increment = 1.0;
+            if (_unitDataAttacking.incrementMagic)
+            {
+                increment=2.5;
+            }
+            AffinitiesController affinitiesController = new AffinitiesController("Force", damage, target, _unitDataAttacking, _view, turnsController, increment);
+            double damageWithAffinities = affinitiesController.ApplyAffinity();
+            
+            target.DiscountHp((int)damageWithAffinities);
             if (!affinitiesController.IsReturnDamageAffinity())
             {
-                menuController.ShowEffectOfDamage(_unitDataAttacking, target, damageWithAffinities);
+                menuController.ShowEffectOfDamage(_unitDataAttacking, target, (int)damageWithAffinities);
 
             }
         
