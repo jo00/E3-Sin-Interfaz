@@ -25,7 +25,7 @@ public class PhysEffect:OffensivePhysEffect
         UnitData target = menuController.SelectTarget(oponentUnits, _unitDataAttacking);
         if (target != null)
         {
-            _view.ShowAttackTarget(_unitDataAttacking, target);
+            _view.AnounceAttackTarget(_unitDataAttacking, target);
             double damage = (Math.Sqrt(_unitDataAttacking.Strength * _skillPower));
         
             AffinitiesController affinitiesController = new AffinitiesController("Phys", damage, target, _unitDataAttacking, _view, turnsController,1);

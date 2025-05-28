@@ -21,7 +21,7 @@ public class MenusController
     public void ShowEffectOfDamage(UnitData unitDataAttacking, UnitData target, int damageWithAffinities)
     {
 
-        _view.ShowEffectOfDamage(unitDataAttacking, target, damageWithAffinities);
+        _view.AnounceEffectOfDamage(unitDataAttacking, target, damageWithAffinities);
     }
 
 

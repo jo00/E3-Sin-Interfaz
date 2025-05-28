@@ -25,7 +25,7 @@ public class ElecEffect:OffensiveMagicEffect
         UnitData target = menuController.SelectTarget(oponentUnits, _unitDataAttacking);
         if (target != null)
         {
-            _view.ShowElecTarget(_unitDataAttacking, target);
+            _view.AnounceElecTarget(_unitDataAttacking, target);
             double damage = (Math.Sqrt(_unitDataAttacking.Magic * _skillPower));
             double increment = 1.0;
             if (_unitDataAttacking.incrementMagic)

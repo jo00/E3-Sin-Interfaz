@@ -193,6 +193,19 @@ public class EffectsSetter
             case "Dark Energy":
                 effects.Add(new DoublePhysOrGunEffect(_unitDataAttacking, _teamData, _skillData.power, _turnsController, _view, _teamController));
                 return new SkillController(_skillData, effects, _unitDataAttacking, _turnsController);
+            case "Hama":
+                effects.Add(new InstaKillEffect(_unitDataAttacking, _skillData.power, _view, "Light"));
+                return new SkillController(_skillData, effects, _unitDataAttacking, _turnsController);
+            case "Hamaon":
+                effects.Add(new InstaKillEffect(_unitDataAttacking, _skillData.power, _view, "Light"));
+                return new SkillController(_skillData, effects, _unitDataAttacking, _turnsController);
+            case "Mudo":
+                effects.Add(new InstaKillEffect(_unitDataAttacking, _skillData.power, _view, "Dark"));
+                return new SkillController(_skillData, effects, _unitDataAttacking, _turnsController);
+            case "Mudoon":
+                effects.Add(new InstaKillEffect(_unitDataAttacking, _skillData.power, _view, "Dark"));
+                return new SkillController(_skillData, effects, _unitDataAttacking, _turnsController);
+
 
         }
 

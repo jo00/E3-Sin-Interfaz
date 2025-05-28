@@ -23,7 +23,7 @@ public class GunEffect:OffensiveGunEffect
         UnitData target = menuController.SelectTarget(oponentUnits, _unitDataAttacking);
         if (target != null)
         {
-            _view.ShowGunTarget(_unitDataAttacking, target);
+            _view.AnounceGunTarget(_unitDataAttacking, target);
             double damage = (Math.Sqrt(_unitDataAttacking.Skill * _skillPower));
         
             AffinitiesController affinitiesController = new AffinitiesController("Gun", damage, target, _unitDataAttacking, _view, turnsController,1);

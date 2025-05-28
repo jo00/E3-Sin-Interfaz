@@ -25,7 +25,7 @@ public class IceEffect:OffensiveMagicEffect
         UnitData target = menuController.SelectTarget(oponentUnits, _unitDataAttacking);
         if (target != null)
         {
-            _view.ShowIceTarget(_unitDataAttacking, target);
+            _view.AnounceIceTarget(_unitDataAttacking, target);
             double damage = (Math.Sqrt(_unitDataAttacking.Magic * _skillPower));
             double increment = 1.0;
             if (_unitDataAttacking.incrementMagic)

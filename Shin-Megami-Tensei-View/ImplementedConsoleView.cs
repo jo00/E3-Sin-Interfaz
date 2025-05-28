@@ -299,7 +299,7 @@ public class ImplementedConsoleView: IView
         return null;
     }
 
-    public void ShowEffectOfDamage(UnitData unitDataAttacking, UnitData target, int damageWithAffinities)
+    public void AnounceEffectOfDamage(UnitData unitDataAttacking, UnitData target, int damageWithAffinities)
     {
 
         if (damageWithAffinities > 0)
@@ -310,7 +310,7 @@ public class ImplementedConsoleView: IView
         _view.WriteLine($"{target.Name} termina con HP:{target.HP}/{target.maxHP}");
     }
     
-    public void ShowGunTarget(UnitData unitDataAttacking, UnitData target)
+    public void AnounceGunTarget(UnitData unitDataAttacking, UnitData target)
     {
 
     {
@@ -318,43 +318,43 @@ public class ImplementedConsoleView: IView
         _view.WriteLine($"{unitDataAttacking.Name} dispara a {target.Name}");
     }    }
 
-    public void ShowAttackTarget(UnitData unitDataAttacking, UnitData target)
+    public void AnounceAttackTarget(UnitData unitDataAttacking, UnitData target)
     {
         _view.WriteLine("----------------------------------------");
         _view.WriteLine($"{unitDataAttacking.Name} ataca a {target.Name}");
     }
     
-    public void ShowFireTarget(UnitData unitDataAttacking, UnitData target)
+    public void AnounceFireTarget(UnitData unitDataAttacking, UnitData target)
     {
         _view.WriteLine("----------------------------------------");
         _view.WriteLine($"{unitDataAttacking.Name} lanza fuego a {target.Name}");
     }
     
-    public void ShowIceTarget(UnitData unitDataAttacking, UnitData target)
+    public void AnounceIceTarget(UnitData unitDataAttacking, UnitData target)
     {
         _view.WriteLine("----------------------------------------");
         _view.WriteLine($"{unitDataAttacking.Name} lanza hielo a {target.Name}");
     }
     
-    public void ShowElecTarget(UnitData unitDataAttacking, UnitData target)
+    public void AnounceElecTarget(UnitData unitDataAttacking, UnitData target)
     {
         _view.WriteLine("----------------------------------------");
         _view.WriteLine($"{unitDataAttacking.Name} lanza electricidad a {target.Name}");
     }
     
-    public void ShowForceTarget(UnitData unitDataAttacking, UnitData target)
+    public void AnounceForceTarget(UnitData unitDataAttacking, UnitData target)
     {
         _view.WriteLine("----------------------------------------");
         _view.WriteLine($"{unitDataAttacking.Name} lanza viento a {target.Name}");
     }
     
-    public void ShowHealAllyTarget(UnitData unitDataAttacking, UnitData target)
+    public void AnounceHealAllyTarget(UnitData unitDataAttacking, UnitData target)
     {
         _view.WriteLine("----------------------------------------");
         _view.WriteLine($"{unitDataAttacking.Name} cura a {target.Name}");
     }
 
-    public void ShowReviveAllyTarget(UnitData unitDataAttacking, UnitData target)
+    public void AnounceReviveAllyTarget(UnitData unitDataAttacking, UnitData target)
     {
         _view.WriteLine("----------------------------------------");
         _view.WriteLine($"{unitDataAttacking.Name} revive a {target.Name}");
@@ -546,6 +546,31 @@ public class ImplementedConsoleView: IView
         _view.WriteLine($"Blinking Turns: {blinkingTurnsCounter}");
         _view.WriteLine("----------------------------------------");
     }
+
+    public void AnounceLightAttack(UnitData unitDataAttacking, UnitData unitDataTarget)
+    {
+        _view.WriteLine("----------------------------------------");
+
+        _view.WriteLine($"{unitDataAttacking.Name} ataca con luz a {unitDataTarget.Name}");
+    }
+    
+    public void AnounceDarkAttack(UnitData unitDataAttacking, UnitData unitDataTarget)
+    {
+        _view.WriteLine("----------------------------------------");
+
+        _view.WriteLine($"{unitDataAttacking.Name} ataca con oscuridad a {unitDataTarget.Name}");
+    }
+
+    public void AnounceThatInstaKillFailed(UnitData unitDataAttacking)
+    {
+        _view.WriteLine($"{unitDataAttacking.Name} ha fallado el ataque");
+    }
+    
+    public void AnounceThatTargetHasBeenEliminated(UnitData targetUnitData)
+    {
+        _view.WriteLine($"{targetUnitData.Name} ha sido eliminado");
+    }
+
     
     
 

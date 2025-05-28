@@ -23,7 +23,7 @@ public class ForceEffect:OffensiveMagicEffect
         UnitData target = menuController.SelectTarget(oponentUnits, _unitDataAttacking);
         if (target != null)
         {
-            _view.ShowForceTarget(_unitDataAttacking, target);
+            _view.AnounceForceTarget(_unitDataAttacking, target);
             double damage = (Math.Sqrt(_unitDataAttacking.Magic * _skillPower));
             double increment = 1.0;
             if (_unitDataAttacking.incrementMagic)

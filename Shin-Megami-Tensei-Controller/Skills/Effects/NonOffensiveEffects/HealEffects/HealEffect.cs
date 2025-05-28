@@ -31,7 +31,7 @@ public class HealEffect:Effect
             
             int healAmount = (int)(allyTarget.maxHP * _power / 100);
             allyTarget.HP = Math.Min(allyTarget.maxHP, allyTarget.HP + healAmount);
-            _view.ShowHealAllyTarget(_unitDataAttacking, allyTarget);
+            _view.AnounceHealAllyTarget(_unitDataAttacking, allyTarget);
             _view.ShowHealResult(healAmount, allyTarget);
             _turnsController.ChangeTurnsForNonOffensiveAbilities();
         }
