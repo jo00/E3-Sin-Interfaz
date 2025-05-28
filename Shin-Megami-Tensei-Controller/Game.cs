@@ -352,6 +352,7 @@ public class Game
                 unitDataAttacking.Skill = unitDataAttacking.Skill / 2.5;
             }
         }
+        CheckIfTeamsCanKeepPlaying();
     }
     
    
