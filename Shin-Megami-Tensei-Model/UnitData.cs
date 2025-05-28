@@ -26,6 +26,11 @@ public abstract class UnitData
     public bool shouldDiscountAttackAfterApplyingIt;
     public bool incrementMagic=false;
 
+    public int defensiveDegree = 0;
+    public int offensiveDegree = 0;
+    public Dictionary<int, double> defensiveMultipliers;
+    public Dictionary<int, double> offensiveMultipliers;
+
     protected UnitData(string name, int hp, int mp, double strength, double skill, double magic, int speed, int luck, Dictionary<string, string> affinities)
     {
         Name = name;
@@ -44,6 +49,29 @@ public abstract class UnitData
         Luck = luck;
         Affinities = affinities;
         shouldDiscountAttackAfterApplyingIt = false;
+        defensiveMultipliers = new Dictionary<int, double>
+        {
+            {-3, 1.75},
+            {-2, 1.5},
+            {-1, 1.25},
+            {0, 1},
+            {1, 0.875},
+            {2 ,0.75},
+            {3, 0.625}
+
+        };
+        
+        offensiveMultipliers = new Dictionary<int, double>
+        {
+            {-3, 0.625},
+            {-2, 0.75},
+            {-1, 0.875},
+            {0, 1},
+            {1, 1.25},
+            {2 ,1.5},
+            {3, 1.75}
+
+        };
     }
     
     public void DiscountHp(int damage)

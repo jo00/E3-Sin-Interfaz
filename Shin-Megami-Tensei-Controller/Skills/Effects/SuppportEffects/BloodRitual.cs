@@ -28,8 +28,11 @@ public class BloodRitual:Effect
     {
 
      
+        _unitDataAttacking.HP = 1;
+        _unitDataAttacking.offensiveDegree += 1;
+        _unitDataAttacking.defensiveDegree += 1;
+
         _view.AnounceBloodRitual(_unitDataAttacking);
-        
         _turnsController.ChangeTurnsForNonOffensiveAbilities();
 
         
