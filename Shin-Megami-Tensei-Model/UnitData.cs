@@ -93,7 +93,11 @@ public abstract class UnitData
         List<SkillData> usableSkills = new List<SkillData>();
         foreach (SkillData skill in Skills)
         {
-            if (skill.cost <= MP)
+            if (skill.cost <= MP && skill.name!="Blood Ritual")
+            {
+                usableSkills.Add(skill);
+            }
+            if(skill.name == "Blood Ritual" && HP >=2 && skill.cost<=MP)
             {
                 usableSkills.Add(skill);
             }
