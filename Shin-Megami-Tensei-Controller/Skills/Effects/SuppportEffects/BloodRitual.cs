@@ -27,10 +27,11 @@ public class BloodRitual:Effect
     public override void Apply(List<UnitData> oponentUnits, TurnsController turnsController)
     {
 
-     
-        _unitDataAttacking.HP = 1;
-        _unitDataAttacking.offensiveDegree += 1;
-        _unitDataAttacking.defensiveDegree += 1;
+
+        int statsDelta = 1;
+        _unitDataAttacking.HP = statsDelta;
+        _unitDataAttacking.ChangeDefensiveDegree(statsDelta);
+        _unitDataAttacking.ChangeOffensiveDegree(statsDelta);
 
         _view.AnounceBloodRitual(_unitDataAttacking);
         _turnsController.ChangeTurnsForNonOffensiveAbilities();

@@ -28,6 +28,7 @@ public abstract class UnitData
 
     public int defensiveDegree = 0;
     public int offensiveDegree = 0;
+   
     public Dictionary<int, double> defensiveMultipliers;
     public Dictionary<int, double> offensiveMultipliers;
 
@@ -85,6 +86,32 @@ public abstract class UnitData
         {
             HP -= damage;
 
+        }
+    }
+
+    public void ChangeOffensiveDegree(int change)
+    {
+        offensiveDegree += change;
+        if (offensiveDegree >= 4)
+        {
+            offensiveDegree = 3;
+        }
+        if(offensiveDegree <= -4)
+        {
+            defensiveDegree = -3;
+        }
+    }
+    
+    public void ChangeDefensiveDegree(int change)
+    {
+        defensiveDegree += change;
+        if (defensiveDegree >= 4)
+        {
+            defensiveDegree = 3;
+        }
+        if(defensiveDegree <= -4)
+        {
+            defensiveDegree = -3;
         }
     }
 
