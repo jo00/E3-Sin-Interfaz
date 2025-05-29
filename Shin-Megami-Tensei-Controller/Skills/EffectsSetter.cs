@@ -208,6 +208,29 @@ public class EffectsSetter
             case "Mahama":
                 effects.Add(new AllTargetInstaKillEffect(_unitDataAttacking, _skillData.power, _view, "Light", _teamController));
                 return new SkillController(_skillData, effects, _unitDataAttacking, _turnsController);
+            case "Mahamaon":
+                effects.Add(new AllTargetInstaKillEffect(_unitDataAttacking, _skillData.power, _view, "Light", _teamController));
+                return new SkillController(_skillData, effects, _unitDataAttacking, _turnsController);
+
+            case "Judgement Light":
+                effects.Add(new AllTargetInstaKillEffect(_unitDataAttacking, _skillData.power, _view, "Light", _teamController));
+                return new SkillController(_skillData, effects, _unitDataAttacking, _turnsController);
+
+            case "Mamudo":
+                effects.Add(new AllTargetInstaKillEffect(_unitDataAttacking, _skillData.power, _view, "Dark", _teamController));
+                return new SkillController(_skillData, effects, _unitDataAttacking, _turnsController);
+
+            case "Mamudoon":
+                effects.Add(new AllTargetInstaKillEffect(_unitDataAttacking, _skillData.power, _view, "Dark", _teamController));
+                return new SkillController(_skillData, effects, _unitDataAttacking, _turnsController);
+
+            case "Die for Me!":
+                effects.Add(new AllTargetInstaKillEffect(_unitDataAttacking, _skillData.power, _view, "Dark", _teamController));
+                return new SkillController(_skillData, effects, _unitDataAttacking, _turnsController);
+
+            case "Critical Wave":
+                effects.Add(new AllTargetPhysEffect(_unitDataAttacking, _skillData.power, _view, _teamController));
+                return new SkillController(_skillData, effects, _unitDataAttacking, _turnsController);
                 
 
 

@@ -92,7 +92,7 @@ public class TurnsController
         _view.ShowNumberOfTurns(CalculateNumberOfFullTurnsLeft(),_blinkinTurnsCounter);
     }
     
-    public void ChangeTurnStateForNeutralOrResistAffinity()
+    public void ChangeTurnStateForMissNeutralOrResistAffinity()
     {
 
         if (_blinkinTurnsCounter > 0)

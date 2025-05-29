@@ -15,6 +15,7 @@ public class AffinitiesController
     private double _increment;
     private double offensiveMultiplierUnitAttacking;
     private double defensiveMultiplierTargetUnit;
+    private bool _shouldChangeTurnsController = true;
 
     public AffinitiesController(string attackType, double baseDamage, UnitData targetUnitData, UnitData unitDataAttacking, ImplementedConsoleView view, TurnsController turnsController, double increment)
     {
@@ -48,14 +49,22 @@ public class AffinitiesController
                 _view.AnounceThatTargetUnitIsWeak(_targetUnitData, _unitDataAttacking);
                 if (!_wereTurnChangesAlreadyApplied)
                 {
-                    _turnsController.ChangeTurnsForWeakAffinity();
+                    if (_shouldChangeTurnsController)
+                    {
+                        _turnsController.ChangeTurnsForWeakAffinity();
+
+                    }
                     _wereTurnChangesAlreadyApplied = true;
                 }
                 return (_baseDamage * 1.5*_increment*offensiveMultiplierUnitAttacking * defensiveMultiplierTargetUnit);
             case "Rs":
                 if (!_wereTurnChangesAlreadyApplied)
                 {
-                    _turnsController.ChangeTurnStateForNeutralOrResistAffinity();
+                    if (_shouldChangeTurnsController)
+                    {
+                        _turnsController.ChangeTurnStateForMissNeutralOrResistAffinity();
+
+                    }
                     _wereTurnChangesAlreadyApplied = true;
                 }
                 _view.AnounceThatTargetIsRessistent(_targetUnitData, _unitDataAttacking);
@@ -63,7 +72,11 @@ public class AffinitiesController
             case "Nu":
                 if (!_wereTurnChangesAlreadyApplied)
                 {
-                    _turnsController.ChangeTurnsStateForNullAffinity();
+                    if (_shouldChangeTurnsController)
+                    {
+                        _turnsController.ChangeTurnsStateForNullAffinity();
+
+                    }
                     _wereTurnChangesAlreadyApplied = true;
                 }
                 _view.AnounceThatTargetBlockedAttack(_targetUnitData, _unitDataAttacking);
@@ -71,7 +84,11 @@ public class AffinitiesController
             case "Dr":
                 if (!_wereTurnChangesAlreadyApplied)
                 {
-                    _turnsController.ChangeTurnsStateForDrOrRepelAffinity();
+                    if (_shouldChangeTurnsController)
+                    {
+                        _turnsController.ChangeTurnsStateForDrOrRepelAffinity();
+
+                    }
                     _wereTurnChangesAlreadyApplied = true;
                 }
                 _targetUnitData.HP = (int)Math.Min(_targetUnitData.HP + _baseDamage, _targetUnitData.maxHP);
@@ -80,14 +97,22 @@ public class AffinitiesController
             case "-":
                 if (!_wereTurnChangesAlreadyApplied)
                 {
-                    _turnsController.ChangeTurnStateForNeutralOrResistAffinity();
+                    if (_shouldChangeTurnsController)
+                    {
+                        _turnsController.ChangeTurnStateForMissNeutralOrResistAffinity();
+
+                    }
                     _wereTurnChangesAlreadyApplied = true;
                 }
                 return _baseDamage*_increment*offensiveMultiplierUnitAttacking * defensiveMultiplierTargetUnit;
             case "Rp":
                 if (!_wereTurnChangesAlreadyApplied)
                 {
-                    _turnsController.ChangeTurnsStateForDrOrRepelAffinity();
+                    if (_shouldChangeTurnsController)
+                    {
+                        _turnsController.ChangeTurnsStateForDrOrRepelAffinity();
+
+                    }
                     _wereTurnChangesAlreadyApplied = true;
                 }
 
@@ -105,4 +130,10 @@ public class AffinitiesController
     {
         return _isReturnDamageAffinity;
     }
+
+    public void SetThatShouldnChangeTurns()
+    {
+        _shouldChangeTurnsController = false;
+    }
+    
 }

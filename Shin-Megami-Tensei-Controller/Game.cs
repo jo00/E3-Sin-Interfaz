@@ -447,7 +447,7 @@ public class Game
             _canSecondTeamKeepPlaying = false;
         } 
         
-        _turnsController.ChangeTurnStateForNeutralOrResistAffinity();
+        _turnsController.ChangeTurnStateForMissNeutralOrResistAffinity();
     }
 
     

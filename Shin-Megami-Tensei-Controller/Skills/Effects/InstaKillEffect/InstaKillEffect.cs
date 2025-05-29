@@ -61,7 +61,7 @@ public class InstaKillEffect:OffensiveMagicEffect
         if (affinity == "-")
         {
             CheckEffectivnessForNeutralAffinity(target);
-            turnsController.ChangeTurnStateForNeutralOrResistAffinity();
+            turnsController.ChangeTurnStateForMissNeutralOrResistAffinity();
         }
 
         if (affinity == "Wk")
@@ -73,7 +73,7 @@ public class InstaKillEffect:OffensiveMagicEffect
 
         if (affinity == "Rs")
         {
-            turnsController.ChangeTurnStateForNeutralOrResistAffinity();
+            turnsController.ChangeTurnStateForMissNeutralOrResistAffinity();
             CheckEffectivnessForResistAffinity(target);
         }
         

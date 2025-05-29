@@ -323,6 +323,12 @@ public class ImplementedConsoleView: IView
         _view.WriteLine("----------------------------------------");
         _view.WriteLine($"{unitDataAttacking.Name} ataca a {target.Name}");
     }
+
+    public void AnounceAttackWithouLines(UnitData unitDataAttacking, UnitData target)
+    {
+        _view.WriteLine($"{unitDataAttacking.Name} ataca a {target.Name}");
+
+    }
     
     public void AnounceFireTarget(UnitData unitDataAttacking, UnitData target)
     {

@@ -16,6 +16,8 @@ public class AllTargetInstaKillEffect:OffensiveMagicEffect
     private bool _wasBlocked = false;
     private bool _isLast = false;
     private TeamController _teamController;
+    private TurnsController _turnsController;
+    private List<string> _actions = new List<string>();
 
     public AllTargetInstaKillEffect(UnitData unitDataAttacking, int skillPower, ImplementedConsoleView view, string type, TeamController teamController) : base(unitDataAttacking)
     {
@@ -30,22 +32,22 @@ public class AllTargetInstaKillEffect:OffensiveMagicEffect
     {
         _view.ShowLines();
         
-
+        _turnsController= turnsController;
         List<UnitData> activeUnitsAlive = _teamController.GetActiveUnitsAlive(oponentUnits);
         foreach (UnitData target in activeUnitsAlive)
         {
-            _isLast = ReferenceEquals(target, oponentUnits[^1]);
-
             ReStartBooleanValues();
             AnounceCorrespondingAttack(target);
             string affinity = target.Affinities[_type];
-            CheckEffectivness(affinity, target, turnsController);
+            CheckEffectivness(affinity, target);
             ApplyCorrespondingEffectivness(target);
             _view.AnounceHPFinalStateForUnit(target);
         }
-        
 
-    
+        ChangeTurnsAccordingToActionsPriority();
+
+
+
     }
 
     private void ReStartBooleanValues()
@@ -66,46 +68,32 @@ public class AllTargetInstaKillEffect:OffensiveMagicEffect
         }
     }
 
-    private void CheckEffectivness(string affinity, UnitData target, TurnsController turnsController)
+    private void CheckEffectivness(string affinity, UnitData target)
     {
         if (affinity == "-")
         {
             CheckEffectivnessForNeutralAffinity(target);
-            if (_isLast)
-            {
-                turnsController.ChangeTurnStateForNeutralOrResistAffinity();
-
-            }
+            
         }
 
         if (affinity == "Wk")
         {
+            _actions.Add("Weak");
             _view.AnounceThatTargetUnitIsWeak(target, _unitDataAttacking);
-            if (_isLast)
-            {
-                turnsController.ChangeTurnsForWeakAffinity();
 
-            }
+            
             _wasEffective = true;
         }
 
         if (affinity == "Rs")
         {
-            if (_isLast)
-            {
-                turnsController.ChangeTurnStateForNeutralOrResistAffinity();
-
-            }
+            
             CheckEffectivnessForResistAffinity(target);
         }
 
         if (affinity == "Nu")
         {
-            if (_isLast)
-            {
-                turnsController.ChangeTurnsStateForNullAffinity();
-
-            }
+            _actions.Add("Null");
 
             _wasBlocked = true;
         }
@@ -113,27 +101,34 @@ public class AllTargetInstaKillEffect:OffensiveMagicEffect
 
     private void CheckEffectivnessForNeutralAffinity(UnitData target)
     {
-        
+
         if (_unitDataAttacking.Luck + _skillPower >= target.Luck)
-        {
+        { 
+            _actions.Add("Neutral");
+            
             _wasEffective = true;
         }
         else
         {
+            _actions.Add("Miss");
+
             _wasMissed = true;
         }
     }
 
     private void CheckEffectivnessForResistAffinity(UnitData target)
     {
+
         if(_unitDataAttacking.Luck+_skillPower>=2* target.Luck)
         {
             _view.AnounceThatTargetIsRessistent(target,_unitDataAttacking);
+            _actions.Add("Resist");
 
             _wasEffective = true;
         }
         else
         {
+            _actions.Add("Miss");
 
             _wasMissed = true;
         }
@@ -156,10 +151,31 @@ public class AllTargetInstaKillEffect:OffensiveMagicEffect
 
         }
     }
+
+    private void ChangeTurnsAccordingToActionsPriority()
+    {
+        if (_actions.Contains("Null"))
+        {
+            _turnsController.ChangeTurnsStateForNullAffinity();
+        }
+        else if (_actions.Contains("Miss"))
+        {
+            _turnsController.ChangeTurnStateForMissNeutralOrResistAffinity();
+        }
+        else if (_actions.Contains("Weak"))
+        {
+            _turnsController.ChangeTurnsForWeakAffinity();
+        }
+        else if (_actions.Contains("Neutral") || _actions.Contains("Resit"))
+        {
+            _turnsController.ChangeTurnStateForMissNeutralOrResistAffinity();
+        }
+    }
     public override bool WasEffectApplied()
     {
         return _wasEffectApplied;
     }
+    
 
     
 }
