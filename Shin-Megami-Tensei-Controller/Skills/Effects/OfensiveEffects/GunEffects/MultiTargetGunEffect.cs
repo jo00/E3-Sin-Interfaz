@@ -4,7 +4,7 @@ using Shin_Megami_Tensei.Skills.Effects.OfensiveEffects;
 
 namespace Shin_Megami_Tensei.Skills.Effects;
 
-public class MultiTargetPhysEffect:Effect
+public class MultiTargetGunEffect:Effect
 
 {
     private readonly int _min;
@@ -18,7 +18,7 @@ public class MultiTargetPhysEffect:Effect
     private bool _wasAttackUnitAttacked = false;
     private List<string> _affinitiesApplied = new List<string>();
     private int _K;
-    public MultiTargetPhysEffect(UnitData unitDataAttacking, int min, int max, int skillPower, ImplementedConsoleView view, int k, TeamController teamController) : base(unitDataAttacking)
+    public MultiTargetGunEffect(UnitData unitDataAttacking, int min, int max, int skillPower, ImplementedConsoleView view, int k, TeamController teamController) : base(unitDataAttacking)
     {
         _unitDataAttacking = unitDataAttacking;
         _skillPower = skillPower;
@@ -42,11 +42,11 @@ public class MultiTargetPhysEffect:Effect
         {
             if (target != null)
             {
-                _view.AnounceAttackWithouLines(_unitDataAttacking, target);
+                _view.AnounceGunDamageWithoutLines(_unitDataAttacking, target);
                 double damage = (Math.Sqrt(_unitDataAttacking.Strength * _skillPower));
 
-                _affinitiesApplied.Add(target.Affinities["Phys"]);
-                AffinitiesController affinitiesController = new AffinitiesController("Phys", damage, target, _unitDataAttacking, _view, turnsController,1);
+                _affinitiesApplied.Add(target.Affinities["Gun"]);
+                AffinitiesController affinitiesController = new AffinitiesController("Gun", damage, target, _unitDataAttacking, _view, turnsController,1);
                affinitiesController.SetThatShouldnChangeTurns();
                 int damageWithAffinities = (int)affinitiesController.ApplyAffinity();
                 target.DiscountHp(damageWithAffinities);

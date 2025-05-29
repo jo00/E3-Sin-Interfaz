@@ -4,11 +4,10 @@ using Shin_Megami_Tensei.Skills.Effects.OfensiveEffects;
 
 namespace Shin_Megami_Tensei.Skills.Effects;
 
-public class MultiTargetPhysEffect:Effect
+public class MultiTargetMagicEffect:OffensivePhysEffect
 
 {
-    private readonly int _min;
-    private readonly int _max;
+    
     private UnitData _unitDataAttacking;
     private int _skillPower;
     private ImplementedConsoleView _view;
@@ -17,17 +16,21 @@ public class MultiTargetPhysEffect:Effect
     private TeamController _teamController;
     private bool _wasAttackUnitAttacked = false;
     private List<string> _affinitiesApplied = new List<string>();
+    private string _type;
     private int _K;
-    public MultiTargetPhysEffect(UnitData unitDataAttacking, int min, int max, int skillPower, ImplementedConsoleView view, int k, TeamController teamController) : base(unitDataAttacking)
+    private int _min;
+    private int _max;
+    
+    public MultiTargetMagicEffect(UnitData unitDataAttacking, int skillPower,int min, int max, ImplementedConsoleView view, TeamController teamController, string type, int k) : base(unitDataAttacking)
     {
         _unitDataAttacking = unitDataAttacking;
         _skillPower = skillPower;
         _view = view;
         _teamController = teamController;
-        _min = min;
-        _max = max;
+        _type = type;
         _K = k;
-        
+        _max = max;
+        _min = min;
     }
 
     public override void Apply(List<UnitData> oponentUnits, TurnsController turnsController)
@@ -42,12 +45,14 @@ public class MultiTargetPhysEffect:Effect
         {
             if (target != null)
             {
-                _view.AnounceAttackWithouLines(_unitDataAttacking, target);
-                double damage = (Math.Sqrt(_unitDataAttacking.Strength * _skillPower));
+                AnounceCorrespondingMagicAttack(target);
+                double damage = (Math.Sqrt(_unitDataAttacking.Magic * _skillPower));
 
-                _affinitiesApplied.Add(target.Affinities["Phys"]);
-                AffinitiesController affinitiesController = new AffinitiesController("Phys", damage, target, _unitDataAttacking, _view, turnsController,1);
-               affinitiesController.SetThatShouldnChangeTurns();
+                _affinitiesApplied.Add(target.Affinities[_type]);
+
+                AffinitiesController affinitiesController = new AffinitiesController(_type, damage, target, _unitDataAttacking, _view, turnsController,1);
+                affinitiesController.SetThatShouldnChangeTurns();
+
                 int damageWithAffinities = (int)affinitiesController.ApplyAffinity();
                 target.DiscountHp(damageWithAffinities);
                 if (!affinitiesController.IsReturnDamageAffinity())
@@ -90,13 +95,9 @@ public class MultiTargetPhysEffect:Effect
         {
             _turnsController.ChangeTurnsStateForDrOrRepelAffinity();
         }
-        else if (_affinitiesApplied.Contains("Null"))
+        else if (_affinitiesApplied.Contains("Nu"))
         {
             _turnsController.ChangeTurnsStateForNullAffinity();
-        }
-        else if (_affinitiesApplied.Contains("Miss"))
-        {
-            _turnsController.ChangeTurnStateForMissNeutralOrResistAffinity();
         }
         else if (_affinitiesApplied.Contains("Wk"))
         {
@@ -107,7 +108,28 @@ public class MultiTargetPhysEffect:Effect
             _turnsController.ChangeTurnStateForMissNeutralOrResistAffinity();
         }
     }
-    
+
+    private void AnounceCorrespondingMagicAttack(UnitData target)
+    {
+        if(_type == "Fire")
+        {
+            _view.AnounceFireTargetWithoutLines(_unitDataAttacking, target);
+        }
+        else if(_type == "Ice")
+        {
+            _view.AnounceIceTargetWithoutLines(_unitDataAttacking, target);
+        }
+        else if(_type == "Elec")
+        {
+            _view.AnounceElecTargetWithoutLines(_unitDataAttacking, target);
+        }
+        else if(_type == "Force")
+        {
+            _view.AnounceForceTargetWithoutLines(_unitDataAttacking, target);
+        }
+        
+
+    }
     private int CalculateHits(int k)
     {
         int range = _max - _min + 1;

@@ -317,9 +317,53 @@ public class EffectsSetter
                 effects.Add(new AllTargetGunEffect(_unitDataAttacking, _skillData.power, _view, _teamController));
                 return new SkillController(_skillData, effects, _unitDataAttacking, _turnsController);
 
-            case "Heaven’s Bow":
+            case "Heaven's Bow":
                 effects.Add(new AllTargetGunEffect(_unitDataAttacking, _skillData.power, _view, _teamController));
                 return new SkillController(_skillData, effects, _unitDataAttacking, _turnsController);
+            case "Fire Breath":
+                effects.Add(new MultiTargetMagicEffect(_unitDataAttacking, 1, 4, _skillData.power, _view, _teamController, "Fire", _teamData.abilitiesUsedCounter));
+                return new SkillController(_skillData, effects, _unitDataAttacking, _turnsController);
+
+            case "Ragnarok":
+                effects.Add(new MultiTargetMagicEffect(_unitDataAttacking, 1, 4, _skillData.power, _view, _teamController, "Fire", _teamData.abilitiesUsedCounter));
+                return new SkillController(_skillData, effects, _unitDataAttacking, _turnsController);
+
+            case "Ice Breath":
+                effects.Add(new MultiTargetMagicEffect(_unitDataAttacking, 1, 4, _skillData.power, _view, _teamController, "Ice", _teamData.abilitiesUsedCounter));
+                return new SkillController(_skillData, effects, _unitDataAttacking, _turnsController);
+
+            case "Glacial Blast":
+                effects.Add(new MultiTargetMagicEffect(_unitDataAttacking, 1, 4, _skillData.power, _view, _teamController, "Ice", _teamData.abilitiesUsedCounter));
+                return new SkillController(_skillData, effects, _unitDataAttacking, _turnsController);
+
+            case "Breath":
+                effects.Add(new MultiTargetMagicEffect(_unitDataAttacking, 1, 5, _skillData.power, _view, _teamController, "Ice", _teamData.abilitiesUsedCounter));
+                return new SkillController(_skillData, effects, _unitDataAttacking, _turnsController);
+
+            case "Refrigerate":
+                effects.Add(new MultiTargetMagicEffect(_unitDataAttacking, 1, 8, _skillData.power, _view, _teamController, "Ice", _teamData.abilitiesUsedCounter));
+                return new SkillController(_skillData, effects, _unitDataAttacking, _turnsController);
+
+            case "Shock":
+                effects.Add(new MultiTargetMagicEffect(_unitDataAttacking, 1, 4, _skillData.power, _view, _teamController, "Elec", _teamData.abilitiesUsedCounter));
+                return new SkillController(_skillData, effects, _unitDataAttacking, _turnsController);
+
+            case "Plasma Discharge":
+                effects.Add(new MultiTargetMagicEffect(_unitDataAttacking, 1, 8, _skillData.power, _view, _teamController, "Elec", _teamData.abilitiesUsedCounter));
+                return new SkillController(_skillData, effects, _unitDataAttacking, _turnsController);
+
+            case "Wind Breath":
+                effects.Add(new MultiTargetMagicEffect(_unitDataAttacking, 1, 4, _skillData.power, _view, _teamController, "Force", _teamData.abilitiesUsedCounter));
+                return new SkillController(_skillData, effects, _unitDataAttacking, _turnsController);
+
+            case "Floral Gust":
+                effects.Add(new MultiTargetMagicEffect(_unitDataAttacking, 1, 4, _skillData.power, _view, _teamController, "Force", _teamData.abilitiesUsedCounter));
+                return new SkillController(_skillData, effects, _unitDataAttacking, _turnsController);
+            
+            case "Myriad Arrows":
+                effects.Add((new MultiTargetGunEffect(_unitDataAttacking, 1, 3, _skillData.power, _view, _teamData.abilitiesUsedCounter, _teamController)));
+                return new SkillController(_skillData, effects, _unitDataAttacking, _turnsController);
+
 
 
 
