@@ -3,7 +3,7 @@ using Shin_Megami_Tensei.Configs;
 
 namespace Shin_Megami_Tensei.Skills.Effects.NonOffensiveEffects.HealEffects;
 
-public class AllTargetHealEffect:Effect
+public class AllTargetHealAndReviveEffect:Effect
 
 {
     private UnitData _unitDataAttacking;
@@ -16,7 +16,7 @@ public class AllTargetHealEffect:Effect
     private List<string> _affinitiesApplied = new List<string>();
     private TeamData _teamData;
     
-    public AllTargetHealEffect(UnitData unitDataAttacking, int skillPower, ImplementedConsoleView view, TeamController teamController, TeamData teamData) : base(unitDataAttacking)
+    public AllTargetHealAndReviveEffect(UnitData unitDataAttacking, int skillPower, ImplementedConsoleView view, TeamController teamController, TeamData teamData) : base(unitDataAttacking)
     {
         _unitDataAttacking = unitDataAttacking;
         _skillPower = skillPower;
@@ -33,24 +33,51 @@ public class AllTargetHealEffect:Effect
         MenusController menuController = new MenusController(_view);
         foreach (UnitData allyTarget in activeUnitsAlive)
         {
-            if (allyTarget != null && allyTarget!=_unitDataAttacking)
+            if ( allyTarget!=_unitDataAttacking)
 
             {
+                Console.WriteLine("1");
+
                 int healAmount = (int)(allyTarget.maxHP * _skillPower / 100);
                 allyTarget.HP = Math.Min(allyTarget.maxHP, allyTarget.HP + healAmount);
                 _view.AnounceHealAllyTargetWithoutLines(_unitDataAttacking, allyTarget);
                 _view.AnounceHealResult(healAmount, allyTarget);
             }
-            else
-            {
-                _wasEffectApplied = false;
+            
+        }
 
+        foreach (UnitData allyCopy in _teamData.originalTeamOrder)
+        {
+            UnitData ally = GetUnitAccordingToOriginalOrder(allyCopy);
+            if (allyCopy.HP<=0 || allyCopy.active==false)
+            {
+                
+
+                if (ally.HP <= 0)
+                {
+                    
+                    _view.AnounceReviveAllyTargetWithoutLines(_unitDataAttacking, ally);
+                }
+                else
+                {
+                    _view.AnounceHealAllyTargetWithoutLines(_unitDataAttacking, ally);
+
+                }
+                int healAmount = (int)(ally.maxHP * (_skillPower / 100.0));
+                ally.HP = Math.Min(ally.maxHP, ally.HP + healAmount);
+                ally.active = false;
+                
+                _view.AnounceHealResult(healAmount, ally);
+
+            
+                
             }
         }
-        int healAmountForSelf = (int)(_unitDataAttacking.maxHP * _skillPower / 100);
-        _unitDataAttacking.HP = Math.Min(_unitDataAttacking.maxHP, _unitDataAttacking.HP + healAmountForSelf);
-        _view.AnounceHealAllyTargetWithoutLines(_unitDataAttacking, _unitDataAttacking);
-        _view.AnounceHealResult(healAmountForSelf, _unitDataAttacking);
+        
+        _unitDataAttacking.HP = 0;
+        _unitDataAttacking.active = false;
+        _view.AnounceHPFinalStateForUnit(_unitDataAttacking);
+        
         
         _turnsController.ChangeTurnsForNonOffensiveAbilities();
 
@@ -60,5 +87,18 @@ public class AllTargetHealEffect:Effect
     public override bool WasEffectApplied()
     {
         return true;
+    }
+
+    private UnitData GetUnitAccordingToOriginalOrder(UnitData unitCopy)
+    {
+        foreach (UnitData unit in _teamData.team)
+        {
+            if (unit.Name == unitCopy.Name)
+            {
+                return unit;
+            }
+        }
+
+        return null;
     }
 }

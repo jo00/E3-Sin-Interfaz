@@ -375,7 +375,7 @@ public class EffectsSetter
                 effects.Add(new AllTargetHealEffect(_unitDataAttacking,  _skillData.power,  _view, _teamController,_teamData));
                 return new SkillController(_skillData, effects, _unitDataAttacking, _turnsController);
             case "Recarmdra":
-                effects.Add(new AllTargetHealEffect(_unitDataAttacking,  _skillData.power,  _view, _teamController,_teamData));
+                effects.Add(new AllTargetHealAndReviveEffect(_unitDataAttacking,  _skillData.power,  _view, _teamController,_teamData));
                 return new SkillController(_skillData, effects, _unitDataAttacking, _turnsController);
 
             

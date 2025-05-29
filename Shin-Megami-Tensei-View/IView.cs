@@ -30,7 +30,7 @@ public interface IView
     void AnounceForceTarget(UnitData unitDataAttacking, UnitData target);
     void AnounceHealAllyTarget(UnitData unitDataAttacking, UnitData target);
     void AnounceReviveAllyTarget(UnitData unitDataAttacking, UnitData target);
-    void ShowHealResult(int heal, UnitData target);
+    void AnounceHealResult(int heal, UnitData target);
     UnitData GetAllyTarget(UnitData unitDataAttacking, List<UnitData> activeUnitsAlive);
     UnitData GetDeadAllyTarget(UnitData unitDataAttacking, List<UnitData> deadUnits);
     void AnounceRound(string samuraiName, string playerNumber);

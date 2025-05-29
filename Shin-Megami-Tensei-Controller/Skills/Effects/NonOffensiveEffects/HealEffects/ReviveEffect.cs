@@ -34,7 +34,7 @@ public class ReviveEffect:Effect
             allyTarget.HP = Math.Min(allyTarget.maxHP, allyTarget.HP + healAmount);
             allyTarget.active = false;
             _view.AnounceReviveAllyTarget(_unitDataAttacking, allyTarget);
-            _view.ShowHealResult(healAmount, allyTarget);
+            _view.AnounceHealResult(healAmount, allyTarget);
             _turnsController.ChangeTurnsForNonOffensiveAbilities();  
         }
         else

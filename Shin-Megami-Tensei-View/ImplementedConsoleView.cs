@@ -393,6 +393,10 @@ public class ImplementedConsoleView: IView
         _view.WriteLine("----------------------------------------");
         _view.WriteLine($"{unitDataAttacking.Name} revive a {target.Name}");
     }
+    public void AnounceReviveAllyTargetWithoutLines(UnitData unitDataAttacking, UnitData target)
+    {
+        _view.WriteLine($"{unitDataAttacking.Name} revive a {target.Name}");
+    }
     
     public void AnounceCharge(UnitData unitDataAttacking)
     {
@@ -414,7 +418,7 @@ public class ImplementedConsoleView: IView
         AnounceHPFinalStateForUnit(unitDataAttacking);
     }
 
-    public void ShowHealResult(int heal, UnitData target)
+    public void AnounceHealResult(int heal, UnitData target)
     {
         _view.WriteLine($"{target.Name} recibe {heal} de HP");
         _view.WriteLine($"{target.Name} termina con HP:{target.HP}/{target.maxHP}");
