@@ -468,6 +468,41 @@ public class TeamController(ImplementedConsoleView implementedConsoleView, List<
 
         return lines;
     }
+    
+    public List<UnitData> GetMultiTargetUnits(List<UnitData> R, int K, int hits)
+    {
+        
+        List<UnitData> targets = new List<UnitData>();
+
+        int A = R.Count; 
+        if (A == 0 || hits == 0) return targets;
+
+        int i = K % A; 
+        bool goLeft = i % 2 == 0; 
+
+        int index = i;
+
+        for (int step = 0; step < hits; step++)
+        {
+            targets.Add(R[index]);
+
+            if (goLeft)
+            {
+                index--;
+                if (index < 0) index = A - 1; 
+            }
+            else
+            {
+                index++;
+                if (index >= A) index = 0; 
+            }
+        }
+
+        return targets;
+        
+
+    }
+
 
     
     

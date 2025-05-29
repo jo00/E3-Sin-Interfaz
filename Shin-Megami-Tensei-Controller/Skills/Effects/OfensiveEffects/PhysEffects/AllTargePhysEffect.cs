@@ -15,7 +15,7 @@ public class AllTargetPhysEffect:OffensivePhysEffect
     private TurnsController _turnsController;
     private TeamController _teamController;
     private bool _wasAttackUnitAttacked = false;
-    private List<string> _affinitiesApplied;
+    private List<string> _affinitiesApplied = new List<string>();
     
     public AllTargetPhysEffect(UnitData unitDataAttacking, int skillPower, ImplementedConsoleView view, TeamController teamController) : base(unitDataAttacking)
     {
@@ -40,6 +40,7 @@ public class AllTargetPhysEffect:OffensivePhysEffect
 
                 _affinitiesApplied.Add(target.Affinities["Phys"]);
                 AffinitiesController affinitiesController = new AffinitiesController("Phys", damage, target, _unitDataAttacking, _view, turnsController,1);
+                affinitiesController.SetThatShouldnChangeTurns();
                 int damageWithAffinities = (int)affinitiesController.ApplyAffinity();
                 target.DiscountHp(damageWithAffinities);
                 if (!affinitiesController.IsReturnDamageAffinity())

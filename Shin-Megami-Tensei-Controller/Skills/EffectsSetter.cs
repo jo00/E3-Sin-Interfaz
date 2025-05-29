@@ -231,7 +231,37 @@ public class EffectsSetter
             case "Critical Wave":
                 effects.Add(new AllTargetPhysEffect(_unitDataAttacking, _skillData.power, _view, _teamController));
                 return new SkillController(_skillData, effects, _unitDataAttacking, _turnsController);
-                
+            
+            case "Megaton Press":
+                effects.Add(new AllTargetPhysEffect(_unitDataAttacking, _skillData.power, _view, _teamController));
+                return new SkillController(_skillData, effects, _unitDataAttacking, _turnsController);
+            
+            case "Titanomachia":
+                effects.Add(new AllTargetPhysEffect(_unitDataAttacking, _skillData.power, _view, _teamController));
+                return new SkillController(_skillData, effects, _unitDataAttacking, _turnsController);
+            
+            case "Heat Wave":
+                effects.Add(new AllTargetPhysEffect(_unitDataAttacking, _skillData.power, _view, _teamController));
+                return new SkillController(_skillData, effects, _unitDataAttacking, _turnsController);
+            
+            case "Javelin Rain":
+                effects.Add(new AllTargetPhysEffect(_unitDataAttacking, _skillData.power, _view, _teamController));
+                return new SkillController(_skillData, effects, _unitDataAttacking, _turnsController);
+            
+            case "Hades Blast":
+                effects.Add(new AllTargetPhysEffect(_unitDataAttacking, _skillData.power, _view, _teamController));
+                return new SkillController(_skillData, effects, _unitDataAttacking, _turnsController);
+            
+            case "Scratch Dance":
+                effects.Add((new MultiTargetPhysEffect(_unitDataAttacking, 1, 3, _skillData.power, _view, _teamData.abilitiesUsedCounter, _teamController)));
+                return new SkillController(_skillData, effects, _unitDataAttacking, _turnsController);
+            case "Madness Nails":
+                effects.Add((new MultiTargetPhysEffect(_unitDataAttacking, 1, 3, _skillData.power, _view, _teamData.abilitiesUsedCounter, _teamController)));
+                return new SkillController(_skillData, effects, _unitDataAttacking, _turnsController);
+            case "Bar Toss":
+                effects.Add((new MultiTargetPhysEffect(_unitDataAttacking, 1, 3, _skillData.power, _view, _teamData.abilitiesUsedCounter, _teamController)));
+                return new SkillController(_skillData, effects, _unitDataAttacking, _turnsController);
+
 
 
         }
