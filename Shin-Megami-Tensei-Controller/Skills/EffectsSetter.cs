@@ -1,6 +1,7 @@
 using Shin_Megami_Tensei_View;
 using Shin_Megami_Tensei.Configs;
 using Shin_Megami_Tensei.Skills.Effects;
+using Shin_Megami_Tensei.Skills.Effects.NonOffensiveEffects.HealEffects;
 using Shin_Megami_Tensei.Skills.Effects.OfensiveEffects;
 using Shin_Megami_Tensei.Skills.Effects.SuppportEffects;
 
@@ -363,6 +364,21 @@ public class EffectsSetter
             case "Myriad Arrows":
                 effects.Add((new MultiTargetGunEffect(_unitDataAttacking, 1, 3, _skillData.power, _view, _teamData.abilitiesUsedCounter, _teamController)));
                 return new SkillController(_skillData, effects, _unitDataAttacking, _turnsController);
+            
+            case "Media":
+                effects.Add(new AllTargetHealEffect(_unitDataAttacking,  _skillData.power,  _view, _teamController,_teamData));
+                return new SkillController(_skillData, effects, _unitDataAttacking, _turnsController);
+            case "Mediarama":
+                effects.Add(new AllTargetHealEffect(_unitDataAttacking,  _skillData.power,  _view, _teamController,_teamData));
+                return new SkillController(_skillData, effects, _unitDataAttacking, _turnsController);
+            case "Mediarahan":
+                effects.Add(new AllTargetHealEffect(_unitDataAttacking,  _skillData.power,  _view, _teamController,_teamData));
+                return new SkillController(_skillData, effects, _unitDataAttacking, _turnsController);
+            case "Recarmdra":
+                effects.Add(new AllTargetHealEffect(_unitDataAttacking,  _skillData.power,  _view, _teamController,_teamData));
+                return new SkillController(_skillData, effects, _unitDataAttacking, _turnsController);
+
+            
 
 
 

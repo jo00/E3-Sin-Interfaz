@@ -7,18 +7,18 @@ public class HealEffect:Effect
 {
     private UnitData _unitDataAttacking;
     private TeamData _teamData;
-    private int _power;
+    private int _skillPower;
     private TurnsController _turnsController;
     private bool _wasEffectApplied = true;
     private ImplementedConsoleView _view;
     private TeamController _teamController;
-    public HealEffect(UnitData unitDataAttacking, TeamData teamData,  int power, TurnsController turnsController, ImplementedConsoleView view, TeamController teamController) : base(unitDataAttacking)
+    public HealEffect(UnitData unitDataAttacking, TeamData teamData,  int skillPower, TurnsController turnsController, ImplementedConsoleView view, TeamController teamController) : base(unitDataAttacking)
     {
         _teamController = teamController;
         _view = view;
         _unitDataAttacking = unitDataAttacking;
         _teamData = teamData;
-        _power = power;
+        _skillPower = skillPower;
         _turnsController = turnsController;
     }
 
@@ -29,7 +29,7 @@ public class HealEffect:Effect
         if (allyTarget != null)
         {
             
-            int healAmount = (int)(allyTarget.maxHP * _power / 100);
+            int healAmount = (int)(allyTarget.maxHP * _skillPower / 100);
             allyTarget.HP = Math.Min(allyTarget.maxHP, allyTarget.HP + healAmount);
             _view.AnounceHealAllyTarget(_unitDataAttacking, allyTarget);
             _view.ShowHealResult(healAmount, allyTarget);
