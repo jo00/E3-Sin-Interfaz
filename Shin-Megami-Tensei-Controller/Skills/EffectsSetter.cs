@@ -261,6 +261,55 @@ public class EffectsSetter
             case "Bar Toss":
                 effects.Add((new MultiTargetPhysEffect(_unitDataAttacking, 1, 3, _skillData.power, _view, _teamData.abilitiesUsedCounter, _teamController)));
                 return new SkillController(_skillData, effects, _unitDataAttacking, _turnsController);
+            
+            case "Maragi":
+                effects.Add((new AllTargetMagicEffect(_unitDataAttacking, _skillData.power, _view, _teamController, "Fire")));
+                return new SkillController(_skillData, effects, _unitDataAttacking, _turnsController);
+
+            case "Maragion":
+                effects.Add(new AllTargetMagicEffect(_unitDataAttacking, _skillData.power, _view, _teamController, "Fire"));
+                return new SkillController(_skillData, effects, _unitDataAttacking, _turnsController);
+
+            case "Maragidyne":
+                effects.Add(new AllTargetMagicEffect(_unitDataAttacking, _skillData.power, _view, _teamController, "Fire"));
+                return new SkillController(_skillData, effects, _unitDataAttacking, _turnsController);
+
+            case "Mabufu":
+                effects.Add(new AllTargetMagicEffect(_unitDataAttacking, _skillData.power, _view, _teamController, "Ice"));
+                return new SkillController(_skillData, effects, _unitDataAttacking, _turnsController);
+
+            case "Mabufula":
+                effects.Add(new AllTargetMagicEffect(_unitDataAttacking, _skillData.power, _view, _teamController, "Ice"));
+                return new SkillController(_skillData, effects, _unitDataAttacking, _turnsController);
+
+            case "Mabufudyne":
+                effects.Add(new AllTargetMagicEffect(_unitDataAttacking, _skillData.power, _view, _teamController, "Ice"));
+                return new SkillController(_skillData, effects, _unitDataAttacking, _turnsController);
+
+            case "Mazio":
+                effects.Add(new AllTargetMagicEffect(_unitDataAttacking, _skillData.power, _view, _teamController, "Elec"));
+                return new SkillController(_skillData, effects, _unitDataAttacking, _turnsController);
+
+            case "Mazionga":
+                effects.Add(new AllTargetMagicEffect(_unitDataAttacking, _skillData.power, _view, _teamController, "Elec"));
+                return new SkillController(_skillData, effects, _unitDataAttacking, _turnsController);
+
+            case "Maziodyne":
+                effects.Add(new AllTargetMagicEffect(_unitDataAttacking, _skillData.power, _view, _teamController, "Elec"));
+                return new SkillController(_skillData, effects, _unitDataAttacking, _turnsController);
+
+            case "Mazan":
+                effects.Add(new AllTargetMagicEffect(_unitDataAttacking, _skillData.power, _view, _teamController, "Force"));
+                return new SkillController(_skillData, effects, _unitDataAttacking, _turnsController);
+
+            case "Mazanma":
+                effects.Add(new AllTargetMagicEffect(_unitDataAttacking, _skillData.power, _view, _teamController, "Force"));
+                return new SkillController(_skillData, effects, _unitDataAttacking, _turnsController);
+
+            case "Mazandyne":
+                effects.Add(new AllTargetMagicEffect(_unitDataAttacking, _skillData.power, _view, _teamController, "Force"));
+                return new SkillController(_skillData, effects, _unitDataAttacking, _turnsController);
+
 
 
 

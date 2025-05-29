@@ -354,6 +354,30 @@ public class ImplementedConsoleView: IView
         _view.WriteLine($"{unitDataAttacking.Name} lanza viento a {target.Name}");
     }
     
+    public void AnounceFireTargetWithoutLines(UnitData unitDataAttacking, UnitData target)
+    {
+        _view.WriteLine($"{unitDataAttacking.Name} lanza fuego a {target.Name}");
+    }
+    
+    public void AnounceIceTargetWithoutLines(UnitData unitDataAttacking, UnitData target)
+    {
+        _view.WriteLine($"{unitDataAttacking.Name} lanza hielo a {target.Name}");
+    }
+    
+    public void AnounceElecTargetWithoutLines(UnitData unitDataAttacking, UnitData target)
+    {
+        _view.WriteLine($"{unitDataAttacking.Name} lanza electricidad a {target.Name}");
+    }
+    
+    public void AnounceForceTargetWithoutLines(UnitData unitDataAttacking, UnitData target)
+    {
+        _view.WriteLine($"{unitDataAttacking.Name} lanza viento a {target.Name}");
+    }
+    
+    public void AnounceHealAllyTargetWithoutLines(UnitData unitDataAttacking, UnitData target)
+    {
+        _view.WriteLine($"{unitDataAttacking.Name} cura a {target.Name}");
+    }
     public void AnounceHealAllyTarget(UnitData unitDataAttacking, UnitData target)
     {
         _view.WriteLine("----------------------------------------");
