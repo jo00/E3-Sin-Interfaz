@@ -39,8 +39,11 @@ public class AllTargetPhysEffect:OffensivePhysEffect
                 double damage = (Math.Sqrt(_unitDataAttacking.Strength * _skillPower));
 
                 _affinitiesApplied.Add(target.Affinities["Phys"]);
+                Console.WriteLine(target.Affinities["Phys"]);
+
                 AffinitiesController affinitiesController = new AffinitiesController("Phys", damage, target, _unitDataAttacking, _view, turnsController,1);
                 affinitiesController.SetThatShouldnChangeTurns();
+
                 int damageWithAffinities = (int)affinitiesController.ApplyAffinity();
                 target.DiscountHp(damageWithAffinities);
                 if (!affinitiesController.IsReturnDamageAffinity())
@@ -95,7 +98,7 @@ public class AllTargetPhysEffect:OffensivePhysEffect
         {
             _turnsController.ChangeTurnsForWeakAffinity();
         }
-        else if (_affinitiesApplied.Contains("Neutral") || _affinitiesApplied.Contains("Resit"))
+        else if (_affinitiesApplied.Contains("_") || _affinitiesApplied.Contains("Rs"))
         {
             _turnsController.ChangeTurnStateForMissNeutralOrResistAffinity();
         }

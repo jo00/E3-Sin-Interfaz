@@ -46,7 +46,9 @@ public class MultiTargetPhysEffect:OffensivePhysEffect
                 double damage = (Math.Sqrt(_unitDataAttacking.Strength * _skillPower));
 
                 _affinitiesApplied.Add(target.Affinities["Phys"]);
+                Console.WriteLine(target.Affinities["Phys"]);
                 AffinitiesController affinitiesController = new AffinitiesController("Phys", damage, target, _unitDataAttacking, _view, turnsController,1);
+               affinitiesController.SetThatShouldnChangeTurns();
                 int damageWithAffinities = (int)affinitiesController.ApplyAffinity();
                 target.DiscountHp(damageWithAffinities);
                 if (!affinitiesController.IsReturnDamageAffinity())
