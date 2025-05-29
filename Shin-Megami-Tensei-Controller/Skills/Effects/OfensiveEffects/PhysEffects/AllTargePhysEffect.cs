@@ -86,7 +86,7 @@ public class AllTargetPhysEffect:OffensivePhysEffect
         {
             _turnsController.ChangeTurnsStateForDrOrRepelAffinity();
         }
-        else if (_affinitiesApplied.Contains("Null"))
+        else if (_affinitiesApplied.Contains("Nu"))
         {
             _turnsController.ChangeTurnsStateForNullAffinity();
         }
@@ -94,11 +94,11 @@ public class AllTargetPhysEffect:OffensivePhysEffect
         {
             _turnsController.ChangeTurnStateForMissNeutralOrResistAffinity();
         }
-        else if (_affinitiesApplied.Contains("Weak"))
+        else if (_affinitiesApplied.Contains("Wk"))
         {
             _turnsController.ChangeTurnsForWeakAffinity();
         }
-        else if (_affinitiesApplied.Contains("_") || _affinitiesApplied.Contains("Rs"))
+        else if (_affinitiesApplied.Contains("-") || _affinitiesApplied.Contains("Rs"))
         {
             _turnsController.ChangeTurnStateForMissNeutralOrResistAffinity();
         }

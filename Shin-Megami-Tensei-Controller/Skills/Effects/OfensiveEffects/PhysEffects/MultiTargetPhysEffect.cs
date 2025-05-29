@@ -99,11 +99,11 @@ public class MultiTargetPhysEffect:OffensivePhysEffect
         {
             _turnsController.ChangeTurnStateForMissNeutralOrResistAffinity();
         }
-        else if (_affinitiesApplied.Contains("Weak"))
+        else if (_affinitiesApplied.Contains("Wk"))
         {
             _turnsController.ChangeTurnsForWeakAffinity();
         }
-        else if (_affinitiesApplied.Contains("Neutral") || _affinitiesApplied.Contains("Resit"))
+        else if (_affinitiesApplied.Contains("-") || _affinitiesApplied.Contains("Rs"))
         {
             _turnsController.ChangeTurnStateForMissNeutralOrResistAffinity();
         }
