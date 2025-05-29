@@ -45,6 +45,10 @@ public class ImplementedConsoleView: IView
         _view.WriteLine("----------------------------------------");
         _view.WriteLine($"{unitDataAttacking.Name} dispara a {targetUnitData.Name}");
     }
+    public void AnounceGunDamageWithoutLines(UnitData unitDataAttacking, UnitData targetUnitData)
+    {
+        _view.WriteLine($"{unitDataAttacking.Name} dispara a {targetUnitData.Name}");
+    }
 
     public void ShowSelectAbilityMenu(UnitData unitDataAttacking)
     {

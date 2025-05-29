@@ -309,6 +309,18 @@ public class EffectsSetter
             case "Mazandyne":
                 effects.Add(new AllTargetMagicEffect(_unitDataAttacking, _skillData.power, _view, _teamController, "Force"));
                 return new SkillController(_skillData, effects, _unitDataAttacking, _turnsController);
+            case "Rapid Needle":
+                effects.Add(new AllTargetGunEffect(_unitDataAttacking, _skillData.power, _view, _teamController));
+                return new SkillController(_skillData, effects, _unitDataAttacking, _turnsController);
+
+            case "Blast Arrow":
+                effects.Add(new AllTargetGunEffect(_unitDataAttacking, _skillData.power, _view, _teamController));
+                return new SkillController(_skillData, effects, _unitDataAttacking, _turnsController);
+
+            case "Heaven’s Bow":
+                effects.Add(new AllTargetGunEffect(_unitDataAttacking, _skillData.power, _view, _teamController));
+                return new SkillController(_skillData, effects, _unitDataAttacking, _turnsController);
+
 
 
 

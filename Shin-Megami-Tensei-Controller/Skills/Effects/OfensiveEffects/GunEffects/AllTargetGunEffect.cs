@@ -4,11 +4,10 @@ using Shin_Megami_Tensei.Skills.Effects.OfensiveEffects;
 
 namespace Shin_Megami_Tensei.Skills.Effects;
 
-public class MultiTargetPhysEffect:Effect
+public class AllTargetGunEffect:OffensivePhysEffect
 
 {
-    private readonly int _min;
-    private readonly int _max;
+    
     private UnitData _unitDataAttacking;
     private int _skillPower;
     private ImplementedConsoleView _view;
@@ -16,18 +15,14 @@ public class MultiTargetPhysEffect:Effect
     private TurnsController _turnsController;
     private TeamController _teamController;
     private bool _wasAttackUnitAttacked = false;
-    private List<string> _affinitiesApplied;
-    private int _K;
-    public MultiTargetPhysEffect(UnitData unitDataAttacking, int min, int max, int skillPower, ImplementedConsoleView view, int k, TeamController teamController) : base(unitDataAttacking)
+    private List<string> _affinitiesApplied = new List<string>();
+    
+    public AllTargetGunEffect(UnitData unitDataAttacking, int skillPower, ImplementedConsoleView view, TeamController teamController) : base(unitDataAttacking)
     {
         _unitDataAttacking = unitDataAttacking;
         _skillPower = skillPower;
         _view = view;
         _teamController = teamController;
-        _min = min;
-        _max = max;
-        _K = k;
-        
     }
 
     public override void Apply(List<UnitData> oponentUnits, TurnsController turnsController)
@@ -36,18 +31,18 @@ public class MultiTargetPhysEffect:Effect
         _turnsController= turnsController;
         List<UnitData> activeOpponentUnitsAlive = _teamController.GetActiveUnitsAlive(oponentUnits);
         MenusController menuController = new MenusController(_view);
-        int hits = CalculateHits(_K);
-        List<UnitData>targets= _teamController.GetMultiTargetUnits(activeOpponentUnitsAlive, _K, hits);
-        foreach (UnitData target in targets)
+        foreach (UnitData target in activeOpponentUnitsAlive)
         {
             if (target != null)
             {
-                _view.AnounceAttackWithouLines(_unitDataAttacking, target);
-                double damage = (Math.Sqrt(_unitDataAttacking.Strength * _skillPower));
+                _view.AnounceGunDamageWithoutLines(_unitDataAttacking, target);
+                double damage = (Math.Sqrt(_unitDataAttacking.Skill * _skillPower));
 
-                _affinitiesApplied.Add(target.Affinities["Phys"]);
-                AffinitiesController affinitiesController = new AffinitiesController("Phys", damage, target, _unitDataAttacking, _view, turnsController,1);
-               affinitiesController.SetThatShouldnChangeTurns();
+                _affinitiesApplied.Add(target.Affinities["Gun"]);
+
+                AffinitiesController affinitiesController = new AffinitiesController("Gun", damage, target, _unitDataAttacking, _view, turnsController,1);
+                affinitiesController.SetThatShouldnChangeTurns();
+
                 int damageWithAffinities = (int)affinitiesController.ApplyAffinity();
                 target.DiscountHp(damageWithAffinities);
                 if (!affinitiesController.IsReturnDamageAffinity())
@@ -90,7 +85,7 @@ public class MultiTargetPhysEffect:Effect
         {
             _turnsController.ChangeTurnsStateForDrOrRepelAffinity();
         }
-        else if (_affinitiesApplied.Contains("Null"))
+        else if (_affinitiesApplied.Contains("Nu"))
         {
             _turnsController.ChangeTurnsStateForNullAffinity();
         }
@@ -106,13 +101,6 @@ public class MultiTargetPhysEffect:Effect
         {
             _turnsController.ChangeTurnStateForMissNeutralOrResistAffinity();
         }
-    }
-    
-    private int CalculateHits(int k)
-    {
-        int range = _max - _min + 1;
-        int offset = k % range;
-        return _min + offset;
     }
 
     
